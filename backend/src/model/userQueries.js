@@ -17,9 +17,10 @@ class User {
         return user;
     }
 
-    // Update the user requests first then update the user who will receive that request...
-    // TODO: Handle edge case when user tries to add an existing friend..
+    // Update the user requests sent first then update the user who will receive that request...
     async addUser({ id, receiverId }) {
+        if (this.checkUserIsFriend({ id, friendId: receiverId })) throw new Error("Already Friends")
+
         await prisma.user.update({
             where: { id },
             data: {
@@ -89,13 +90,23 @@ class User {
 
         return user;
     }
+
+    // A helper for the adding user function, checks if user is already friends with the user that they're trying to add.
+    async checkUserIsFriend({ id, friendId }) {
+        const user = await prisma.user.findUnique({
+            where: { id, friends: { some: { id: friendId } } },
+        });
+
+        return user;
+    }
 }
 
 const user = new User();
 
-user.getUser({ username: "mastachii273" });
-// user.addUser({ id: "103febb0-5b70-43d1-8c03-47aaba751ee1", username: "Midori" });
-// user.acceptUser({ id: "0b150dba-1d81-402f-8737-6afc9d5041cf", senderUsername: "mastachii273" });
+user.getUser({ username: "Midori" });
+// user.addUser({ id: 1, receiverId: 2 });
+// user.acceptUser({ id: 2, senderId: 1 });
+// user.checkUserIsFriend({ id: 1, friendId: 2 });
 
 // user.createUser({
 //     username: "mastachii273",
