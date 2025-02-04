@@ -12,3 +12,44 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id               String            @id @default(uuid())
+  username         String            @unique
+  displayName      String
+  profilePicture   String
+  friends          User[]            @relation("UserFriends")
+  conversations    Conversation[]
+  messages         Message[]
+  requestsReceived RequestRecieved[]
+  requestsSent     RequestSent[]
+  symmetricFriends User[]            @relation("UserFriends") // Just to suppress the error, wont be used in any way..
+}
+
+model Conversation {
+  id       String    @id @default(uuid())
+  messages Message[]
+  users    User[]
+}
+
+model Message {
+  id             Int           @id @default(autoincrement())
+  message        String
+  dateSent       DateTime
+  user           User?         @relation(fields: [userId], references: [id])
+  userId         String?
+  conversation   Conversation? @relation(fields: [conversationId], references: [id])
+  conversationId String?
+}
+
+model RequestRecieved {
+  id     String @id @default(uuid())
+  sentBy User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model RequestSent {
+  id     String @id @default(uuid())
+  sentTo User   @relation(fields: [userId], references: [id])
+  userId String
+}
