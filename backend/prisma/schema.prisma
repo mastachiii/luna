@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id               String         @id @default(uuid())
+  id               Int            @id @default(autoincrement())
   username         String         @unique
   password         String
   email            String         @unique
@@ -33,7 +33,7 @@ model User {
 }
 
 model Conversation {
-  id       String    @id @default(uuid())
+  id       Int       @id @default(autoincrement())
   messages Message[]
   users    User[]
 }
@@ -43,7 +43,7 @@ model Message {
   message        String
   dateSent       DateTime
   user           User?         @relation(fields: [userId], references: [id])
-  userId         String?
+  userId         Int?
   conversation   Conversation? @relation(fields: [conversationId], references: [id])
-  conversationId String?
+  conversationId Int?
 }

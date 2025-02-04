@@ -19,9 +19,7 @@ class User {
 
     // Update the user requests first then update the user who will receive that request...
     // TODO: Handle edge case when user tries to add an existing friend..
-    async addUser({ id, receiverUsername }) {
-        const { id: receiverId } = await this.getUser({ username: receiverUsername });
-
+    async addUser({ id, receiverId }) {
         await prisma.user.update({
             where: { id },
             data: {
@@ -34,7 +32,7 @@ class User {
         });
 
         await prisma.user.update({
-            where: { username: receiverUsername },
+            where: { id: receiverId },
             data: {
                 requestsReceived: {
                     connect: {
@@ -45,9 +43,7 @@ class User {
         });
     }
 
-    async acceptUser({ id, senderUsername }) {
-        const { id: senderId } = await this.getUser({ username: senderUsername });
-
+    async acceptUser({ id, senderId }) {
         await prisma.user.update({
             where: { id },
             data: {
@@ -90,8 +86,6 @@ class User {
                 requestsReceived: true,
             },
         });
-
-        console.log(user);
 
         return user;
     }
