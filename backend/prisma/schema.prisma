@@ -14,18 +14,20 @@ datasource db {
 }
 
 model User {
-  id               String            @id @default(uuid())
-  username         String            @unique
-  password         String
-  email            String            @unique
-  displayName      String
-  profilePicture   String?
-  friends          User[]            @relation("UserFriends")
-  conversations    Conversation[]
-  messages         Message[]
-  requestsReceived RequestRecieved[]
-  requestsSent     RequestSent[]
-  symmetricFriends User[]            @relation("UserFriends") // Just to suppress the error, wont be used in any way..
+  id                String         @id @default(uuid())
+  username          String         @unique
+  password          String
+  email             String         @unique
+  displayName       String
+  profilePicture    String?
+  friends           User[]         @relation("UserFriends")
+  conversations     Conversation[]
+  messages          Message[]
+  requestsReceived  User[]         @relation("received")
+  requestsSent      User[]         @relation("sent")
+  symmetricFriends  User[]         @relation("UserFriends") // Just to suppress the error, wont be used in any way..
+  symmetricReceived User[]         @relation("received")
+  symmetricSent     User[]         @relation("sent")
 }
 
 model Conversation {
@@ -42,16 +44,4 @@ model Message {
   userId         String?
   conversation   Conversation? @relation(fields: [conversationId], references: [id])
   conversationId String?
-}
-
-model RequestRecieved {
-  id     String @id @default(uuid())
-  sentBy User   @relation(fields: [userId], references: [id])
-  userId String
-}
-
-model RequestSent {
-  id     String @id @default(uuid())
-  sentTo User   @relation(fields: [userId], references: [id])
-  userId String
 }
