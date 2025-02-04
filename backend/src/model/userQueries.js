@@ -19,8 +19,8 @@ class User {
 
     // Update the user requests first then update the user who will receive that request...
     // TODO: Handle edge case when user tries to add an existing friend..
-    async addUser({ id, username }) {
-        const { id: receiverId } = await this.getUser({ username });
+    async addUser({ id, receiverUsername }) {
+        const { id: receiverId } = await this.getUser({ username: receiverUsername });
 
         await prisma.user.update({
             where: { id },
@@ -34,10 +34,46 @@ class User {
         });
 
         await prisma.user.update({
-            where: { username },
+            where: { username: receiverUsername },
             data: {
                 requestsReceived: {
                     connect: {
+                        id,
+                    },
+                },
+            },
+        });
+    }
+
+    async acceptUser({ id, senderUsername }) {
+        const { id: senderId } = await this.getUser({ username: senderUsername });
+
+        await prisma.user.update({
+            where: { id },
+            data: {
+                friends: {
+                    connect: {
+                        id: senderId,
+                    },
+                },
+                requestsReceived: {
+                    disconnect: {
+                        id: senderId,
+                    },
+                },
+            },
+        });
+
+        await prisma.user.update({
+            where: { id: senderId },
+            data: {
+                friends: {
+                    connect: {
+                        id,
+                    },
+                },
+                requestsSent: {
+                    disconnect: {
                         id,
                     },
                 },
@@ -49,6 +85,7 @@ class User {
         const user = await prisma.user.findUnique({
             where: { username },
             include: {
+                friends: true,
                 requestsSent: true,
                 requestsReceived: true,
             },
@@ -62,8 +99,9 @@ class User {
 
 const user = new User();
 
-user.getUser({ username: "Midori" });
+user.getUser({ username: "mastachii273" });
 // user.addUser({ id: "103febb0-5b70-43d1-8c03-47aaba751ee1", username: "Midori" });
+// user.acceptUser({ id: "0b150dba-1d81-402f-8737-6afc9d5041cf", senderUsername: "mastachii273" });
 
 // user.createUser({
 //     username: "mastachii273",
