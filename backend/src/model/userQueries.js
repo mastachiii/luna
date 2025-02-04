@@ -19,7 +19,7 @@ class User {
 
     // Update the user requests sent first then update the user who will receive that request...
     async addUser({ id, receiverId }) {
-        if (this.checkUserIsFriend({ id, friendId: receiverId })) throw new Error("Already Friends")
+        if (this.checkUserIsFriend({ id, friendId: receiverId })) throw new Error("Already Friends");
 
         await prisma.user.update({
             where: { id },
@@ -85,6 +85,11 @@ class User {
                 friends: true,
                 requestsSent: true,
                 requestsReceived: true,
+                conversations: {
+                    include: {
+                        users: true
+                    }
+                },
             },
         });
 
