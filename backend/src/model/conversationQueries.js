@@ -20,6 +20,21 @@ class Conversation {
             },
         });
     }
+
+    async addMessageToConversation({ id, message, senderId }) {
+        await prisma.conversation.update({
+            where: { id },
+            data: {
+                messages: {
+                    create: {
+                        message,
+                        userId: senderId,
+                        dateSent: new Date(),
+                    },
+                },
+            },
+        });
+    }
 }
 
 const convo = new Conversation();

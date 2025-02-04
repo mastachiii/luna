@@ -95,12 +95,16 @@ class User {
                 requestsReceived: true,
                 conversations: {
                     include: {
-                        users: true,
+                        messages: {
+                            include: {
+                                user: true,
+                            },
+                        },
                     },
                 },
             },
         });
-
+        debugger;
         return user;
     }
 
@@ -131,7 +135,7 @@ const user = new User();
     //     displayName: "midori :-)",
     // });
     // await user.addUser({ id: 1, receiverId: 3 });
-    await user.acceptUser({ id: 3, senderId: 1 });
+    // await user.acceptUser({ id: 3, senderId: 1 });
     await user.getUser({ username: "mastachii273" });
     // await user.checkUserIsFriend({ id: 1, receiverId: 3 })
 })();
