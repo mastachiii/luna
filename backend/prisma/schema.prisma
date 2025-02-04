@@ -16,8 +16,10 @@ datasource db {
 model User {
   id               String            @id @default(uuid())
   username         String            @unique
+  password         String
+  email            String            @unique
   displayName      String
-  profilePicture   String
+  profilePicture   String?
   friends          User[]            @relation("UserFriends")
   conversations    Conversation[]
   messages         Message[]
