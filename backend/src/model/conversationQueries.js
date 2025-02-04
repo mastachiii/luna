@@ -24,6 +24,4 @@ class Conversation {
 
 const convo = new Conversation();
 
-convo.createFriendConversation({ userOneId: 1, userTwoId: 2 });
-
 module.exports = new Conversation();

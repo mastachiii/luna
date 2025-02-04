@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+const conversation = require("./conversationQueries");
 
 const prisma = new PrismaClient();
 
@@ -19,7 +20,12 @@ class User {
 
     // Update the user requests sent first then update the user who will receive that request...
     async addUser({ id, receiverId }) {
-        if (this.checkUserIsFriend({ id, friendId: receiverId })) throw new Error("Already Friends");
+        const isFriend = await this.checkUserIsFriend({
+            id,
+            friendId: receiverId,
+        });
+
+        if (isFriend) throw new Error("Already Friends");
 
         await prisma.user.update({
             where: { id },
@@ -76,6 +82,8 @@ class User {
                 },
             },
         });
+
+        await conversation.createFriendConversation({ userOneId: id, userTwoId: senderId });
     }
 
     async getUser({ username }) {
@@ -87,8 +95,8 @@ class User {
                 requestsReceived: true,
                 conversations: {
                     include: {
-                        users: true
-                    }
+                        users: true,
+                    },
                 },
             },
         });
@@ -108,21 +116,22 @@ class User {
 
 const user = new User();
 
-user.getUser({ username: "Midori" });
-// user.addUser({ id: 1, receiverId: 2 });
-// user.acceptUser({ id: 2, senderId: 1 });
-// user.checkUserIsFriend({ id: 1, friendId: 2 });
-
-// user.createUser({
-//     username: "mastachii273",
-//     email: "mastachii273@gmail.com",
-//     password: "alsaliasid12",
-//     displayName: "machii",
-// });
-
-// user.createUser({
-//     username: "Midori",
-//     email: "midori@gmail.com",
-//     password: "alsaliasid12",
-//     displayName: "midori :-)",
-// });
+(async () => {
+    // user.checkUserIsFriend({ id: 1, friendId: 2 });
+    // await user.createUser({
+    //     username: "mastachii273",
+    //     email: "mastachii273@gmail.com",
+    //     password: "alsaliasid12",
+    //     displayName: "machii",
+    // });
+    // await user.createUser({
+    //     username: "Midori",
+    //     email: "midori@gmail.com",
+    //     password: "alsaliasid12",
+    //     displayName: "midori :-)",
+    // });
+    // await user.addUser({ id: 1, receiverId: 3 });
+    await user.acceptUser({ id: 3, senderId: 1 });
+    await user.getUser({ username: "mastachii273" });
+    // await user.checkUserIsFriend({ id: 1, receiverId: 3 })
+})();
