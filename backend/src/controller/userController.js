@@ -39,6 +39,11 @@ const validateSignUp = [
         .withMessage("Password does not match"),
 ];
 
+const validateLogIn = [
+    body("username").trim().notEmpty().withMessage("Username is required"),
+    body("password").trim().notEmpty().withMessage("Password is required"),
+];
+
 class User {
     signUp = [
         validateSignUp,

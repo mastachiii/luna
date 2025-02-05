@@ -1,4 +1,7 @@
 const express = require("express");
+const session = require("express-session");
+const passportConfig = require("./passport/passport");
+require("dotenv").config();
 
 // Routes
 const userRoute = require("./routes/userRoutes");
@@ -9,8 +12,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/user", userRoute);
-
-app.get("/", (req, res) => res.send("Hello Express"));
 
 // Error handling
 app.use((err, req, res, next) => {
