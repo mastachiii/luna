@@ -3,19 +3,15 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 class Conversation {
-    // Creates a conversation only between two friends
-    async createFriendConversation({ userOneId, userTwoId }) {
+    async createConversation({ userIds }) {
+        const ids = userIds.map(u => ({
+            id: u,
+        }));
+
         await prisma.conversation.create({
             data: {
                 users: {
-                    connect: [
-                        {
-                            id: userOneId,
-                        },
-                        {
-                            id: userTwoId,
-                        },
-                    ],
+                    connect: ids,
                 },
             },
         });
@@ -38,5 +34,6 @@ class Conversation {
 }
 
 const convo = new Conversation();
+
 
 module.exports = new Conversation();

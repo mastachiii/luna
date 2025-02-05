@@ -83,7 +83,7 @@ class User {
             },
         });
 
-        await conversation.createFriendConversation({ userOneId: id, userTwoId: senderId });
+        await conversation.createConversation({ userIds: [id, senderId] });
     }
 
     async getUser({ username }) {
@@ -104,7 +104,7 @@ class User {
                 },
             },
         });
-        debugger;
+        debugger
         return user;
     }
 
@@ -113,7 +113,7 @@ class User {
         const user = await prisma.user.findUnique({
             where: { id, friends: { some: { id: friendId } } },
         });
-
+        debugger;
         return user;
     }
 }
@@ -134,8 +134,8 @@ const user = new User();
     //     password: "alsaliasid12",
     //     displayName: "midori :-)",
     // });
-    // await user.addUser({ id: 1, receiverId: 3 });
-    // await user.acceptUser({ id: 3, senderId: 1 });
-    await user.getUser({ username: "mastachii273" });
+    // await user.addUser({ id: 1, receiverId: 2 });
+    // await user.acceptUser({ id: 2, senderId: 1 });
     // await user.checkUserIsFriend({ id: 1, receiverId: 3 })
+    await user.getUser({ username: "mastachii273" });
 })();
