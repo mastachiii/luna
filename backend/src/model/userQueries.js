@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient, Prisma } = require("@prisma/client");
 const conversation = require("./conversationQueries");
 
 const prisma = new PrismaClient();
@@ -86,9 +86,11 @@ class User {
         await conversation.createConversation({ userIds: [id, senderId] });
     }
 
-    async getUser({ username }) {
+    async getUser({ id }) {
         const user = await prisma.user.findUnique({
-            where: { username },
+            where: {
+                id,
+            },
             include: {
                 friends: true,
                 requestsSent: true,
@@ -105,7 +107,25 @@ class User {
                 },
             },
         });
-        debugger;
+
+        console.log(user);
+
+        return user;
+    }
+
+    async getUserByEmail({ email }) {
+        const user = await prisma.user.findUnique({
+            where: { email },
+        });
+
+        return user;
+    }
+
+    async getUserByUsername({ username }) {
+        const user = await prisma.user.findUnique({
+            where: { username },
+        });
+
         return user;
     }
 
@@ -144,5 +164,7 @@ const user = new User();
     // await user.addUser({ id: 1, receiverId: 2 });
     // await user.acceptUser({ id: 2, senderId: 1 });
     // await user.checkUserIsFriend({ id: 1, receiverId: 3 })
-    await user.getUser({ username: "mastachii273" });
+    // await user.getUser({ username: "mastachii273" });
 })();
+
+module.exports = new User();
