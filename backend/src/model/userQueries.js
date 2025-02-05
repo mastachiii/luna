@@ -100,11 +100,12 @@ class User {
                                 user: true,
                             },
                         },
+                        users: true,
                     },
                 },
             },
         });
-        debugger
+        debugger;
         return user;
     }
 
@@ -113,7 +114,7 @@ class User {
         const user = await prisma.user.findUnique({
             where: { id, friends: { some: { id: friendId } } },
         });
-        debugger;
+
         return user;
     }
 }
@@ -133,6 +134,12 @@ const user = new User();
     //     email: "midori@gmail.com",
     //     password: "alsaliasid12",
     //     displayName: "midori :-)",
+    // });
+    // await user.createUser({
+    //     username: "alAsid2006",
+    //     email: "jpinkman378@gmail.com",
+    //     password: "alsaliasid12",
+    //     displayName: "AL",
     // });
     // await user.addUser({ id: 1, receiverId: 2 });
     // await user.acceptUser({ id: 2, senderId: 1 });

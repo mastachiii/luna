@@ -18,6 +18,10 @@ class Conversation {
     }
 
     async addMessageToConversation({ id, message, senderId }) {
+        const userInConvo = await this.checkIfUserIsInConversation({ id, userId: senderId });
+
+        if (!userInConvo) throw new Error("401: Unauthorized");
+
         await prisma.conversation.update({
             where: { id },
             data: {
@@ -31,9 +35,16 @@ class Conversation {
             },
         });
     }
+
+    async checkIfUserIsInConversation({ id, userId }) {
+        const convo = await prisma.conversation.findUnique({
+            where: { id, users: { some: { id: userId } } },
+        });
+        console.log(convo);
+        return convo;
+    }
 }
 
 const convo = new Conversation();
-
 
 module.exports = new Conversation();
