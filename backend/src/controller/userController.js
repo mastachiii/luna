@@ -1,4 +1,6 @@
 const { body, validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
+const db = require("../model/userQueries");
 
 const validateSignUp = [
     body("username")
@@ -6,20 +8,19 @@ const validateSignUp = [
         .notEmpty()
         .withMessage("Username is required")
         .custom(async value => {
-            const user = db.getUserByUsername({ username: value });
+            const user = await db.getUserByUsername({ username: value });
 
             if (user) throw new Error("Username is already taken");
         }),
     body("email")
         .trim()
         .notEmpty()
-        .withMessage("Email is required")
         .isEmail()
         .withMessage("Email is in an invalid format")
         .custom(async value => {
-            const user = db.getUserByEmail({ email: value });
+            const user = await db.getUserByEmail({ email: value });
 
-            if (email) throw new Error("Email has already been used.");
+            if (user) throw new Error("Email has already been used.");
         }),
     body("displayName").trim().notEmpty().withMessage("Display name is required"),
     body("password")
@@ -37,3 +38,32 @@ const validateSignUp = [
         })
         .withMessage("Password does not match"),
 ];
+
+class User {
+    signUp = [
+        validateSignUp,
+        async (req, res, next) => {
+            try {
+                const errors = validationResult(req);
+
+                console.log(req.body);
+
+                if (!errors.isEmpty()) return res.send({ errors: errors.array() });
+
+                bcrypt.hash(req.body.password, 10, async (err, hash) => {
+                    if (err) next(err);
+
+                    req.body.password = hash;
+
+                    const user = await db.createUser(req.body);
+
+                    return res.status(200).json({ user });
+                });
+            } catch (err) {
+                next(err);
+            }
+        },
+    ];
+}
+
+module.exports = new User();
