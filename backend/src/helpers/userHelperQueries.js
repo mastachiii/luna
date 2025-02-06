@@ -8,14 +8,14 @@ async function validateAddUser({ id, receiverId }) {
         where: { id, friends: { some: { id: receiverId } } },
     });
 
-    // const requestAlreadySent = await prisma.user.findUnique({
-    //     where: { id, requestsSent: { some: { id: receiverId } } },
-    // });
+    const isExist = await prisma.user.findUnique({
+        where: { id: receiverId },
+    });
 
     // Incase some guy tries to add themselves
     const isSelf = id === receiverId;
 
-    return !isFriend && !isSelf;
+    return !isFriend && !isSelf && isExist;
 }
 
 module.exports = { validateAddUser };

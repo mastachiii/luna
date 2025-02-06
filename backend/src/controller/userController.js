@@ -99,7 +99,25 @@ class User {
         }
     }
 
-    async acceptUser(req, res, next) { }
+    async acceptUser(req, res, next) {
+        try {
+            const user = await db.acceptUser({ id: req.user.id, senderId: +req.params.id });
+
+            return res.status(200).json({ user });
+        } catch (err) {
+            return res.status(400).json({ message: err });
+        }
+    }
+
+    async rejectUser(req, res, next) {
+        try {
+            const user = await db.rejectUser({ id: req.user.id, senderId: +req.params.id });
+
+            return res.status(200).json({ user });
+        } catch (err) {
+            return res.status(400).json({ message: err });
+        }
+    }
 }
 
 module.exports = new User();

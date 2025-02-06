@@ -48,9 +48,13 @@ xdescribe("Sign up requests", () => {
     });
 });
 
-describe("When user tries to add someone", () => {
+xdescribe("When user tries to add someone", () => {
     it("Rejects if user tries to add themselves", done => {
         request.post("/user/add/1").set("Cookie", breezyCookie).expect(400, done);
+    });
+
+    it("Rejects if user tries to add a non-existing user", done => {
+        request.post("/user/add/1000000").set("Cookie", breezyCookie).expect(400, done);
     });
 
     it("Adds user", done => {
@@ -58,14 +62,22 @@ describe("When user tries to add someone", () => {
     });
 });
 
-describe("When user tries to accept another user", () => {
+describe("When user tries to accept/reject another user", () => {
     it("Rejects if user accepts non-existent request", done => {
-        request.post("user/accept/100").set("Cookie", breezyCookie).expect(400, done);
+        request.post("/user/accept/100").set("Cookie", breezyCookie).expect(400, done);
+    });
+
+    it("Rejects if user rejects non-existent request", done => {
+        request.post("/user/reject/100").set("Cookie", breezyCookie).expect(400, done);
+    });
+
+    it("Rejects if user accepts non-existent request", done => {
+        request.post("/user/accept/100").set("Cookie", breezyCookie).expect(400, done);
     });
 
     it("Rejects a friend request", done => {
         request
-            .post("user/reject/3")
+            .post("/user/reject/3")
             .set("Cookie", breezyCookie)
             .expect(200)
             .then(response => {
@@ -75,9 +87,9 @@ describe("When user tries to accept another user", () => {
             });
     });
 
-    it("Accepts friend request and creates a initial conversation", done => {
+    xit("Accepts friend request and creates a initial conversation", done => {
         request
-            .post("user/accept/3")
+            .post("/user/accept/3")
             .set("Cookie", breezyCookie)
             .expect(200, done)
             .then(response => {

@@ -56,10 +56,16 @@ class User {
                 },
             },
         });
+
+        return user;
     }
 
     async acceptUser({ id, senderId }) {
-        await prisma.user.update({
+        const sender = await this.getUser({ id: senderId });
+
+        if (!sender) throw new Error("User does not exist..");
+
+        const user = await prisma.user.update({
             where: { id },
             data: {
                 friends: {
@@ -92,6 +98,38 @@ class User {
         });
 
         await conversation.createConversation({ userIds: [id, senderId] });
+
+        return user;
+    }
+
+    async rejectUser({ id, senderId }) {
+        const sender = await this.getUser({ id: senderId });
+
+        if (!sender) throw new Error("User does not exist..");
+
+        const user = await prisma.user.update({
+            where: { id },
+            data: {
+                requestsReceived: {
+                    disconnect: {
+                        id: senderId,
+                    },
+                },
+            },
+        });
+
+        await prisma.user.update({
+            where: { id: senderId },
+            data: {
+                requestsSent: {
+                    disconnect: {
+                        id: receiverId,
+                    },
+                },
+            },
+        });
+
+        return user;
     }
 
     async getUser({ id }) {
@@ -115,8 +153,6 @@ class User {
                 },
             },
         });
-
-        console.log(user);
 
         return user;
     }

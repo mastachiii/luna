@@ -43,7 +43,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/user", userRoute);
 
-app.get("/", isAuthenticated, (req, res, next) => res.sendStatus(200));
+app.get("/", isAuthenticated, (req, res, next) => console.log(req.user));
 
 // Error handling
 app.use((err, req, res, next) => {
