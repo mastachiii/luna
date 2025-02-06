@@ -4,8 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "jest",
-        "dev": "nodemon src/app.js"
+        "dev": "NODE_ENV=development && nodemon src/app.js",
+        "test": "NODE_ENV=test && jest"
     },
     "keywords": [],
     "author": "",

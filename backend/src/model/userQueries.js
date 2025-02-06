@@ -2,7 +2,14 @@ const { PrismaClient, Prisma } = require("@prisma/client");
 const conversation = require("./conversationQueries");
 const { validateAddUser } = require("../helpers/userHelperQueries");
 
-const prisma = new PrismaClient();
+const databaseUrl = process.env.NODE_ENV === "test" ? process.env.TEST_DATABASE_URL : process.env.DATABASE_URL;
+const prisma = new PrismaClient({
+    datasources: {
+        db: {
+            url: databaseUrl,
+        },
+    },
+});
 
 class User {
     async createUser({ username, email, password, displayName, profilePicture }) {

@@ -5,6 +5,8 @@ const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const passportConfig = require("./passport/passport");
 require("dotenv").config();
 
+const databaseUrl = process.env.NODE_ENV === "test" ? process.env.TEST_DATABASE_URL : process.env.DATABASE_URL;
+
 // Routes
 const userRoute = require("./routes/userRoutes");
 const passport = require("passport");
@@ -21,10 +23,19 @@ app.use(
         resave: false,
         saveUninitialized: false,
         secret: process.env.SECRET,
-        store: new PrismaSessionStore(new PrismaClient(), {
-            dbRecordIdFunction: false,
-            dbRecordIdIsSessionId: true,
-        }),
+        store: new PrismaSessionStore(
+            new PrismaClient({
+                datasources: {
+                    db: {
+                        url: databaseUrl,
+                    },
+                },
+            }),
+            {
+                dbRecordIdFunction: false,
+                dbRecordIdIsSessionId: true,
+            }
+        ),
     })
 );
 app.use(passport.authenticate("session"));
