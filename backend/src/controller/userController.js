@@ -51,8 +51,6 @@ class User {
             try {
                 const errors = validationResult(req);
 
-                console.log(req.body);
-
                 if (!errors.isEmpty()) return res.send({ errors: errors.array() });
 
                 bcrypt.hash(req.body.password, 10, async (err, hash) => {
@@ -69,6 +67,27 @@ class User {
             }
         },
     ];
+
+    validateLoginForm = [
+        validateLogIn,
+        async (req, res, next) => {
+            try {
+                const errors = validationResult(req);
+
+                if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
+                next();
+            } catch (err) {
+                next(err);
+            }
+        },
+    ];
+
+    logIn(req, res, next) {
+        console.log(req.user);
+
+        return res.status(200).json({ message: "Authorized" });
+    }
 }
 
 module.exports = new User();
