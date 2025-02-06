@@ -51,7 +51,7 @@ class User {
             try {
                 const errors = validationResult(req);
 
-                if (!errors.isEmpty()) return res.send({ errors: errors.array() });
+                if (!errors.isEmpty()) return res.status(401).send({ errors: errors.array() });
 
                 bcrypt.hash(req.body.password, 10, async (err, hash) => {
                     if (err) next(err);
@@ -60,7 +60,7 @@ class User {
 
                     const user = await db.createUser(req.body);
 
-                    return res.status(200).json({ user });
+                    return res.status(201).json({ user });
                 });
             } catch (err) {
                 next(err);
@@ -95,7 +95,7 @@ class User {
 
             return res.sendStatus(200);
         } catch (err) {
-            next(err);
+            return res.status(400).json({ message: err });
         }
     }
 

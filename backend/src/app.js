@@ -8,6 +8,7 @@ require("dotenv").config();
 // Routes
 const userRoute = require("./routes/userRoutes");
 const passport = require("passport");
+const { isAuthenticated } = require("./helpers/authMiddleware");
 
 const app = express();
 
@@ -31,7 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/user", userRoute);
 
-app.get("/", (req, res, next) => console.log(req.user));
+app.get("/", isAuthenticated, (req, res, next) => res.sendStatus(200));
 
 // Error handling
 app.use((err, req, res, next) => {
