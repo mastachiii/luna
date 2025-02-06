@@ -7,6 +7,7 @@ require("dotenv").config();
 
 // Routes
 const userRoute = require("./routes/userRoutes");
+const passport = require("passport");
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(
         }),
     })
 );
+app.use(passport.authenticate("session"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/user", userRoute);
