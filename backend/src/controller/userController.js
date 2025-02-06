@@ -88,6 +88,16 @@ class User {
 
         return res.status(200).json({ message: "Authorized" });
     }
+
+    async addUser(req, res, next) {
+        try {
+            await db.addUser({ id: req.user.id, receiverId: +req.params.id });
+
+            return res.sendStatus(200);
+        } catch (err) {
+            next(err);
+        }
+    }
 }
 
 module.exports = new User();

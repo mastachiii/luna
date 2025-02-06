@@ -7,16 +7,22 @@ const { isAuthenticated } = require("../helpers/authMiddleware");
 const route = express.Router();
 
 // GET
-route.get("/log-out", isAuthenticated, (req, res) => {
+route.post("/log-out", isAuthenticated, (req, res, next) => {
     req.logout(err => {
         if (err) next(err);
 
-        return res.status(200).json({ message: "Logged out" });
+        // Destroy session in db if user logs out...
+        req.session.destroy(err => {
+            if (err) next(err);
+
+            return res.status(200).json({ message: "Logged out" });
+        });
     });
 });
 
 // POST
 route.post("/sign-up", controller.signUp);
-route.post("/log-in", passport.authenticate("local", { failureMessage: true }, controller.logIn));
+route.post("/log-in", passport.authenticate("local", { failureMessage: true }), controller.logIn);
+route.post("/add/:id", isAuthenticated, controller.addUser);
 
 module.exports = route;

@@ -1,5 +1,6 @@
 const { PrismaClient, Prisma } = require("@prisma/client");
 const conversation = require("./conversationQueries");
+const { validateAddUser } = require("../helpers/userHelperQueries");
 
 const prisma = new PrismaClient();
 
@@ -20,12 +21,12 @@ class User {
 
     // Update the user requests sent first then update the user who will receive that request...
     async addUser({ id, receiverId }) {
-        const isFriend = await this.checkUserIsFriend({
-            id,
-            friendId: receiverId,
-        });
+        const verifyReq = await validateAddUser({ id, receiverId });
 
-        if (isFriend) throw new Error("Already Friends");
+        if (!verifyReq)
+            throw new Error(
+                "Request rejected. Are you sure that you haven't sent a request already or that you're not friends with the one you're trying to add?"
+            );
 
         await prisma.user.update({
             where: { id },
