@@ -18,4 +18,12 @@ async function validateAddUser({ id, receiverId }) {
     return !isFriend && !isSelf && isExist;
 }
 
-module.exports = { validateAddUser };
+async function validateFriendRequest({ id, senderId }) {
+    const reqIsValid = await prisma.user.findUnique({
+        where: { id, requestsReceived: { some: { id: senderId } } },
+    });
+
+    return reqIsValid;
+}
+
+module.exports = { validateAddUser, validateFriendRequest };

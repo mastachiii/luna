@@ -2,8 +2,8 @@ let request = require("supertest");
 
 request = request("http://localhost:8080");
 // Needs to be updated, just curl and copy paste from the cookie.txt file...
-const audreyCookie = ["connect.sid=s%3AXmtz9yPaxBkaPV2IN-jakIeWOu4yVWNB.lmnCvNFKGRVvHuF1hJBOsI7uEy2piVtbzpZD7gVf4rw"];
-const breezyCookie = ["connect.sid=s%3Ab_SseGxOMyqGh34IO8Z8o2pRAS-zGROJ.%2BoidrCarFHFwmMYuBzvPLQ%2Fd5zDVCxoYF6tlHEPSpgY"];
+const audreyCookie = ["connect.sid=s%3AENnvBqlQ76QLD5f9Shma2bGV7GP3HwpB.yXFvQEZy4Tg1h%2FCupzW1zhjqhk583zdLQmeXvLwIjjg"];
+const breezyCookie = ["connect.sid=s%3AwLVjoMkqSs4hHfX_I5OMCa85tRfsTvvL.7b9GtUQnL8%2FK3OyOMeLJ82Q0CfNMEd5yjFOYqurWcN8"];
 
 xdescribe("Login requests", () => {
     it("Rejects if user already exists", done => {
@@ -48,7 +48,7 @@ xdescribe("Sign up requests", () => {
     });
 });
 
-xdescribe("When user tries to add someone", () => {
+describe("When user tries to add someone", () => {
     it("Rejects if user tries to add themselves", done => {
         request.post("/user/add/1").set("Cookie", breezyCookie).expect(400, done);
     });
@@ -76,26 +76,14 @@ describe("When user tries to accept/reject another user", () => {
     });
 
     it("Rejects a friend request", done => {
-        request
-            .post("/user/reject/3")
-            .set("Cookie", breezyCookie)
-            .expect(200)
-            .then(response => {
-                expect(response.body.user.requestsReceived.length).toBe(0);
-
-                done();
-            });
+        request.post("/user/reject/2").set("Cookie", breezyCookie).expect(200, done);
     });
 
-    xit("Accepts friend request and creates a initial conversation", done => {
-        request
-            .post("/user/accept/3")
-            .set("Cookie", breezyCookie)
-            .expect(200, done)
-            .then(response => {
-                expect(response.body.user.conversations.length).toBe(1);
+    it("Adds after being rejected", done => {
+        request.post("/user/add/1").set("Cookie", audreyCookie).expect(200, done);
+    });
 
-                done();
-            });
+    it("Accepts friend request and creates a initial conversation", done => {
+        request.post("/user/accept/2").set("Cookie", breezyCookie).expect(200, done);
     });
 });

@@ -1,6 +1,6 @@
 const { PrismaClient, Prisma } = require("@prisma/client");
 const conversation = require("./conversationQueries");
-const { validateAddUser } = require("../helpers/userHelperQueries");
+const { validateAddUser, validateFriendRequest } = require("../helpers/userHelperQueries");
 
 const databaseUrl = process.env.NODE_ENV === "test" ? process.env.TEST_DATABASE_URL : process.env.DATABASE_URL;
 const prisma = new PrismaClient({
@@ -61,11 +61,11 @@ class User {
     }
 
     async acceptUser({ id, senderId }) {
-        const sender = await this.getUser({ id: senderId });
+        const reqValid = await validateFriendRequest({ id, senderId });
 
-        if (!sender) throw new Error("User does not exist..");
+        if (!reqValid) throw new Error();
 
-        const user = await prisma.user.update({
+        await prisma.user.update({
             where: { id },
             data: {
                 friends: {
@@ -98,16 +98,14 @@ class User {
         });
 
         await conversation.createConversation({ userIds: [id, senderId] });
-
-        return user;
     }
 
     async rejectUser({ id, senderId }) {
-        const sender = await this.getUser({ id: senderId });
+        const reqValid = await validateFriendRequest({ id, senderId });
 
-        if (!sender) throw new Error("User does not exist..");
+        if (!reqValid) throw new Error();
 
-        const user = await prisma.user.update({
+        await prisma.user.update({
             where: { id },
             data: {
                 requestsReceived: {
@@ -123,13 +121,11 @@ class User {
             data: {
                 requestsSent: {
                     disconnect: {
-                        id: receiverId,
+                        id,
                     },
                 },
             },
         });
-
-        return user;
     }
 
     async getUser({ id }) {
