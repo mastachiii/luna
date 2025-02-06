@@ -98,6 +98,8 @@ class User {
             next(err);
         }
     }
+
+    async acceptUser(req, res, next) { }
 }
 
 module.exports = new User();
