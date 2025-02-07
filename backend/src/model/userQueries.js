@@ -62,9 +62,9 @@ class User {
 
     async acceptUser({ id, senderId }) {
         const reqValid = await validateFriendRequest({ id, senderId });
-
         if (!reqValid) throw new Error("Request is not valid");
 
+        console.log("passed")
         await prisma.user.update({
             where: { id },
             data: {

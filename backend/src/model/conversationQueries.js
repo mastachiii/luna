@@ -1,19 +1,18 @@
 const { PrismaClient } = require("@prisma/client");
-const { checkIfUserIsInConversation } = require("../helpers/conversationHelperQueries");
+const { checkIfUsersAlreadyHaveConvo } = require("../helpers/conversationHelperQueries");
 
 const prisma = new PrismaClient();
 
 class Conversation {
     async createConversation({ id, id2 }) {
-        const usersAlreadyHaveConvo = await checkIfUserIsInConversation({ id, id2 });
-        const ids = userIds.map(u => ({
-            id: u,
-        }));
+        const usersAlreadyHaveConvo = await checkIfUsersAlreadyHaveConvo({ id, id2 });
+
+        if (usersAlreadyHaveConvo) return;
 
         await prisma.conversation.create({
             data: {
                 users: {
-                    connect: ids,
+                    connect: [{ id }, { id: id2 }],
                 },
             },
         });
@@ -42,11 +41,13 @@ class Conversation {
         const convo = await prisma.conversation.findUnique({
             where: { id, users: { some: { id: userId } } },
         });
-        console.log(convo);
+
         return convo;
     }
 }
 
 const convo = new Conversation();
+
+convo.createConversation({ id: 1, id2: 2 });
 
 module.exports = new Conversation();
