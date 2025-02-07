@@ -18,6 +18,12 @@ class Conversation {
         });
     }
 
+    async createGroupConversation({ userIds }) {
+        const ids = userIds.map(id => ({ id }));
+
+        console.log(ids);
+    }
+
     async addMessageToConversation({ id, message, senderId }) {
         const userInConvo = await checkIfUserIsInConversation({ id, userId: senderId });
 

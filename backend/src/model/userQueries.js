@@ -168,6 +168,9 @@ class User {
                 conversations: {
                     include: {
                         messages: {
+                            orderBy: {
+                                dateSent: "desc",
+                            },
                             include: {
                                 user: true,
                             },
@@ -223,7 +226,7 @@ const user = new User();
     // await user.addUser({ id: 1, receiverId: 2 });
     // await user.acceptUser({ id: 2, senderId: 1 });
     // await user.checkUserIsFriend({ id: 1, receiverId: 3 })
-    // await user.getUser({ username: "mastachii273" });
+    console.dir(await user.getUser({ id: 1 }), { depth: null });
 })();
 
 module.exports = new User();

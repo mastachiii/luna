@@ -25,6 +25,7 @@ model User {
   messages         Message[]
   requestsReceived User[]         @relation("received")
   requestsSent     User[]         @relation("sent")
+  online           Boolean        @default(false)
 
   // Just to suppress the error, wont be used in any way..
   symmetricFriends  User[] @relation("UserFriends")
@@ -36,6 +37,7 @@ model Conversation {
   id       Int       @id @default(autoincrement())
   messages Message[]
   users    User[]
+  isGroup  Boolean   @default(false)
 }
 
 model Message {

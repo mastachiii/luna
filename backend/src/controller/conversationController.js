@@ -15,7 +15,7 @@ class Conversation {
         try {
             const convo = await db.getConversation({ id: +req.params.id });
 
-            if (!convo) throw Error
+            if (!convo) throw Error;
 
             return res.status(200).json({ convo });
         } catch (err) {

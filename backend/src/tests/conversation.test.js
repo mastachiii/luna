@@ -21,3 +21,10 @@ describe("User gets conversation", () => {
         request.get("/conversation/1").expect("Content-Type", /json/).expect(200, done);
     });
 });
+
+describe("Create a group conversation", done => {
+    request
+        .post("/conversation/group")
+        .send({ userIds: [1, 2] })
+        .expect(200, done);
+});
