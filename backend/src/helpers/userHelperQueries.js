@@ -7,12 +7,12 @@ async function checkIfUserAreFriends({ id, friendId }) {
     const isFriend = await prisma.user.findUnique({
         where: { id, friends: { some: { id: friendId } } },
     });
-
+    console.log(isFriend);
     return isFriend;
 }
 
 async function validateAddUser({ id, receiverId }) {
-    const isFriend = checkIfUserAreFriends({ id, friendId: receiverId });
+    const isFriend = await checkIfUserAreFriends({ id, friendId: receiverId });
 
     const isExist = await prisma.user.findUnique({
         where: { id: receiverId },
@@ -20,6 +20,8 @@ async function validateAddUser({ id, receiverId }) {
 
     // Incase some guy tries to add themselves
     const isSelf = id === receiverId;
+
+    console.log({ isFriend, isExist, isSelf });
 
     return !isFriend && !isSelf && isExist;
 }
@@ -29,7 +31,7 @@ async function validateFriendRequest({ id, senderId }) {
         where: { id, requestsReceived: { some: { id: senderId } } },
     });
 
-    console.log(reqIsValid)
+    console.log(reqIsValid);
 
     return reqIsValid;
 }
@@ -37,13 +39,17 @@ async function validateFriendRequest({ id, senderId }) {
 (async () => {
     const query = await prisma.user.findMany({
         include: {
-            conversations: true,
+            conversations: {
+                include: {
+                    users: true,
+                },
+            },
             friends: true,
             requestsReceived: true,
             requestsSent: true,
         },
     });
-    console.log(query)
+    // checkIfUserAreFriends({ id: 2, friendId: 2 });
     // console.dir(query, { depth: null });
 })();
 

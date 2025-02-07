@@ -48,7 +48,7 @@ xdescribe("Sign up requests", () => {
     });
 });
 
-xdescribe("When user tries to add someone", () => {
+describe("When user tries to add someone", () => {
     it("Rejects if user tries to add themselves", done => {
         request.post("/user/add/1").send({ id: 1 }).expect(400, done);
     });
@@ -62,7 +62,7 @@ xdescribe("When user tries to add someone", () => {
     });
 });
 
-xdescribe("When user tries to accept/reject another user", () => {
+describe("When user tries to accept/reject another user", () => {
     it("Rejects if user accepts non-existent request", done => {
         request.post("/user/accept/100").send({ id: 1 }).expect(400, done);
     });
@@ -94,10 +94,10 @@ describe("Remove a friend", () => {
     });
 
     it("Removes a friend", done => {
-        request.post("/user/remove/2").send({ id: 2 }).expect(200, done);
+        request.post("/user/remove/2").send({ id: 1 }).expect(200, done);
     });
 
-    it("Can still add user after being removed", done => {
+    it("Can still add removed friend", done => {
         request.post("/user/add/1").send({ id: 2 }).expect(200);
 
         request.post("/user/accept/2").send({ id: 1 }).expect(200, done);

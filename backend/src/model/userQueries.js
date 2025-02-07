@@ -97,7 +97,7 @@ class User {
             },
         });
 
-        await conversation.createConversation({ userIds: [id, senderId] });
+        await conversation.createConversation({ idOne: id, idTwo: senderId });
     }
 
     async rejectUser({ id, senderId }) {
@@ -132,7 +132,7 @@ class User {
         const isFriends = checkIfUserAreFriends({ id, friendId });
 
         if (!isFriends) throw new Error("Users are not friends");
-
+        console.log({ id, friendId });
         await prisma.user.update({
             where: { id },
             data: {

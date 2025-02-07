@@ -1,9 +1,11 @@
 const { PrismaClient } = require("@prisma/client");
+const { checkIfUserIsInConversation } = require("../helpers/conversationHelperQueries");
 
 const prisma = new PrismaClient();
 
 class Conversation {
-    async createConversation({ userIds }) {
+    async createConversation({ id, id2 }) {
+        const usersAlreadyHaveConvo = await checkIfUserIsInConversation({ id, id2 });
         const ids = userIds.map(u => ({
             id: u,
         }));
