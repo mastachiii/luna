@@ -8,6 +8,16 @@ describe("User adds a message to conversation", () => {
     });
 
     it("Sends message", done => {
-        request.post("/conversation/1").send({ id: 1, message: "Hi" }).expect(200, done);
+        request.post("/conversation/1").send({ id: 2, message: "Yoooow" }).expect(200, done);
+    });
+});
+
+describe("User gets conversation", () => {
+    it("Throws if conversation does not exist", done => {
+        request.get("/conversation/10000000").expect(404, done);
+    });
+
+    it("Returns conversation", done => {
+        request.get("/conversation/1").expect("Content-Type", /json/).expect(200, done);
     });
 });

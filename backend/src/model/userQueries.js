@@ -132,7 +132,7 @@ class User {
         const isFriends = checkIfUserAreFriends({ id, friendId });
 
         if (!isFriends) throw new Error("Users are not friends");
-        console.log({ id, friendId });
+
         await prisma.user.update({
             where: { id },
             data: {

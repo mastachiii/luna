@@ -3,8 +3,10 @@ const controller = require("../controller/conversationController");
 
 const route = express.Router();
 
-// route.get("/:username", controller.getConversation);
+// GET
+route.get("/:id", controller.getConversation);
 
+// POST
 route.post("/:id", controller.sendMessage);
 
 module.exports = route;

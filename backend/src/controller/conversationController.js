@@ -10,6 +10,18 @@ class Conversation {
             return res.sendStatus(400);
         }
     }
+
+    async getConversation(req, res, next) {
+        try {
+            const convo = await db.getConversation({ id: +req.params.id });
+
+            if (!convo) throw Error
+
+            return res.status(200).json({ convo });
+        } catch (err) {
+            return res.sendStatus(404);
+        }
+    }
 }
 
 module.exports = new Conversation();
