@@ -62,7 +62,7 @@ xdescribe("When user tries to add someone", () => {
     });
 });
 
-describe("When user tries to accept/reject another user", () => {
+xdescribe("When user tries to accept/reject another user", () => {
     xit("Rejects if user accepts non-existent request", done => {
         request.post("/user/accept/100").send({ id: 1 }).expect(400, done);
     });

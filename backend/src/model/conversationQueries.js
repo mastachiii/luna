@@ -1,5 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
-const { checkIfUsersAlreadyHaveConvo } = require("../helpers/conversationHelperQueries");
+const { checkIfUsersAlreadyHaveConvo, checkIfUserIsInConversation } = require("../helpers/conversationHelperQueries");
 
 const prisma = new PrismaClient();
 
@@ -19,7 +19,8 @@ class Conversation {
     }
 
     async addMessageToConversation({ id, message, senderId }) {
-        const userInConvo = await this.checkIfUserIsInConversation({ id, userId: senderId });
+        console.log({ id, message, senderId })
+        const userInConvo = await checkIfUserIsInConversation({ id, userId: senderId });
 
         if (!userInConvo) throw new Error("401: Unauthorized");
 
@@ -35,14 +36,6 @@ class Conversation {
                 },
             },
         });
-    }
-
-    async checkIfUserIsInConversation({ id, userId }) {
-        const convo = await prisma.conversation.findUnique({
-            where: { id, users: { some: { id: userId } } },
-        });
-
-        return convo;
     }
 }
 

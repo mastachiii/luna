@@ -5,6 +5,6 @@ const route = express.Router();
 
 // route.get("/:username", controller.getConversation);
 
-// route.post("/:username", controller.sendMessage);
+route.post("/:id", controller.sendMessage);
 
 module.exports = route;

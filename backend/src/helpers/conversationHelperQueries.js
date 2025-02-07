@@ -21,31 +21,13 @@ async function checkIfUsersAlreadyHaveConvo({ id, id2 }) {
     return query;
 }
 
-async function getConversationId({ username1, username2 }) {
-    const query = await prisma.conversation.findFirst({
-        where: {
-            AND: [
-                {
-                    users: {
-                        some: {
-                            username: username1,
-                        },
-                    },
-                },
-                {
-                    users: {
-                        some: {
-                            username: username2,
-                        },
-                    },
-                },
-            ],
-        },
+async function checkIfUserIsInConversation({ id, userId }) {
+    const convo = await prisma.conversation.findUnique({
+        where: { id, users: { some: { id: userId } } },
     });
-
-    return query
+    console.log(convo);
+    return convo;
 }
 
-getConversationId({ username1: "breezy_786", username2: "audreyHepburn123" });
 
-module.exports = { checkIfUsersAlreadyHaveConvo };
+module.exports = { checkIfUsersAlreadyHaveConvo, checkIfUserIsInConversation };
