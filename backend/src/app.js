@@ -9,6 +9,7 @@ const databaseUrl = process.env.NODE_ENV === "test" ? process.env.TEST_DATABASE_
 
 // Routes
 const userRoute = require("./routes/userRoutes");
+const conversationRoute = require("./routes/conversationRoutes");
 const passport = require("passport");
 const { isAuthenticated } = require("./helpers/authMiddleware");
 
@@ -42,6 +43,7 @@ app.use(passport.authenticate("session"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/user", userRoute);
+app.use("/conversation", conversationRoute);
 
 app.get("/", isAuthenticated, (req, res, next) => console.log(req.user));
 
