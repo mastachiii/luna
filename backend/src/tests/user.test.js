@@ -63,23 +63,23 @@ xdescribe("When user tries to add someone", () => {
 });
 
 xdescribe("When user tries to accept/reject another user", () => {
-    xit("Rejects if user accepts non-existent request", done => {
+    it("Rejects if user accepts non-existent request", done => {
         request.post("/user/accept/100").send({ id: 1 }).expect(400, done);
     });
 
-    xit("Rejects if user rejects non-existent request", done => {
+    it("Rejects if user rejects non-existent request", done => {
         request.post("/user/reject/100").send({ id: 1 }).expect(400, done);
     });
 
-    xit("Rejects if user accepts non-existent request", done => {
+    it("Rejects if user accepts non-existent request", done => {
         request.post("/user/accept/100").send({ id: 1 }).expect(400, done);
     });
 
-    xit("Rejects a friend request", done => {
+    it("Rejects a friend request", done => {
         request.post("/user/reject/2").send({ id: 1 }).expect(200, done);
     });
 
-    xit("Adds after being rejected", done => {
+    it("Adds after being rejected", done => {
         request.post("/user/add/1").send({ id: 2 }).expect(200, done);
     });
 

@@ -62,8 +62,8 @@ class User {
 
     async acceptUser({ id, senderId }) {
         const reqValid = await validateFriendRequest({ id, senderId });
-
         if (!reqValid) throw new Error("Request is not valid");
+        console.log({ id, senderId });
 
         await prisma.user.update({
             where: { id },
@@ -97,7 +97,7 @@ class User {
             },
         });
 
-        await conversation.createConversation({ idOne: id, idTwo: senderId });
+        // await conversation.createConversation({ id: id, id2: senderId });
     }
 
     async rejectUser({ id, senderId }) {
@@ -172,10 +172,10 @@ class User {
                                 dateSent: "desc",
                             },
                             include: {
-                                user: true,
+                                // user: true,
                             },
                         },
-                        users: true,
+                        // users: true,
                     },
                 },
             },
@@ -224,7 +224,7 @@ const user = new User();
     //     displayName: "AL",
     // });
     // await user.addUser({ id: 1, receiverId: 2 });
-    // await user.acceptUser({ id: 2, senderId: 1 });
+    // await user.acceptUser({ id: 1, senderId: 2 });
     // await user.checkUserIsFriend({ id: 1, receiverId: 3 })
     console.dir(await user.getUser({ id: 1 }), { depth: null });
 })();

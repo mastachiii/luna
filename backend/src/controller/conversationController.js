@@ -22,6 +22,16 @@ class Conversation {
             return res.sendStatus(404);
         }
     }
+
+    async createGroupConversation(req, res, next) {
+        try {
+            await db.createGroupConversation({ userIds: req.body.userIds });
+
+            return res.sendStatus(200);
+        } catch (err) {
+            return res.sendStatus(400);
+        }
+    }
 }
 
 module.exports = new Conversation();

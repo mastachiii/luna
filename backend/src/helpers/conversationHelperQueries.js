@@ -13,6 +13,7 @@ async function checkIfUsersAlreadyHaveConvo({ id, id2 }) {
                             id: id2,
                         },
                     },
+                    isGroup: false,
                 },
             },
         },
@@ -29,5 +30,6 @@ async function checkIfUserIsInConversation({ id, userId }) {
     return convo;
 }
 
+checkIfUsersAlreadyHaveConvo({ id: 1, id2: 2 });
 
 module.exports = { checkIfUsersAlreadyHaveConvo, checkIfUserIsInConversation };

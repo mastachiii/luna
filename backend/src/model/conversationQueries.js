@@ -21,7 +21,14 @@ class Conversation {
     async createGroupConversation({ userIds }) {
         const ids = userIds.map(id => ({ id }));
 
-        console.log(ids);
+        await prisma.conversation.create({
+            data: {
+                users: {
+                    connect: ids,
+                },
+                isGroup: true,
+            },
+        });
     }
 
     async addMessageToConversation({ id, message, senderId }) {

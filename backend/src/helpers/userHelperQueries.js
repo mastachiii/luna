@@ -26,10 +26,16 @@ async function validateAddUser({ id, receiverId }) {
 
 async function validateFriendRequest({ id, senderId }) {
     const reqIsValid = await prisma.user.findUnique({
-        where: { id, requestsReceived: { some: { id: senderId } } },
+        where: {
+            id,
+            requestsReceived: {
+                some: {
+                    id: senderId,
+                },
+            },
+        },
     });
-
-    console.log(reqIsValid);
+    console.log(reqIsValid)
     return reqIsValid;
 }
 
@@ -52,7 +58,7 @@ async function validateFriendRequest({ id, senderId }) {
     });
     // checkIfUserAreFriends({ id: 2, friendId: 2 });
     // validateFriendRequest({ id: 1, senderId: 2 })
-    // console.dir(query, { depth: null });
+    console.dir(query, { depth: null });
 })();
 
 module.exports = { validateAddUser, validateFriendRequest, checkIfUserAreFriends };

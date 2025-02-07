@@ -7,7 +7,7 @@ const route = express.Router();
 route.get("/:id", controller.getConversation);
 
 // POST
-route.post("/:id", controller.sendMessage);
 route.post("/group", controller.createGroupConversation);
+route.post("/:id", controller.sendMessage);
 
 module.exports = route;
