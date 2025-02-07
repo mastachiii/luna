@@ -58,7 +58,7 @@ async function validateFriendRequest({ id, senderId }) {
     });
     // checkIfUserAreFriends({ id: 2, friendId: 2 });
     // validateFriendRequest({ id: 1, senderId: 2 })
-    console.dir(query, { depth: null });
+    // console.dir(query, { depth: null });
 })();
 
 module.exports = { validateAddUser, validateFriendRequest, checkIfUserAreFriends };

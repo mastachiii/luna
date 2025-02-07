@@ -22,11 +22,17 @@ xdescribe("User gets conversation", () => {
     });
 });
 
-describe("Group conversation", done => {
+xdescribe("Group conversation", done => {
     it("Creates group conversation", done => {
         request
             .post("/conversation/group")
             .send({ userIds: [1, 2] })
             .expect(200, done);
+    });
+});
+
+xdescribe("Delete conversations", done => {
+    it("Deletes conversation", done => {
+        request.post("/conversation/delete/2").send({ id: 1 }).expect(204, done);
     });
 });

@@ -32,6 +32,16 @@ class Conversation {
             return res.sendStatus(400);
         }
     }
+
+    async deleteConversation(req, res, next) {
+        try {
+            await db.deleteConversation({ id: +req.params.id, userId: req.body.id });
+
+            return res.sendStatus(204);
+        } catch (err) {
+            return res.sendStatus(400);
+        }
+    }
 }
 
 module.exports = new Conversation();

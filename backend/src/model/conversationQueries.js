@@ -63,9 +63,20 @@ class Conversation {
             },
         });
 
-        console.dir({ conversation }, { depth: null });
-
         return conversation;
+    }
+
+    async deleteConversation({ id, userId }) {
+        await prisma.conversation.update({
+            where: { id },
+            data: {
+                users: {
+                    disconnect: {
+                        id: userId,
+                    },
+                },
+            },
+        });
     }
 }
 

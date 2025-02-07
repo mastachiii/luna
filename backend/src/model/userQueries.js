@@ -175,7 +175,6 @@ class User {
                                 // user: true,
                             },
                         },
-                        // users: true,
                     },
                 },
             },
@@ -226,7 +225,7 @@ const user = new User();
     // await user.addUser({ id: 1, receiverId: 2 });
     // await user.acceptUser({ id: 1, senderId: 2 });
     // await user.checkUserIsFriend({ id: 1, receiverId: 3 })
-    console.dir(await user.getUser({ id: 1 }), { depth: null });
+    // console.dir(await user.getUser({ id: 1 }), { depth: null });
 })();
 
 module.exports = new User();
