@@ -23,8 +23,9 @@ route.post("/log-out", isAuthenticated, (req, res, next) => {
 // POST
 route.post("/sign-up", controller.signUp);
 route.post("/log-in", passport.authenticate("local", { failureMessage: true }), controller.logIn);
-route.post("/add/:id", isAuthenticated, controller.addUser);
-route.post("/accept/:id", isAuthenticated, controller.acceptUser);
-route.post("/reject/:id", isAuthenticated, controller.rejectUser);
+route.post("/add/:id", controller.addUser);
+route.post("/accept/:id", controller.acceptUser);
+route.post("/reject/:id", controller.rejectUser);
+route.post("/remove/:id", controller.removeFriend);
 
 module.exports = route;

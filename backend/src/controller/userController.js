@@ -88,10 +88,10 @@ class User {
 
         return res.status(200).json({ message: "Authorized" });
     }
-
+    // ONLY USE REQ.BODY WHEN TESTING,
     async addUser(req, res, next) {
         try {
-            await db.addUser({ id: req.user.id, receiverId: +req.params.id });
+            await db.addUser({ id: req.body.id, receiverId: +req.params.id });
 
             return res.sendStatus(200);
         } catch (err) {
@@ -101,9 +101,9 @@ class User {
 
     async acceptUser(req, res, next) {
         try {
-            const user = await db.acceptUser({ id: req.user.id, senderId: +req.params.id });
+            await db.acceptUser({ id: req.body.id, senderId: +req.params.id });
 
-            return res.status(200).json({ user });
+            return res.sendStatus(200);
         } catch (err) {
             return res.status(400).json({ message: err });
         }
@@ -111,9 +111,19 @@ class User {
 
     async rejectUser(req, res, next) {
         try {
-            const user = await db.rejectUser({ id: req.user.id, senderId: +req.params.id });
+            await db.rejectUser({ id: req.body.id, senderId: +req.params.id });
 
-            return res.status(200).json({ user });
+            return res.sendStatus(200);
+        } catch (err) {
+            return res.status(400).json({ message: err });
+        }
+    }
+
+    async removeFriend(req, res, next) {
+        try {
+            await db.removeFriend({ id: req.body.id, friendId: +req.params.id });
+
+            return res.sendStatus(200);
         } catch (err) {
             return res.status(400).json({ message: err });
         }

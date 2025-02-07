@@ -1,6 +1,6 @@
 const { PrismaClient, Prisma } = require("@prisma/client");
 const conversation = require("./conversationQueries");
-const { validateAddUser, validateFriendRequest } = require("../helpers/userHelperQueries");
+const { validateAddUser, validateFriendRequest, checkIfUserAreFriends } = require("../helpers/userHelperQueries");
 
 const databaseUrl = process.env.NODE_ENV === "test" ? process.env.TEST_DATABASE_URL : process.env.DATABASE_URL;
 const prisma = new PrismaClient({
@@ -63,7 +63,7 @@ class User {
     async acceptUser({ id, senderId }) {
         const reqValid = await validateFriendRequest({ id, senderId });
 
-        if (!reqValid) throw new Error();
+        if (!reqValid) throw new Error("Request is not valid");
 
         await prisma.user.update({
             where: { id },
@@ -103,7 +103,7 @@ class User {
     async rejectUser({ id, senderId }) {
         const reqValid = await validateFriendRequest({ id, senderId });
 
-        if (!reqValid) throw new Error();
+        if (!reqValid) throw new Error("Request is not valid");
 
         await prisma.user.update({
             where: { id },
@@ -120,6 +120,34 @@ class User {
             where: { id: senderId },
             data: {
                 requestsSent: {
+                    disconnect: {
+                        id,
+                    },
+                },
+            },
+        });
+    }
+
+    async removeFriend({ id, friendId }) {
+        const isFriends = checkIfUserAreFriends({ id, friendId });
+
+        if (!isFriends) throw new Error("Users are not friends");
+
+        await prisma.user.update({
+            where: { id },
+            data: {
+                friends: {
+                    disconnect: {
+                        id: friendId,
+                    },
+                },
+            },
+        });
+
+        await prisma.user.update({
+            where: { id: friendId },
+            data: {
+                friends: {
                     disconnect: {
                         id,
                     },
@@ -164,15 +192,6 @@ class User {
     async getUserByUsername({ username }) {
         const user = await prisma.user.findUnique({
             where: { username },
-        });
-
-        return user;
-    }
-
-    // A helper for the adding user function, checks if user is already friends with the user that they're trying to add.
-    async checkUserIsFriend({ id, friendId }) {
-        const user = await prisma.user.findUnique({
-            where: { id, friends: { some: { id: friendId } } },
         });
 
         return user;
