@@ -2,7 +2,7 @@ class User {
     constructor() {
         this.signUpUrl = "http://localhost:8080/user/sign-up";
         this.logInUrl = "http://localhost:8080/user/log-in";
-        this.userUrl = "http://localhost:8080/user";
+        this.userUrl = "http://localhost:8080/user/";
     }
 
     signUp({ username, email, password, passwordConfirm, displayName, errMessageHandler }) {
