@@ -1,6 +1,6 @@
 class User {
     constructor() {
-        this.signUpUrl = "http://localhost:8080/sign-up";
+        this.signUpUrl = "http://localhost:8080/user/sign-up";
     }
 
     signUp({ username, email, password, passwordConfirm, displayName, errMessageHandler }) {
@@ -13,10 +13,12 @@ class User {
         })
             .then(response => response.json())
             .then(data => {
-                if (data.err) return errMessageHandler(data.message);
+                if (data.err) return errMessageHandler(data.errors);
             })
             .catch(err => {
                 console.log(err);
             });
     }
 }
+
+export default new User();
