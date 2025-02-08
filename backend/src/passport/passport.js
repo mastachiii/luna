@@ -8,6 +8,7 @@ passport.use(
         try {
             const user = await db.getUserByUsername({ username });
             if (!user) return done(null, false);
+            console.log(user)
 
             const passwordMatch = await bcrypt.compare(password, user.password);
             if (!passwordMatch) return done(null, false);
