@@ -21,7 +21,7 @@ class User {
     }
 
     logIn({ username, password }) {
-        fetch(`${this.userUrl}/sign-up`, {
+        fetch(`${this.userUrl}/log-in`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -42,7 +42,7 @@ class User {
                 "Content-Type": "application/json",
             },
             credentials: "include",
-            body: JSON.stringify({ username }),
+            body: JSON.stringify({ receiverUsername: username }),
         });
     }
 

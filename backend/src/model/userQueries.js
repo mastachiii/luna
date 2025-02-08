@@ -57,7 +57,7 @@ class User {
             },
         });
 
-        return user;
+        return;
     }
 
     async acceptUser({ id, senderId }) {
@@ -194,7 +194,7 @@ class User {
 
     async getUserId({ username }) {
         const user = await prisma.user.findUnique({
-            where: { id },
+            where: { username },
         });
 
         return user.id;

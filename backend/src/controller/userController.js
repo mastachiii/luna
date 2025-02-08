@@ -92,13 +92,12 @@ class User {
     async addUser(req, res, next) {
         try {
             const receiverId = await db.getUserId({ username: req.body.receiverUsername });
-
-            console.log(receiverId);
-            // await db.addUser({ id: req.body.id, receiverId });
+            console.log(req.user)
+            await db.addUser({ id: req.user.id, receiverId });
 
             return res.sendStatus(200);
         } catch (err) {
-            return res.status(400).json({ message: err });
+            next(err);
         }
     }
 
@@ -108,7 +107,7 @@ class User {
 
             return res.sendStatus(200);
         } catch (err) {
-            return res.status(400).json({ message: err });
+            next(err);
         }
     }
 
@@ -118,7 +117,7 @@ class User {
 
             return res.sendStatus(200);
         } catch (err) {
-            return res.status(400).json({ message: err });
+            next(err);
         }
     }
 
@@ -128,7 +127,7 @@ class User {
 
             return res.sendStatus(200);
         } catch (err) {
-            return res.status(400).json({ message: err });
+            next(err);
         }
     }
 
