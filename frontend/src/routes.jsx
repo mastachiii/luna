@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router";
 import SignUp from "./components/signUp";
 import LogIn from "./components/logIn";
 import Index from "./components";
-import AddFriend from "./components/addFriend";
+import FriendsPage from "./components/addFriend";
 
 const routes = createBrowserRouter([
     {
@@ -19,7 +19,7 @@ const routes = createBrowserRouter([
     },
     {
         path: "/add",
-        element: <AddFriend />,
+        element: <FriendsPage />,
     },
 ]);
 

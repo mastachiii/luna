@@ -7,6 +7,7 @@ const { isAuthenticated } = require("../helpers/authMiddleware");
 const route = express.Router();
 
 // GET
+route.get("/", isAuthenticated, controller.getUserData);
 
 // POST
 route.post("/sign-up", controller.signUp);

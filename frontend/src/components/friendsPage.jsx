@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormField from "./formField";
 import userApi from "../helpers/userApi";
 
-export default function AddFriend() {
+export default function FriendsPage() {
     const [username, setUsername] = useState("");
+
+    useEffect(() => {});
 
     function handleSubmit(e) {
         e.preventDefault();
 
-        userApi.addFriend({username})
+        userApi.addFriend({ username });
     }
 
     return (

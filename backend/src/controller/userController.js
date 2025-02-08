@@ -92,7 +92,7 @@ class User {
     async addUser(req, res, next) {
         try {
             const receiverId = await db.getUserId({ username: req.body.receiverUsername });
-            console.log(req.user)
+            console.log(req.user);
             await db.addUser({ id: req.user.id, receiverId });
 
             return res.sendStatus(200);
@@ -126,6 +126,16 @@ class User {
             await db.removeFriend({ id: req.body.id, friendId: +req.params.id });
 
             return res.sendStatus(200);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async getUserData(req, res, next) {
+        try {
+            const user = await db.getUser({ id: req.user.id });
+
+            return res.status(200).json({ user });
         } catch (err) {
             next(err);
         }
