@@ -128,6 +128,16 @@ class User {
             return res.status(400).json({ message: err });
         }
     }
+
+    async changeUserStatus(req, res, next) {
+        try {
+            await db.modifyUserStatus({ id: req.user.id, isOnline: req.body.status });
+
+            return res.sendStatus(200);
+        } catch (err) {
+            next(err);
+        }
+    }
 }
 
 module.exports = new User();

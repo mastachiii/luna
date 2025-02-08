@@ -156,6 +156,15 @@ class User {
         });
     }
 
+    async modifyUserStatus({ id, isOnline }) {
+        await prisma.user.update({
+            where: { id },
+            data: {
+                online: isOnline === "online",
+            },
+        });
+    }
+
     async getUser({ id }) {
         const user = await prisma.user.findUnique({
             where: {
