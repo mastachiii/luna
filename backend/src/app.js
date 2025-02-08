@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require("express-session");
+const cors = require("cors");
 const { PrismaClient } = require("@prisma/client");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const passportConfig = require("./passport/passport");
@@ -41,6 +42,7 @@ app.use(
 );
 app.use(passport.authenticate("session"));
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use("/user", userRoute);
 app.use("/conversation", conversationRoute);
