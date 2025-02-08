@@ -1,12 +1,10 @@
 class User {
     constructor() {
-        this.signUpUrl = "http://localhost:8080/user/sign-up";
-        this.logInUrl = "http://localhost:8080/user/log-in";
         this.userUrl = "http://localhost:8080/user/";
     }
 
     signUp({ username, email, password, passwordConfirm, displayName, errMessageHandler }) {
-        fetch(this.signUpUrl, {
+        fetch(`${this.userUrl}/sign-up`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -23,7 +21,7 @@ class User {
     }
 
     logIn({ username, password }) {
-        fetch(this.logInUrl, {
+        fetch(`${this.userUrl}/sign-up`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -35,6 +33,17 @@ class User {
             .catch(err => {
                 console.log(err);
             });
+    }
+
+    addFriend({ username }) {
+        fetch(`${this.userUrl}/add/${username}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({ username }),
+        });
     }
 
     goOnline() {

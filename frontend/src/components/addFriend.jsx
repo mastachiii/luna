@@ -3,6 +3,11 @@ import FormField from "./formField";
 
 export default function AddFriend() {
     const [friendName, setFriendName] = useState("");
+
+    function handleSubmit(e) {
+        e.preventDefault();
+    }
+
     return (
         <div>
             <h4>You can add a friend with their username.</h4>

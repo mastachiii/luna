@@ -62,8 +62,8 @@ class User {
 
     async acceptUser({ id, senderId }) {
         const reqValid = await validateFriendRequest({ id, senderId });
+
         if (!reqValid) throw new Error("Request is not valid");
-        console.log({ id, senderId });
 
         await prisma.user.update({
             where: { id },
@@ -190,6 +190,14 @@ class User {
         });
 
         return user;
+    }
+
+    async getUserId({ username }) {
+        const user = await prisma.user.findUnique({
+            where: { id },
+        });
+
+        return user.id;
     }
 
     async getUserByEmail({ email }) {

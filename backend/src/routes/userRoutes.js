@@ -7,6 +7,10 @@ const { isAuthenticated } = require("../helpers/authMiddleware");
 const route = express.Router();
 
 // GET
+
+// POST
+route.post("/sign-up", controller.signUp);
+route.post("/log-in", passport.authenticate("local", { failureMessage: true }), controller.logIn);
 route.post("/log-out", isAuthenticated, (req, res, next) => {
     req.logout(err => {
         if (err) next(err);
@@ -19,10 +23,7 @@ route.post("/log-out", isAuthenticated, (req, res, next) => {
         });
     });
 });
-
-// POST
-route.post("/sign-up", controller.signUp);
-route.post("/log-in", passport.authenticate("local", { failureMessage: true }), controller.logIn);
+route.post("/", isAuthenticated, controller.changeUserStatus);
 route.post("/add/:id", controller.addUser);
 route.post("/accept/:id", controller.acceptUser);
 route.post("/reject/:id", controller.rejectUser);

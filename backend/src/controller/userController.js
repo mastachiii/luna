@@ -91,7 +91,10 @@ class User {
     // ONLY USE REQ.BODY WHEN TESTING,
     async addUser(req, res, next) {
         try {
-            await db.addUser({ id: req.body.id, receiverId: +req.params.id });
+            const receiverId = await db.getUserId({ username: req.body.receiverUsername });
+
+            console.log(receiverId);
+            // await db.addUser({ id: req.body.id, receiverId });
 
             return res.sendStatus(200);
         } catch (err) {
@@ -131,6 +134,7 @@ class User {
 
     async changeUserStatus(req, res, next) {
         try {
+            console.log(req.user, req.body);
             await db.modifyUserStatus({ id: req.user.id, isOnline: req.body.status });
 
             return res.sendStatus(200);
