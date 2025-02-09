@@ -3,7 +3,7 @@ const db = require("../model/conversationQueries");
 class Conversation {
     async sendMessage(req, res, next) {
         try {
-            await db.addMessageToConversation({ id: +req.params.id, senderId: req.body.id, message: req.body.message });
+            await db.addMessageToConversation({ id: +req.params.id, senderId: req.user.id, message: req.body.message });
 
             return res.sendStatus(200);
         } catch (err) {

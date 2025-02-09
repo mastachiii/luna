@@ -10,7 +10,7 @@ route.get("/private/:username", isAuthenticated, controller.getPrivateConversati
 
 // POST
 route.post("/group", controller.createGroupConversation);
+route.post("/:id", isAuthenticated, controller.sendMessage);
 route.post("/delete/:id", controller.deleteConversation);
-route.post("/:id", controller.sendMessage);
 
 module.exports = route;

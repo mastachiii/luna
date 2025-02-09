@@ -36,7 +36,7 @@ class Conversation {
 
         if (!userInConvo) throw new Error();
 
-        await prisma.conversation.update({
+        const conversation = await prisma.conversation.update({
             where: { id },
             data: {
                 messages: {
@@ -48,6 +48,8 @@ class Conversation {
                 },
             },
         });
+
+        console.log({ conversation });
     }
 
     async getConversation({ id }) {
