@@ -13,8 +13,15 @@ class Conversation {
         return convo;
     }
 
-    async sendMessage({ id }) {
-        await fetch
+    async sendMessage({ id, message }) {
+        await fetch(`${this.conversationUrl}/${id}`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message }),
+        });
     }
 }
 

@@ -9,16 +9,32 @@ export default function Chat(props) {
 
     useEffect(() => {
         (async () => {
-            const convo = await conversationApi.getConversation(friend);
+            const { convo } = await conversationApi.getConversation(friend);
 
             setConversation(convo);
         })();
-    });
+    }, [friend]);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        conversationApi.sendMessage({ id: conversation.id, message: text });
+    }
 
     return (
         <div>
             <h2>CHAT - {friend.displayName}</h2>
-            <form action="">
+            {conversation.messages.map(m => {
+                return (
+                    <div key={m.id}>
+                        <b>
+                            {m.user.displayName} at {m.dateSent}
+                        </b>
+                        <p>{m.message}</p>
+                    </div>
+                );
+            })}
+            <form onSubmit={handleSubmit}>
                 <input type="text" value={text} onChange={e => setText(e.target.value)} />
                 <button>SEND</button>
             </form>
