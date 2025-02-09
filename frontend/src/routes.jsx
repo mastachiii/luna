@@ -4,6 +4,7 @@ import LogIn from "./components/logIn";
 import Index from "./components";
 import FriendsPage from "./components/friendsPage";
 import Request from "./components/requestList";
+import Friends from "./components/friends";
 
 const routes = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ const routes = createBrowserRouter([
     {
         path: "/requests",
         element: <Request />,
+    },
+    {
+        path: "/friends",
+        element: <Friends />,
     },
 ]);
 

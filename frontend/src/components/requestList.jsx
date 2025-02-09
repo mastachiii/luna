@@ -7,7 +7,7 @@ export default function Request() {
     useEffect(() => {
         (async () => {
             const data = await userApi.getUserData();
-            console.log(data)
+            console.log(data);
             setRequests(data.requestsReceived);
         })();
     }, []);
