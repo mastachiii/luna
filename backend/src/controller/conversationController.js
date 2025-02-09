@@ -7,7 +7,7 @@ class Conversation {
 
             return res.sendStatus(200);
         } catch (err) {
-            return res.sendStatus(400);
+            next(err);
         }
     }
 
@@ -19,7 +19,7 @@ class Conversation {
 
             return res.status(200).json({ convo });
         } catch (err) {
-            return res.sendStatus(404);
+            next(err);
         }
     }
 
@@ -39,7 +39,7 @@ class Conversation {
 
             return res.sendStatus(200);
         } catch (err) {
-            return res.sendStatus(400);
+            next(err);
         }
     }
 
@@ -49,7 +49,7 @@ class Conversation {
 
             return res.sendStatus(204);
         } catch (err) {
-            return res.sendStatus(400);
+            next(err);
         }
     }
 }

@@ -12,6 +12,10 @@ class Conversation {
 
         return convo;
     }
+
+    async sendMessage({ id }) {
+        await fetch
+    }
 }
 
 export default new Conversation();
