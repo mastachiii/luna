@@ -1,6 +1,6 @@
 class User {
     constructor() {
-        this.userUrl = "http://localhost:8080/user/";
+        this.userUrl = "http://localhost:8080/user";
     }
 
     signUp({ username, email, password, passwordConfirm, displayName, errMessageHandler }) {
@@ -43,6 +43,13 @@ class User {
             },
             credentials: "include",
             body: JSON.stringify({ receiverUsername: username }),
+        });
+    }
+
+    rejectRequest({ id }) {
+        fetch(`${this.userUrl}/reject/${id}`, {
+            method: "POST",
+            credentials: "include",
         });
     }
 

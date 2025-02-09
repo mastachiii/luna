@@ -7,10 +7,16 @@ export default function Request() {
     useEffect(() => {
         (async () => {
             const data = await userApi.getUserData();
-
+            
             setRequests(data.requestsReceived);
         })();
     }, []);
+
+    function handleReject(id) {
+        userApi.rejectRequest({ id });
+
+        setRequests([...requests].filter(r => r.id !== id));
+    }
 
     return (
         <div>
@@ -20,7 +26,7 @@ export default function Request() {
                     <div key={r.username}>
                         <p>{r.displayName}</p>
                         <button>Accept</button>
-                        <button>Reject</button>
+                        <button onClick={() => handleReject(r.id)}>Reject</button>
                     </div>
                 );
             })}
