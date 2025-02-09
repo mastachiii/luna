@@ -46,12 +46,14 @@ class User {
         });
     }
 
-    getUserData() {
-        fetch(this.userUrl, {
+    async getUserData() {
+        const { user } = await fetch(this.userUrl, {
             credentials: "include",
         })
             .then(response => response.json())
-            .then(data => console.log(data));
+            .then(data => data);
+
+        return user;
     }
 
     goOnline() {
