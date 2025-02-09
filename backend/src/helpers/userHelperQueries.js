@@ -1,7 +1,6 @@
 const { PrismaClient, Prisma } = require("@prisma/client");
 
 const prisma = new PrismaClient();
-// A bunch of verification queries to run before adding a user
 
 async function checkIfUserAreFriends({ id, friendId }) {
     const isFriend = await prisma.user.findUnique({
@@ -40,7 +39,7 @@ async function validateFriendRequest({ id, senderId }) {
             },
         },
     });
-    console.log(reqIsValid);
+
     return reqIsValid;
 }
 
