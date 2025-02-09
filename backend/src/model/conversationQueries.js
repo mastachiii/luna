@@ -103,6 +103,13 @@ class Conversation {
                         dateSent: "asc",
                     },
                 },
+                users: {
+                    where: { id },
+                    select: {
+                        displayName: true,
+                        profilePicture: true,
+                    },
+                },
             },
         });
 
