@@ -46,6 +46,13 @@ class User {
         });
     }
 
+    acceptRequest({ id }) {
+        fetch(`${this.userUrl}/accept/${id}`, {
+            method: "POST",
+            credentials: "include",
+        });
+    }
+
     rejectRequest({ id }) {
         fetch(`${this.userUrl}/reject/${id}`, {
             method: "POST",

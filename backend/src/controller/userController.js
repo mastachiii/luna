@@ -103,7 +103,7 @@ class User {
 
     async acceptUser(req, res, next) {
         try {
-            await db.acceptUser({ id: req.body.id, senderId: +req.params.id });
+            await db.acceptUser({ id: req.user.id, senderId: +req.params.id });
 
             return res.sendStatus(200);
         } catch (err) {
@@ -113,7 +113,7 @@ class User {
 
     async rejectUser(req, res, next) {
         try {
-            await db.rejectUser({ id: req.body.id, senderId: +req.params.id });
+            await db.rejectUser({ id: req.user.id, senderId: +req.params.id });
 
             return res.sendStatus(200);
         } catch (err) {
