@@ -28,6 +28,6 @@ route.post("/", isAuthenticated, controller.changeUserStatus);
 route.post("/add/:id", isAuthenticated, controller.addUser);
 route.post("/accept/:id", isAuthenticated, controller.acceptUser);
 route.post("/reject/:id", isAuthenticated, controller.rejectUser);
-route.post("/remove/:id", controller.removeFriend);
+route.post("/remove/:id", isAuthenticated, controller.removeFriend);
 
 module.exports = route;

@@ -14,6 +14,11 @@ async function checkIfUserAreFriends({ id, friendId }) {
 async function validateAddUser({ id, receiverId }) {
     const isFriend = await checkIfUserAreFriends({ id, friendId: receiverId });
 
+    // Checks if receiver already sent a friend request to user
+    const receiverSentRequest = await prisma.user.findUnique({
+        where: { id, requestsReceived: { some: { id: receiverId } } },
+    });
+
     const isExist = await prisma.user.findUnique({
         where: { id: receiverId },
     });
@@ -21,7 +26,7 @@ async function validateAddUser({ id, receiverId }) {
     // Incase some guy tries to add themselves
     const isSelf = id === receiverId;
 
-    return !isFriend && !isSelf && isExist;
+    return !isFriend && !isSelf && !receiverSentRequest && isExist;
 }
 
 async function validateFriendRequest({ id, senderId }) {
@@ -35,7 +40,7 @@ async function validateFriendRequest({ id, senderId }) {
             },
         },
     });
-    console.log(reqIsValid)
+    console.log(reqIsValid);
     return reqIsValid;
 }
 

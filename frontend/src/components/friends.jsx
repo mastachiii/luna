@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import userApi from "../helpers/userApi";
+import { data } from "react-router";
 
 export default function Friends() {
     const [friends, setFriends] = useState([]);
@@ -12,6 +13,12 @@ export default function Friends() {
         })();
     }, []);
 
+    function handleRemove(id) {
+        userApi.removeFriend({ id });
+
+        setFriends([...friends].filter(f => f.id !== id));
+    }
+
     return (
         <div>
             {friends.map(f => {
@@ -19,7 +26,7 @@ export default function Friends() {
                     <div key={f.id}>
                         <p>{f.displayName}</p>
                         <p>{f.online ? "ONLINE" : "OFFLINE"}</p>
-                        <button>REMOVE</button>
+                        <button onClick={() => handleRemove(f.id)}>REMOVE</button>
                     </div>
                 );
             })}

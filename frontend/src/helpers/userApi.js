@@ -53,6 +53,13 @@ class User {
         });
     }
 
+    removeFriend({ id }) {
+        fetch(`${this.userUrl}/remove/${id}`, {
+            method: "POST",
+            credentials: "include",
+        });
+    }
+
     rejectRequest({ id }) {
         fetch(`${this.userUrl}/reject/${id}`, {
             method: "POST",
