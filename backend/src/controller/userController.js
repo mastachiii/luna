@@ -88,6 +88,7 @@ class User {
 
         return res.status(200).json({ message: "Authorized" });
     }
+
     // ONLY USE REQ.BODY WHEN TESTING,
     async addUser(req, res, next) {
         try {
@@ -143,7 +144,6 @@ class User {
 
     async changeUserStatus(req, res, next) {
         try {
-            console.log(req.user, req.body);
             await db.modifyUserStatus({ id: req.user.id, isOnline: req.body.status });
 
             return res.sendStatus(200);

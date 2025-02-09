@@ -81,6 +81,17 @@ class User {
         });
     }
 
+    goOffline() {
+        fetch(this.userUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({ status: "offline" }),
+        });
+    }
+
     foo() {
         fetch("http://localhost:8080", {
             credentials: "include",
