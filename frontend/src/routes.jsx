@@ -5,6 +5,7 @@ import Index from "./components";
 import FriendsPage from "./components/friendsPage";
 import Request from "./components/requestList";
 import Friends from "./components/friends";
+import Chat from "./components/chat";
 
 const routes = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const routes = createBrowserRouter([
     {
         path: "/friends",
         element: <Friends />,
+    },
+    {
+        path: "/chat/:username",
+        element: <Chat />,
     },
 ]);
 

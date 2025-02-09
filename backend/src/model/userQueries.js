@@ -97,7 +97,7 @@ class User {
             },
         });
 
-        // await conversation.createConversation({ id: id, id2: senderId });
+        await conversation.createConversation({ id: id, id2: senderId });
     }
 
     async rejectUser({ id, senderId }) {
@@ -171,7 +171,14 @@ class User {
                 id,
             },
             include: {
-                friends: true,
+                friends: {
+                    select: {
+                        username: true,
+                        displayName: true,
+                        profilePicture: true,
+                        online: true,
+                    },
+                },
                 requestsSent: true,
                 requestsReceived: true,
                 conversations: {

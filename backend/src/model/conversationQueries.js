@@ -66,6 +66,47 @@ class Conversation {
         return conversation;
     }
 
+    async getPrivateConversation({ id, username }) {
+        const convo = await prisma.conversation.findFirst({
+            where: {
+                isGroup: false,
+                AND: [
+                    {
+                        users: {
+                            some: {
+                                id,
+                            },
+                        },
+                    },
+                    {
+                        users: {
+                            some: {
+                                username,
+                            },
+                        },
+                    },
+                ],
+            },
+            include: {
+                messages: {
+                    include: {
+                        user: {
+                            select: {
+                                displayName: true,
+                                profilePicture: true,
+                            },
+                        },
+                    },
+                    orderBy: {
+                        dateSent: "asc",
+                    },
+                },
+            },
+        });
+
+        return convo;
+    }
+
     async deleteConversation({ id, userId }) {
         await prisma.conversation.update({
             where: { id },

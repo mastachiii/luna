@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import userApi from "../helpers/userApi";
-import { data } from "react-router";
+import { Link } from "react-router";
 
 export default function Friends() {
     const [friends, setFriends] = useState([]);
@@ -27,6 +27,9 @@ export default function Friends() {
                         <p>{f.displayName}</p>
                         <p>{f.online ? "ONLINE" : "OFFLINE"}</p>
                         <button onClick={() => handleRemove(f.id)}>REMOVE</button>
+                        <Link to={`/chat/${f.username}`} state={{ friendData: f }}>
+                            CHAT
+                        </Link>
                     </div>
                 );
             })}

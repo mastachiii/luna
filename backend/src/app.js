@@ -53,7 +53,7 @@ app.get("/", isAuthenticated, (req, res, next) => console.log(req.user));
 app.use((err, req, res, next) => {
     console.log(err);
 
-    res.json({ error: err });
+    res.status(400).json({ error: err });
 });
 
 const PORT = process.env.PORT || 8080;

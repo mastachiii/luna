@@ -23,6 +23,16 @@ class Conversation {
         }
     }
 
+    async getPrivateConversation(req, res, next) {
+        try {
+            const convo = await db.getPrivateConversation({ id: req.user.id, username: req.params.username });
+
+            res.status(200).json({ convo });
+        } catch (err) {
+            next(err);
+        }
+    }
+
     async createGroupConversation(req, res, next) {
         try {
             await db.createGroupConversation({ userIds: req.body.userIds });
