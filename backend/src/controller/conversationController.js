@@ -11,6 +11,14 @@ class Conversation {
         }
     }
 
+    async sendImage(req, res, next) {
+        try {
+            console.log(req.file);
+        } catch (err) {
+            next(err);
+        }
+    }
+
     async getConversation(req, res, next) {
         try {
             const convo = await db.getConversation({ id: +req.params.id });

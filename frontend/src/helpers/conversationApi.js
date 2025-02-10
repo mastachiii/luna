@@ -34,6 +34,19 @@ class Conversation {
         });
     }
 
+    async sendImage({ id, image }) {
+        if (image.type.split("/")[0] !== "image") return;
+
+        const formData = new FormData();
+        formData.append("file", image);
+
+        fetch(`${this.conversationUrl}/image/${id}`, {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+        });
+    }
+
     async createGroupConversation({ userIds }) {
         fetch(`${this.conversationUrl}/group`, {
             method: "POST",

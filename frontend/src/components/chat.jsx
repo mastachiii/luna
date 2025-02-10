@@ -8,6 +8,7 @@ export default function Chat({ isGroup }) {
     const [conversation, setConversation] = useState(null);
     const [text, setText] = useState("");
     const [trigger, setTrigger] = useState(0);
+    const [image, setImage] = useState(null);
     const timeout = useRef();
 
     useEffect(() => {
@@ -53,6 +54,11 @@ export default function Chat({ isGroup }) {
         setText("");
     }
 
+    function handleImageUpload(e) {
+        e.preventDefault();
+        conversationApi.sendImage({ id: params.id, image });
+    }
+
     return (
         <div>
             <h2>CHAT - {friend.displayName}</h2>
@@ -69,6 +75,10 @@ export default function Chat({ isGroup }) {
                 })}
             <form onSubmit={handleSubmit}>
                 <input type="text" value={text} onChange={e => setText(e.target.value)} />
+                <button>SEND</button>
+            </form>
+            <form onSubmit={handleImageUpload}>
+                <input type="file" accept="image/*" onChange={e => setImage(e.target.files[0])} />
                 <button>SEND</button>
             </form>
         </div>
