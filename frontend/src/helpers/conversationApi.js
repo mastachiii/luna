@@ -16,7 +16,9 @@ class Conversation {
     async getGroupChat({ id }) {
         const chat = await fetch(`${this.conversationUrl}/${id}`, {
             credentials: "include",
-        });
+        })
+            .then(response => response.json())
+            .then(data => data);
 
         return chat;
     }
