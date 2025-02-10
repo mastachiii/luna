@@ -41,9 +41,15 @@ export default function Chat({ isGroup }) {
             ...conversation,
             messages: [
                 ...conversation.messages,
-                { id: conversation.messages.length + 1, message: text, dateSent: new Date().toDateString(), user: conversation.users[0] },
+                {
+                    id: conversation.messages.length + 1,
+                    message: text,
+                    dateSent: new Date().toDateString(),
+                    user: JSON.parse(localStorage.getItem("user")),
+                },
             ],
         });
+
         setText("");
     }
 

@@ -84,9 +84,7 @@ class User {
     ];
 
     logIn(req, res, next) {
-        console.log(req.user);
-
-        return res.status(200).json({ message: "Authorized" });
+        return res.status(200).json({ user: req.user });
     }
 
     // ONLY USE REQ.BODY WHEN TESTING,

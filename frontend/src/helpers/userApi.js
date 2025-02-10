@@ -19,7 +19,7 @@ class User {
                 console.log(err);
             });
     }
-    
+
     logIn({ username, password }) {
         fetch(`${this.userUrl}/log-in`, {
             method: "POST",
@@ -29,7 +29,10 @@ class User {
             credentials: "include",
             body: JSON.stringify({ username, password }),
         })
-            .then(response => console.log(response))
+            .then(response => response.json())
+            .then(data => {
+                localStorage.setItem("user", JSON.stringify(data.user));
+            })
             .catch(err => {
                 console.log(err);
             });

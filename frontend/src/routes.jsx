@@ -8,7 +8,6 @@ import Friends from "./components/friends";
 import Chat from "./components/chat";
 import CreateGroup from "./components/createGroup";
 import GroupChatList from "./components/groupChatList";
-import GroupChat from "./components/groupChat";
 
 const routes = createBrowserRouter([
     {
