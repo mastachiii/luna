@@ -3,8 +3,8 @@ import { useLocation, useParams } from "react-router";
 import conversationApi from "../helpers/conversationApi";
 
 export default function Chat({ isGroup }) {
-    const friend = useLocation().state.friendData;
-    const { id } = useParams();
+    const friend = !isGroup && useLocation().state.friendData;
+    const params = useParams();
     const [conversation, setConversation] = useState(null);
     const [text, setText] = useState("");
     const [trigger, setTrigger] = useState(0);
@@ -12,8 +12,10 @@ export default function Chat({ isGroup }) {
 
     useEffect(() => {
         (async () => {
-            // If group use id from link parameters else use the id of the friend..
-            const { convo } = await conversationApi.getConversation({ id: isGroup ? id : friend.id });
+            // If group use id from link parameters else it means it's a private conversation so the id of the friend would be used..
+            const { convo } = isGroup
+                ? await conversationApi.getGroupChat({ id: params.id })
+                : await conversationApi.getConversation({ id: friend.id });
 
             setConversation(convo);
 
@@ -27,7 +29,7 @@ export default function Chat({ isGroup }) {
                 clearTimeout(timeout.current);
             };
         })();
-    }, [friend, trigger]);
+    }, [friend, trigger, isGroup]);
 
     function handleSubmit(e) {
         e.preventDefault();
