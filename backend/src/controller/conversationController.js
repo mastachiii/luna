@@ -18,11 +18,15 @@ class Conversation {
     async sendImage(req, res, next) {
         try {
             const file = decode(req.file.buffer.toString("base64"));
-            const path = `${req.user.username}/${req.file.originalname}`;
+            const path = `${req.user.username}/${req.file.originalname.toLowerCase()}`;
 
-            await supabase.storage.from("yuna").upload(path, file);
+            await supabase.storage.from("luna").upload(path, file, {
+                contentType: "image",
+            });
 
-            console.log({ file, path });
+            const { data } = await supabase.storage.from("luna").getPublicUrl(path);
+
+
         } catch (err) {
             next(err);
         }

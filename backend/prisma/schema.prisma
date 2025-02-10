@@ -49,6 +49,7 @@ model Message {
   userId         Int?
   conversation   Conversation? @relation(fields: [conversationId], references: [id])
   conversationId Int?
+  isImage        Boolean?      @default(false)
 }
 
 model Session {
