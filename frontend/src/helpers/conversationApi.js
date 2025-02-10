@@ -23,6 +23,17 @@ class Conversation {
             body: JSON.stringify({ message }),
         });
     }
+
+    async createGroupConversation({ userIds }) {
+        fetch(`${this.conversationUrl}/group`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userIds }),
+        });
+    }
 }
 
 export default new Conversation();

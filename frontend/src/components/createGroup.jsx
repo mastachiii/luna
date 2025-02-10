@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import userApi from "../helpers/userApi";
+import conversationApi from "../helpers/conversationApi";
 
 export default function CreateGroup() {
     const [friends, setFriends] = useState([]);
@@ -11,12 +12,12 @@ export default function CreateGroup() {
 
             setFriends(userData.friends);
         })();
-    });
+    }, []);
 
     function handleSubmit(e) {
         e.preventDefault();
 
-        console.log(selectedFriends);
+        conversationApi.createGroupConversation({ userIds: selectedFriends });
     }
 
     function handleChange(id) {
