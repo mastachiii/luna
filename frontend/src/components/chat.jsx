@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import conversationApi from "../helpers/conversationApi";
 
-export default function Chat(props) {
+export default function Chat({ isGroup }) {
     const friend = useLocation().state.friendData;
+    const { id } = useParams();
     const [conversation, setConversation] = useState(null);
     const [text, setText] = useState("");
     const [trigger, setTrigger] = useState(0);
@@ -11,7 +12,8 @@ export default function Chat(props) {
 
     useEffect(() => {
         (async () => {
-            const { convo } = await conversationApi.getConversation(friend);
+            // If group use id from link parameters else use the id of the friend..
+            const { convo } = await conversationApi.getConversation({ id: isGroup ? id : friend.id });
 
             setConversation(convo);
 

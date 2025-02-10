@@ -4,6 +4,7 @@ import conversationApi from "../helpers/conversationApi";
 
 export default function GroupChat() {
     const [conversation, setConversation] = useState(null);
+    const [text, setText] = useState("");
     const { id } = useParams();
 
     useEffect(() => {
@@ -12,5 +13,18 @@ export default function GroupChat() {
 
             console.log(convo);
         })();
-    });
+    },[]);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        conversationApi.sendMessage({ id, message: text });
+    }
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input type="text" value={text} onChange={e => setText(e.target.value)} />
+            <button>SEND</button>
+        </form>
+    );
 }

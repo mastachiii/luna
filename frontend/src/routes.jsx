@@ -37,7 +37,7 @@ const routes = createBrowserRouter([
     },
     {
         path: "/chat/:username",
-        element: <Chat />,
+        element: <Chat isGroup={false} />,
     },
     {
         path: "/chat/group/:id",
