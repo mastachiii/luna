@@ -12,8 +12,6 @@ export default function Chat(props) {
     useEffect(() => {
         (async () => {
             const { convo } = await conversationApi.getConversation(friend);
-            console.log(friend);
-            console.log(convo);
 
             setConversation(convo);
 

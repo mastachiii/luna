@@ -177,6 +177,7 @@ class User {
                         displayName: true,
                         profilePicture: true,
                         online: true,
+                        id: true,
                     },
                 },
                 requestsSent: true,

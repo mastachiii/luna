@@ -6,6 +6,7 @@ import FriendsPage from "./components/friendsPage";
 import Request from "./components/requestList";
 import Friends from "./components/friends";
 import Chat from "./components/chat";
+import CreateGroup from "./components/createGroup";
 
 const routes = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ const routes = createBrowserRouter([
     {
         path: "/chat/:username",
         element: <Chat />,
+    },
+    {
+        path: "/group/create",
+        element: <CreateGroup />,
     },
 ]);
 

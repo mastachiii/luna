@@ -38,6 +38,7 @@ model Conversation {
   messages Message[]
   users    User[]
   isGroup  Boolean   @default(false)
+  picture  String?
 }
 
 model Message {

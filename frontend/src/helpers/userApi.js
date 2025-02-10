@@ -19,7 +19,7 @@ class User {
                 console.log(err);
             });
     }
-
+    
     logIn({ username, password }) {
         fetch(`${this.userUrl}/log-in`, {
             method: "POST",
