@@ -13,6 +13,14 @@ class Conversation {
         return convo;
     }
 
+    async getGroupChat({ id }) {
+        const chat = await fetch(`${this.conversationUrl}/${id}`, {
+            credentials: "include",
+        });
+
+        return chat;
+    }
+
     async sendMessage({ id, message }) {
         await fetch(`${this.conversationUrl}/${id}`, {
             method: "POST",
