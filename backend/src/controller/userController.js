@@ -1,6 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const db = require("../model/userQueries");
+const { decode } = require("base64-arraybuffer");
 
 const validateSignUp = [
     body("username")
@@ -132,7 +133,6 @@ class User {
 
     async getUserData(req, res, next) {
         try {
-            console.log(req.user)
             const user = await db.getUser({ id: req.user.id });
 
             return res.status(200).json({ user });
@@ -143,7 +143,10 @@ class User {
 
     async updateUser(req, res, next) {
         try {
-            await db.updateUser({ id: req.user.id, displayName: req.body.displayName, profilePicture: req.body.profilePicture });
+            const file = decode(req.file.buffer.toString("base64"));
+            const path = `${req.user.username}/${req.file.originalname.toLowerCase()}`;
+            console.log(req.file, req.body.displayName);
+            // await db.updateUser({ id: req.user.id, displayName: req.body.displayName, profilePicture: req.body.profilePicture });
         } catch (err) {
             next(err);
         }

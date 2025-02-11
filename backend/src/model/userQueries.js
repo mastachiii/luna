@@ -185,6 +185,7 @@ class User {
                 },
                 requestsReceived: true,
                 requestsSent: true,
+                profilePicture: true,
                 conversations: {
                     include: {
                         messages: {
