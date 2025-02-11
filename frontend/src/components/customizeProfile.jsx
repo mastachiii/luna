@@ -11,6 +11,7 @@ export default function CustomizeProfile() {
             const data = await userApi.getUserData();
 
             setUser(data);
+            setDisplayName(data.displayName);
         })();
     }, []);
 
@@ -23,7 +24,7 @@ export default function CustomizeProfile() {
     if (user) {
         return (
             <div>
-                <img src={user.profilePicture} alt="user profile" />
+                <img src={user.profilePicture} alt="user profile" style={{ width: "320px" }} />
                 <form onSubmit={handleSubmit}>
                     <input type="text" value={displayName} onChange={e => setDisplayName(e.target.value)} />
                     <input type="file" onChange={e => setImage(e.target.files[0])} />

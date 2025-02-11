@@ -89,9 +89,12 @@ export default function Chat({ isGroup }) {
                 conversation.messages.map(m => {
                     return (
                         <div key={m.id} style={{ display: "flex", flexDirection: "column" }}>
-                            <b>
-                                {m.user.displayName} at {m.dateSent}
-                            </b>
+                            <span style={{ display: "flex" }}>
+                                <img src={m.user.profilePicture} alt="user profile pic" style={{ width: "100px" }} />
+                                <b>
+                                    {m.user.displayName} at {m.dateSent}
+                                </b>
+                            </span>
                             {m.isImage ? <img src={m.message} style={{ width: "200px" }} /> : <p>{m.message}</p>}
                         </div>
                     );
