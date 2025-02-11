@@ -132,6 +132,7 @@ class User {
 
     async getUserData(req, res, next) {
         try {
+            console.log(req.user)
             const user = await db.getUser({ id: req.user.id });
 
             return res.status(200).json({ user });

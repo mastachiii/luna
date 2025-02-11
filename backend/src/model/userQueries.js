@@ -170,7 +170,10 @@ class User {
             where: {
                 id,
             },
-            include: {
+            select: {
+                id: true,
+                username: true,
+                displayName: true,
                 friends: {
                     select: {
                         username: true,
@@ -180,8 +183,8 @@ class User {
                         id: true,
                     },
                 },
-                requestsSent: true,
                 requestsReceived: true,
+                requestsSent: true,
                 conversations: {
                     include: {
                         messages: {

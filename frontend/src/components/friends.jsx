@@ -8,7 +8,7 @@ export default function Friends() {
     useEffect(() => {
         (async () => {
             const data = await userApi.getUserData();
-            
+
             setFriends(data.friends);
         })();
     }, []);

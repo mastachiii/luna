@@ -8,6 +8,7 @@ import Friends from "./components/friends";
 import Chat from "./components/chat";
 import CreateGroup from "./components/createGroup";
 import GroupChatList from "./components/groupChatList";
+import CustomizeProfile from "./components/customizeProfile";
 
 const routes = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ const routes = createBrowserRouter([
     {
         path: "/group",
         element: <GroupChatList />,
+    },
+    {
+        path: "/customize",
+        element: <CustomizeProfile />,
     },
 ]);
 

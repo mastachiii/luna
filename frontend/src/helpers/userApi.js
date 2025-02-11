@@ -80,6 +80,19 @@ class User {
         return user;
     }
 
+    updateProfile({ displayName, profilePicture }) {
+        const formData = new FormData();
+
+        formData.append("file", profilePicture);
+        formData.append("displayName", displayName);
+
+        fetch(`${this.userUrl}/profile`, {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+        });
+    }
+
     goOnline() {
         fetch(this.userUrl, {
             method: "POST",
