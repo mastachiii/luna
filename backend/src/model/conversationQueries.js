@@ -31,7 +31,7 @@ class Conversation {
         });
     }
 
-    async addMessageToConversation({ id, message, senderId }) {
+    async addMessageToConversation({ id, message, senderId, isImage }) {
         const userInConvo = await checkIfUserIsInConversation({ id, userId: senderId });
 
         if (!userInConvo) throw new Error();
@@ -44,12 +44,11 @@ class Conversation {
                         message,
                         userId: senderId,
                         dateSent: new Date(),
+                        isImage,
                     },
                 },
             },
         });
-
-        console.log({ conversation });
     }
 
     async getConversation({ id }) {

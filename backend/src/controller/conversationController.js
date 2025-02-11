@@ -25,6 +25,8 @@ class Conversation {
             });
 
             const { data } = await supabase.storage.from("luna").getPublicUrl(path);
+
+            await db.addMessageToConversation({ id: +req.params.id, senderId: req.user.id, message: data.publicUrl, isImage: true });
         } catch (err) {
             next(err);
         }

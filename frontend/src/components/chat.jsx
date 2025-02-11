@@ -56,7 +56,22 @@ export default function Chat({ isGroup }) {
 
     function handleImageUpload(e) {
         e.preventDefault();
-        conversationApi.sendImage({ id: params.id, image });
+
+        conversationApi.sendImage({ id: conversation.id, image });
+
+        setConversation({
+            ...conversation,
+            messages: [
+                ...conversation.messages,
+                {
+                    id: conversation.messages.length + 1,
+                    message: URL.createObjectURL(image),
+                    dateSent: new Date().toDateString(),
+                    user: JSON.parse(localStorage.getItem("user")),
+                    isImage: true,
+                },
+            ],
+        });
     }
 
     return (
@@ -65,11 +80,11 @@ export default function Chat({ isGroup }) {
             {conversation &&
                 conversation.messages.map(m => {
                     return (
-                        <div key={m.id}>
+                        <div key={m.id} style={{ display: "flex", flexDirection: "column" }}>
                             <b>
                                 {m.user.displayName} at {m.dateSent}
                             </b>
-                            <p>{m.message}</p>
+                            {m.isImage ? <img src={m.message} style={{ width: "200px" }} /> : <p>{m.message}</p>}
                         </div>
                     );
                 })}
