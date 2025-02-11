@@ -1,11 +1,41 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import conversationApi from "../helpers/conversationApi";
+
+function reducer(state, action) {
+    const newMessage = state && {
+        id: crypto.randomUUID(), // Using the length of the messages is unreliable because the database uses auto increment ids.. this works fine since it will get replaced when the useEffect will run again
+        message: action.message,
+        isImage: action.type === "send image",
+        dateSent: new Date().toDateString(),
+        user: JSON.parse(localStorage.getItem("user")),
+    };
+
+    switch (action.type) {
+        case "send text": {
+            return {
+                ...state,
+                messages: [...state.messages, newMessage],
+            };
+        }
+
+        case "send image": {
+            return {
+                ...state,
+                messages: [...state.messages, newMessage],
+            };
+        }
+
+        case "replace conversation": {
+            return action.convo;
+        }
+    }
+}
 
 export default function Chat({ isGroup }) {
     const friend = useLocation().state.friendData;
     const params = useParams();
-    const [conversation, setConversation] = useState(null);
+    const [conversation, dispatch] = useReducer(reducer, null);
     const [text, setText] = useState("");
     const [trigger, setTrigger] = useState(0);
     const [image, setImage] = useState(null);
@@ -18,7 +48,7 @@ export default function Chat({ isGroup }) {
                 ? await conversationApi.getGroupChat({ id: params.id })
                 : await conversationApi.getConversation({ username: friend.username });
 
-            setConversation(convo);
+            dispatch({ type: "replace conversation", convo });
 
             // Increment interv variable so that effect would run...
             // set interval doesn't really work in this case...
@@ -38,18 +68,7 @@ export default function Chat({ isGroup }) {
         conversationApi.sendMessage({ id: conversation.id, message: text });
 
         // Modify current conversation state so that user doesn't have to wait for the effect to run again for their message to display...
-        setConversation({
-            ...conversation,
-            messages: [
-                ...conversation.messages,
-                {
-                    id: conversation.messages.length + 1,
-                    message: text,
-                    dateSent: new Date().toDateString(),
-                    user: JSON.parse(localStorage.getItem("user")),
-                },
-            ],
-        });
+        dispatch({ type: "send text", message: text });
 
         setText("");
     }
@@ -59,19 +78,7 @@ export default function Chat({ isGroup }) {
 
         conversationApi.sendImage({ id: conversation.id, image });
 
-        setConversation({
-            ...conversation,
-            messages: [
-                ...conversation.messages,
-                {
-                    id: conversation.messages.length + 1,
-                    message: URL.createObjectURL(image),
-                    dateSent: new Date().toDateString(),
-                    user: JSON.parse(localStorage.getItem("user")),
-                    isImage: true,
-                },
-            ],
-        });
+        dispatch({ type: "send image", message: URL.createObjectURL(image) });
     }
 
     return (
