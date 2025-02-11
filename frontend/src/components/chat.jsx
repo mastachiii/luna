@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router";
 import conversationApi from "../helpers/conversationApi";
 
 export default function Chat({ isGroup }) {
-    const friend = !isGroup && useLocation().state.friendData;
+    const friend = useLocation().state.friendData;
     const params = useParams();
     const [conversation, setConversation] = useState(null);
     const [text, setText] = useState("");
@@ -16,7 +16,7 @@ export default function Chat({ isGroup }) {
             // If group use id from link parameters else it means it's a private conversation so the id of the friend would be used..
             const { convo } = isGroup
                 ? await conversationApi.getGroupChat({ id: params.id })
-                : await conversationApi.getConversation({ id: friend.id });
+                : await conversationApi.getConversation({ username: friend.username });
 
             setConversation(convo);
 
@@ -30,7 +30,7 @@ export default function Chat({ isGroup }) {
                 clearTimeout(timeout.current);
             };
         })();
-    }, [friend, trigger, isGroup]);
+    }, [friend, trigger, isGroup, params.id]);
 
     function handleSubmit(e) {
         e.preventDefault();

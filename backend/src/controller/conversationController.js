@@ -25,8 +25,6 @@ class Conversation {
             });
 
             const { data } = await supabase.storage.from("luna").getPublicUrl(path);
-
-
         } catch (err) {
             next(err);
         }

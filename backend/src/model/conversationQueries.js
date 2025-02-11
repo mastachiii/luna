@@ -132,4 +132,6 @@ class Conversation {
 
 const convo = new Conversation();
 
+convo.getPrivateConversation({ id: 1, username: "audreyHepburn123" });
+
 module.exports = new Conversation();
