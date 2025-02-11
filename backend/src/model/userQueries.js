@@ -208,6 +208,16 @@ class User {
         return user.id;
     }
 
+    async updateUser({ id, displayName, profilePicture }) {
+        await prisma.user.update({
+            where: { id },
+            data: {
+                displayName,
+                profilePicture,
+            },
+        });
+    }
+
     async getUserByEmail({ email }) {
         const user = await prisma.user.findUnique({
             where: { email },

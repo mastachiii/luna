@@ -140,6 +140,14 @@ class User {
         }
     }
 
+    async updateUser(req, res, next) {
+        try {
+            await db.updateUser({ id: req.user.id, displayName: req.body.displayName, profilePicture: req.body.profilePicture });
+        } catch (err) {
+            next(err);
+        }
+    }
+
     async changeUserStatus(req, res, next) {
         try {
             await db.modifyUserStatus({ id: req.user.id, isOnline: req.body.status });

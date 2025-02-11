@@ -33,8 +33,9 @@ function reducer(state, action) {
 }
 
 export default function Chat({ isGroup }) {
-    const friend = useLocation().state.friendData;
     const params = useParams();
+    const location = useLocation();
+    const friend = location.state && location.state.friendData;
     const [conversation, dispatch] = useReducer(reducer, null);
     const [text, setText] = useState("");
     const [trigger, setTrigger] = useState(0);
@@ -83,7 +84,7 @@ export default function Chat({ isGroup }) {
 
     return (
         <div>
-            <h2>CHAT - {friend.displayName}</h2>
+            {!isGroup && <h2>CHAT - {friend.displayName}</h2>}
             {conversation &&
                 conversation.messages.map(m => {
                     return (

@@ -10,6 +10,7 @@ const route = express.Router();
 route.get("/", isAuthenticated, controller.getUserData);
 
 // POST
+route.post("/", isAuthenticated, controller.changeUserStatus);
 route.post("/sign-up", controller.signUp);
 route.post("/log-in", passport.authenticate("local", { failureMessage: true }), controller.logIn);
 route.post("/log-out", isAuthenticated, (req, res, next) => {
@@ -24,7 +25,7 @@ route.post("/log-out", isAuthenticated, (req, res, next) => {
         });
     });
 });
-route.post("/", isAuthenticated, controller.changeUserStatus);
+route.post("/profile", isAuthenticated, controller.updateUser);
 route.post("/add/:id", isAuthenticated, controller.addUser);
 route.post("/accept/:id", isAuthenticated, controller.acceptUser);
 route.post("/reject/:id", isAuthenticated, controller.rejectUser);
