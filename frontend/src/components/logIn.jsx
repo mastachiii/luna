@@ -3,7 +3,7 @@ import userApi from "../helpers/userApi";
 import FormField from "./formField";
 import { Link } from "react-router";
 import loadingSpinner from "../assets/loading.gif";
-import wallpaper from "../assets/wallpaper.png";
+import logo from "../assets/logo.svg";
 
 export default function LogIn() {
     const [username, setUsername] = useState("");
@@ -20,10 +20,14 @@ export default function LogIn() {
     }
 
     return (
-        <div className="w-screen h-screen flex align-middle relative bg-[url(./assets/wallpaper.png)] bg-cover">
+        <div className="w-screen h-screen flex flex-col align-middle relative bg-[url(./assets/wallpaper.png)] bg-cover">
+            <span className="h-15 flex items-center justify-center ml-10 mt-8">
+                <img src={logo} alt="logo" className="size-13 align-middle" />
+                <p className="h-fit m-auto ml-1 text-3xl text-zinc-50 font-bold font-darumadrop">Luna</p>
+            </span>
             <form
                 onSubmit={handleSubmit}
-                className=" w-xl flex flex-col justify-center text-center m-auto pt-10 pb-12 pl-3 pr-3 z-10 rounded-sm bg-zinc-700 font-noto"
+                className=" w-xl flex flex-col justify-center text-center m-auto mt-30 pt-10 pb-12 pl-3 pr-3 z-10 rounded-sm bg-zinc-700 font-noto"
             >
                 <h4 className="text-xl font-semibold text-zinc-50 ">Welcome back!</h4>
                 <p className="mb-2 text-sm  text-neutral-400 ">We're so excited to see you again!</p>
