@@ -1,6 +1,8 @@
 import { useState } from "react";
 import FormField from "./formField";
 import userApi from "../helpers/userApi";
+import Background from "./background";
+import Form from "./form";
 
 export default function SignUp() {
     const [username, setUsername] = useState("");
@@ -19,19 +21,21 @@ export default function SignUp() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <FormField name={"username"} type={"text"} label={"Username:"} value={username} valueHandler={setUsername} />
-            <FormField name={"email"} type={"email"} label={"Email:"} value={email} valueHandler={setEmail} />
-            <FormField name={"password"} type={"password"} label={"Password:"} value={password} valueHandler={setPassword} />
-            <FormField
-                name={"passwordConfirm"}
-                type={"password"}
-                label={"Confirm Password:"}
-                value={passwordConfirm}
-                valueHandler={setPasswordConfirm}
-            />
-            <FormField name={"displayName"} type={"text"} label={"Display Name:"} value={displayName} valueHandler={setDisplayName} />
-            <button type="submit">Continue</button>
-        </form>
+        <Background>
+            <Form submitHandler={handleSubmit} header={"Create an account"}>
+                <FormField name={"username"} type={"text"} label={"Username:"} value={username} valueHandler={setUsername} />
+                <FormField name={"email"} type={"email"} label={"Email:"} value={email} valueHandler={setEmail} />
+                <FormField name={"password"} type={"password"} label={"Password:"} value={password} valueHandler={setPassword} />
+                <FormField
+                    name={"passwordConfirm"}
+                    type={"password"}
+                    label={"Confirm Password:"}
+                    value={passwordConfirm}
+                    valueHandler={setPasswordConfirm}
+                />
+                <FormField name={"displayName"} type={"text"} label={"Display Name:"} value={displayName} valueHandler={setDisplayName} />
+                <button type="submit">Continue</button>
+            </Form>
+        </Background>
     );
 }
