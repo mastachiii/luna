@@ -1,8 +1,4 @@
 const db = require("../model/conversationQueries");
-const { createClient } = require("@supabase/supabase-js");
-const { decode } = require("base64-arraybuffer");
-
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API_KEY);
 
 class Conversation {
     async sendMessage(req, res, next) {
@@ -17,16 +13,9 @@ class Conversation {
 
     async sendImage(req, res, next) {
         try {
-            const file = decode(req.file.buffer.toString("base64"));
-            const path = `${req.user.username}/${req.file.originalname.toLowerCase()}`;
+            await db.addMessageToConversation({ id: +req.params.id, senderId: req.user.id, message: req.publicUrl, isImage: true });
 
-            await supabase.storage.from("luna").upload(path, file, {
-                contentType: "image",
-            });
-
-            const { data } = await supabase.storage.from("luna").getPublicUrl(path);
-
-            await db.addMessageToConversation({ id: +req.params.id, senderId: req.user.id, message: data.publicUrl, isImage: true });
+            res.sendStatus(200);
         } catch (err) {
             next(err);
         }
