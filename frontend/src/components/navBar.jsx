@@ -12,11 +12,11 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData }) 
                 onMouseEnter={() => setUserBtnHover(true)}
                 onMouseLeave={() => setUserBtnHover(false)}
                 onClick={() => setSelected(null)}
-                className={`w-13 h-13 mt-3 p-2  rounded-full cursor-pointer transition duration-200 ease-in group hover:rounded-xl hover:bg-pink-300 hover:translate-x-1 ${
-                    !selected ? "rounded-xl bg-pink-300" : "bg-zinc-50"
-                }`}
+                className={`w-13 h-13 mt-3 p-2  rounded-full cursor-pointer transition duration-200 ease-in group hover:rounded-xl hover:bg-pink-300 ${
+                    selected ? "hover:translate-x-1" : "translate-x-1"
+                } ${!selected ? "rounded-xl bg-pink-300" : "bg-zinc-50"}`}
             >
-                <img src={userBtnHover || !selected ? logo : logoUnfocused} alt="logo" className={` ${selected && "group-hover:animate-bounce"}`} />
+                <img src={userBtnHover || !selected ? logo : logoUnfocused} alt="logo" className={``} />
             </button>
             <div className="w-8 h-[0.5px] mt-2  bg-zinc-400"></div>
             {groupData.map(c => {
@@ -25,13 +25,16 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData }) 
                         <button
                             onClick={() => {
                                 componentHandler("group");
+                                setSelected(c.id);
                                 groupIdHandler(c.id);
                             }}
-                            className="bg-amber-200 w-13 h-13 p-2 mt-2 rounded-full transition-all duration-100 ease-in  hover:rounded-xl hover:translate-x-1 "
+                            className={`w-12 h-12 mt-2 rounded-full transition-all duration-200 cursor-pointer ease-in group hover:rounded-xl hover:translate-x-1 hover:p-2 hover:bg-pink-300 ${
+                                selected === c.id ? "translate-x-1 bg-pink-300 p-2 rounded-xl" : "hover:translate-x-1"
+                            }`}
                         >
-                            <img src={c.picture} alt="group profile" className="w-13" />
+                            <img src={c.picture} alt="group profile" className={`w-fit rounded-full`} />
                         </button>
-                        <span className="absolute top-23 left-30">{c.name}</span>
+                        <span className="absolute top-22 left-22 w-30 p-2 bg-amber-200 shadow-md shadow-stone-400">{c.name}</span>
                     </div>
                 );
             })}
