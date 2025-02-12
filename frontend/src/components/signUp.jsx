@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router";
 import FormField from "./formField";
 import userApi from "../helpers/userApi";
 import Background from "./background";
@@ -33,7 +34,7 @@ export default function SignUp() {
                 <FormField
                     name={"username"}
                     type={"text"}
-                    label={"Username"}
+                    label={"USERNAME"}
                     value={username}
                     valueHandler={setUsername}
                     errorMessage={errors && errors.username}
@@ -41,7 +42,7 @@ export default function SignUp() {
                 <FormField
                     name={"email"}
                     type={"email"}
-                    label={"Email"}
+                    label={"EMAIL"}
                     value={email}
                     valueHandler={setEmail}
                     errorMessage={errors && errors.email}
@@ -49,7 +50,7 @@ export default function SignUp() {
                 <FormField
                     name={"password"}
                     type={"password"}
-                    label={"Password"}
+                    label={"PASSWORD"}
                     value={password}
                     valueHandler={setPassword}
                     errorMessage={errors && errors.password}
@@ -57,13 +58,19 @@ export default function SignUp() {
                 <FormField
                     name={"passwordConfirm"}
                     type={"password"}
-                    label={"Confirm Password"}
+                    label={"CONFIRM PASSWORD"}
                     value={passwordConfirm}
                     valueHandler={setPasswordConfirm}
                     errorMessage={errors && errors.passwordConfirm}
                 />
-                <FormField name={"displayName"} type={"text"} label={"Display Name"} value={displayName} valueHandler={setDisplayName} />
+                <FormField name={"displayName"} type={"text"} label={"DISPLAY NAME"} value={displayName} valueHandler={setDisplayName} />
                 <FormButton>{status === "signing up" ? <LoadingSpinner /> : "Continue"} </FormButton>
+                <p className="ml-6 mt-3 text-xs text-start text-neutral-400 ">
+                    Already have an account?{" "}
+                    <Link to="/log-in" className="text-pink-400  hover:underline">
+                        Log in
+                    </Link>
+                </p>
             </Form>
         </Background>
     );
