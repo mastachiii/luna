@@ -3,4 +3,16 @@
 @theme {
     --font-noto: "Noto Sans";
     --font-darumadrop: "Darumadrop One";
+    --animate-appear: appear 200ms ease-in-out;
+
+    @keyframes appear {
+        0% {
+            opacity: 50%;
+            transform: translateX(-30%);
+        }
+
+        100% {
+            opacity: 100%;
+        }
+    }
 }
