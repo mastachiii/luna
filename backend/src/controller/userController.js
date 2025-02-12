@@ -55,7 +55,7 @@ class User {
             try {
                 const errors = validationResult(req);
 
-                if (!errors.isEmpty()) return res.status(401).json({ errors: errors.mapped() });
+                if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array(), err: true });
 
                 bcrypt.hash(req.body.password, 10, async (err, hash) => {
                     if (err) next(err);

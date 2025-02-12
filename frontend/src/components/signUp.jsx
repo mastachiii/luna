@@ -13,7 +13,7 @@ export default function SignUp() {
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [displayName, setDisplayName] = useState("");
     const [status, setStatus] = useState("");
-    const [errors, setErrors] = useState([]);
+    const [errors, setErrors] = useState(null);
 
     // if (errors) console.log(errors);
 
@@ -21,24 +21,48 @@ export default function SignUp() {
         e.preventDefault();
 
         setStatus("signing up");
-        
+
         userApi.signUp({ username, email, password, passwordConfirm, displayName, errMessageHandler: setErrors, statusHandler: setStatus });
     }
+
+    // console.log({ errors });
 
     return (
         <Background>
             <Form submitHandler={handleSubmit} header={"Create an account"}>
-                <FormField name={"username"} type={"text"} label={"Username:"} value={username} valueHandler={setUsername} />
-                <FormField name={"email"} type={"email"} label={"Email:"} value={email} valueHandler={setEmail} />
-                <FormField name={"password"} type={"password"} label={"Password:"} value={password} valueHandler={setPassword} />
+                <FormField
+                    name={"username"}
+                    type={"text"}
+                    label={"Username"}
+                    value={username}
+                    valueHandler={setUsername}
+                    errorMessage={errors && errors.username}
+                />
+                <FormField
+                    name={"email"}
+                    type={"email"}
+                    label={"Email"}
+                    value={email}
+                    valueHandler={setEmail}
+                    errorMessage={errors && errors.email}
+                />
+                <FormField
+                    name={"password"}
+                    type={"password"}
+                    label={"Password"}
+                    value={password}
+                    valueHandler={setPassword}
+                    errorMessage={errors && errors.password}
+                />
                 <FormField
                     name={"passwordConfirm"}
                     type={"password"}
-                    label={"Confirm Password:"}
+                    label={"Confirm Password"}
                     value={passwordConfirm}
                     valueHandler={setPasswordConfirm}
+                    errorMessage={errors && errors.passwordConfirm}
                 />
-                <FormField name={"displayName"} type={"text"} label={"Display Name:"} value={displayName} valueHandler={setDisplayName} />
+                <FormField name={"displayName"} type={"text"} label={"Display Name"} value={displayName} valueHandler={setDisplayName} />
                 <FormButton>{status === "signing up" ? <LoadingSpinner /> : "Continue"} </FormButton>
             </Form>
         </Background>

@@ -13,11 +13,16 @@ class User {
         })
             .then(response => response.json())
             .then(data => {
-                if (data.err) return errMessageHandler(data.errors);
+                if (data.err) {
+                    statusHandler("");
+
+                    const errors = {};
+                    data.errors.map(err => (errors[err.path] = err.msg));
+
+                    return errMessageHandler(errors);
+                }
             })
             .catch(err => {
-                statusHandler("");
-
                 console.log(err);
             });
     }
