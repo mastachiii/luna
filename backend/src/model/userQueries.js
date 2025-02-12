@@ -193,7 +193,7 @@ class User {
                                 dateSent: "desc",
                             },
                             include: {
-                                // user: true,
+                                user: true,
                             },
                         },
                     },

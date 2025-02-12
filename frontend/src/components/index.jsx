@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import NavBar from "./navBar";
 import userApi from "../helpers/userApi";
 
 export default function Index() {
@@ -12,5 +13,5 @@ export default function Index() {
         });
     }, []);
 
-    return <></>;
+    return <NavBar />;
 }
