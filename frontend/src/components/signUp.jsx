@@ -3,6 +3,8 @@ import FormField from "./formField";
 import userApi from "../helpers/userApi";
 import Background from "./background";
 import Form from "./form";
+import FormButton from "./formButton";
+import LoadingSpinner from "./loadingSpinner";
 
 export default function SignUp() {
     const [username, setUsername] = useState("");
@@ -10,6 +12,7 @@ export default function SignUp() {
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [displayName, setDisplayName] = useState("");
+    const [status, setStatus] = useState("");
     const [errors, setErrors] = useState([]);
 
     // if (errors) console.log(errors);
@@ -17,7 +20,9 @@ export default function SignUp() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        userApi.signUp({ username, email, password, passwordConfirm, displayName, errMessageHandler: setErrors });
+        setStatus("signing up");
+        
+        userApi.signUp({ username, email, password, passwordConfirm, displayName, errMessageHandler: setErrors, statusHandler: setStatus });
     }
 
     return (
@@ -34,7 +39,7 @@ export default function SignUp() {
                     valueHandler={setPasswordConfirm}
                 />
                 <FormField name={"displayName"} type={"text"} label={"Display Name:"} value={displayName} valueHandler={setDisplayName} />
-                <button type="submit">Continue</button>
+                <FormButton>{status === "signing up" ? <LoadingSpinner /> : "Continue"} </FormButton>
             </Form>
         </Background>
     );

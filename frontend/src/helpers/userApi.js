@@ -3,7 +3,7 @@ class User {
         this.userUrl = "http://localhost:8080/user";
     }
 
-    signUp({ username, email, password, passwordConfirm, displayName, errMessageHandler }) {
+    signUp({ username, email, password, passwordConfirm, displayName, errMessageHandler, statusHandler }) {
         fetch(`${this.userUrl}/sign-up`, {
             method: "POST",
             headers: {
@@ -16,6 +16,8 @@ class User {
                 if (data.err) return errMessageHandler(data.errors);
             })
             .catch(err => {
+                statusHandler("");
+
                 console.log(err);
             });
     }
