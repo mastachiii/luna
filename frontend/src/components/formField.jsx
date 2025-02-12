@@ -1,8 +1,11 @@
-export default function FormField({ type, name, label, value, valueHandler }) {
+export default function FormField({ type, name, label, value, valueHandler, errorMessage }) {
     return (
         <div className="flex flex-col pl-6 pr-6">
-            <label htmlFor={name} className="mb-1 mt-4 text-[10px] text-start text-zinc-50 font-semibold tracking-wider ">
-                {label}
+            <label
+                htmlFor={name}
+                className={`mb-1 mt-4 text-[10px] text-start  font-semibold tracking-wider ${errorMessage ? "text-red-500" : "text-zinc-50"}`}
+            >
+                {label} {errorMessage && <em>{`- ${errorMessage}`}</em>}
             </label>
             <input
                 type={type}

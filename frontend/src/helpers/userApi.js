@@ -20,7 +20,7 @@ class User {
             });
     }
 
-    logIn({ username, password }) {
+    logIn({ username, password, errorHandler, statusHandler }) {
         fetch(`${this.userUrl}/log-in`, {
             method: "POST",
             headers: {
@@ -34,6 +34,9 @@ class User {
                 localStorage.setItem("user", JSON.stringify(data.user));
             })
             .catch(err => {
+                errorHandler(true);
+                statusHandler("");
+
                 console.log(err);
             });
     }
