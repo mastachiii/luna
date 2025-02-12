@@ -242,7 +242,6 @@ class User {
 const user = new User();
 
 (async () => {
-    // user.checkUserIsFriend({ id: 1, friendId: 2 });
     // await user.createUser({
     //     username: "mastachii273",
     //     email: "mastachii273@gmail.com",

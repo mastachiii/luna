@@ -45,7 +45,9 @@ class Conversation {
 
     async createGroupConversation(req, res, next) {
         try {
-            await db.createGroupConversation({ userIds: [...req.body.userIds, req.user.id] });
+            const ids = JSON.parse(req.body.userIds);
+
+            await db.createGroupConversation({ userIds: [...ids, req.user.id], picture: req.publicUrl, name: req.body.name, ownerId: req.user.id });
 
             return res.sendStatus(200);
         } catch (err) {

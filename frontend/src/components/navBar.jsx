@@ -1,49 +1,28 @@
-import { useEffect, useState } from "react";
-import userApi from "../helpers/userApi";
-import Chat from "./chat";
+import { useState } from "react";
+import logo from "../assets/logo.svg";
+import logoUnfocused from "../assets/logo-unfocused.svg";
 
-export default function NavBar() {
-    const [userData, setUserData] = useState(null);
-    const [groupId, setGroupId] = useState(null);
-    const [compToRender, setCompToRender] = useState(null);
+export default function NavBar({ componentHandler, groupIdHandler, groupData }) {
+    const [userBtnHover, setUserBtnHover] = useState(false);
 
-    useEffect(() => {
-        (async () => {
-            const data = await userApi.getUserData();
-
-            setUserData(data);
-        })();
-    }, []);
-
-    if (userData) console.log(userData);
-
-    let comp;
-
-    switch (compToRender) {
-        case "group": {
-            comp = <Chat isGroup={true} id={groupId} />;
-        }
-    }
-    console.log(comp);
     return (
-        <div>
-            <button>USER</button>
-            {userData &&
-                userData.conversations.map(c => {
-                    if (c.isGroup)
-                        return (
-                            <button
-                                key={c.id}
-                                onClick={() => {
-                                    setCompToRender("group");
-                                    setGroupId(c.id);
-                                }}
-                            >
-                                GROUP{c.id}
-                            </button>
-                        );
-                })}
-            {comp}
+        <div className=" h-screen flex flex-col pl-3 pr-3 bg-neutral-200">
+            <button className="w-14 mt-4 p-2 bg-zinc-50 rounded-full">
+                <img src={userBtnHover ? logo : logoUnfocused} alt="logo" onTouchMove={() => setUserBtnHover(!userBtnHover)} />
+            </button>
+            {groupData.map(c => {
+                return (
+                    <button
+                        key={c.id}
+                        onClick={() => {
+                            componentHandler("group");
+                            groupIdHandler(c.id);
+                        }}
+                    >
+                        <img src={c.picture} alt="group profile" className="w-13" />
+                    </button>
+                );
+            })}
         </div>
     );
 }

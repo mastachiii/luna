@@ -5,6 +5,8 @@ import conversationApi from "../helpers/conversationApi";
 export default function CreateGroup() {
     const [friends, setFriends] = useState([]);
     const [selectedFriends, setSelectedFriends] = useState([]);
+    const [image, setImage] = useState(null);
+    const [groupName, setGroupName] = useState("");
 
     useEffect(() => {
         (async () => {
@@ -17,7 +19,7 @@ export default function CreateGroup() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        conversationApi.createGroupConversation({ userIds: selectedFriends });
+        conversationApi.createGroupConversation({ userIds: selectedFriends, image, name: groupName });
     }
 
     function handleChange(id) {
@@ -30,6 +32,8 @@ export default function CreateGroup() {
         <div>
             <h3>Create a group</h3>
             <form onSubmit={handleSubmit}>
+                <input type="text" value={groupName} onChange={e => setGroupName(e.target.value)} />
+                <input type="file" onChange={e => setImage(e.target.files[0])} />
                 {friends.map(f => {
                     return (
                         <span key={f.id}>

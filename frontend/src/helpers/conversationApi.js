@@ -40,7 +40,6 @@ class Conversation {
         const formData = new FormData();
         formData.append("file", image);
 
-
         fetch(`${this.conversationUrl}/image/${id}`, {
             method: "POST",
             credentials: "include",
@@ -48,14 +47,18 @@ class Conversation {
         });
     }
 
-    async createGroupConversation({ userIds }) {
+    async createGroupConversation({ userIds, image, name }) {
+        if (image.type.split("/")[0] !== "image") return;
+
+        const formData = new FormData();
+        formData.append("file", image);
+        formData.append("userIds", JSON.stringify(userIds));
+        formData.append("name", name);
+
         fetch(`${this.conversationUrl}/group`, {
             method: "POST",
             credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ userIds }),
+            body: formData,
         });
     }
 }

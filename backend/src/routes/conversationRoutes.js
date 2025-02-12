@@ -12,7 +12,7 @@ route.get("/:id", controller.getConversation);
 route.get("/private/:username", isAuthenticated, controller.getPrivateConversation);
 
 // POST
-route.post("/group", controller.createGroupConversation);
+route.post("/group", isAuthenticated, upload.single("file"), uploadToSupabase, controller.createGroupConversation);
 route.post("/:id", isAuthenticated, controller.sendMessage);
 route.post("/image/:id", isAuthenticated, upload.single("file"), uploadToSupabase, controller.sendImage);
 route.post("/delete/:id", controller.deleteConversation);

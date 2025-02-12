@@ -18,7 +18,7 @@ class Conversation {
         });
     }
 
-    async createGroupConversation({ userIds }) {
+    async createGroupConversation({ userIds, picture, name, ownerId }) {
         const ids = userIds.map(id => ({ id }));
 
         await prisma.conversation.create({
@@ -27,6 +27,9 @@ class Conversation {
                     connect: ids,
                 },
                 isGroup: true,
+                picture,
+                name,
+                ownerId,
             },
         });
     }
@@ -130,7 +133,5 @@ class Conversation {
 }
 
 const convo = new Conversation();
-
-convo.getPrivateConversation({ id: 1, username: "audreyHepburn123" });
 
 module.exports = new Conversation();

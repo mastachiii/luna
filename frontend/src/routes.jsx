@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import SignUp from "./components/signUp";
 import LogIn from "./components/logIn";
-import Index from "./components";
+import Index from "./components/indexLayout";
 import FriendsPage from "./components/friendsPage";
 import Request from "./components/requestList";
 import Friends from "./components/friends";
