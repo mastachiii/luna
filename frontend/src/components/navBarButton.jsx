@@ -10,7 +10,7 @@ export default function NavBarButton({ handleClick, condition, children, dialogL
                 {children}
             </button>
             <span className="opacity-0 absolute mt-2 ml-5 w-40 p-3 rounded-r-lg bg-zinc-100 shadow-md shadow-stone-400transition duration-100 ease-in group-hover:opacity-100">
-                <p className="text-sm font-bold">{dialogLabel}</p>
+                <p className="text-sm font-noto font-semibold">{dialogLabel}</p>
             </span>
         </div>
     );
