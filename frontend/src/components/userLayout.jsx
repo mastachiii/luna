@@ -1,7 +1,14 @@
 import { useState } from "react";
+import ChatNavBar from "./chatNavBar";
 
 export default function UserLayout({ userData }) {
     const [compToRender, setCompToRender] = useState(null);
+    const [friendId, setFriendId] = useState(null);
 
-    return <div className="flex">USER LAYOUT</div>;
+    console.log(userData);
+    return (
+        <div className="flex">
+            <ChatNavBar friends={userData.friends} compHandler={setCompToRender} friendIdHandler={setFriendId} />
+        </div>
+    );
 }

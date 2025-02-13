@@ -32,9 +32,7 @@ function reducer(state, action) {
     }
 }
 
-export default function Chat({ isGroup, id }) {
-    const location = useLocation();
-    const friend = location.state && location.state.friendData;
+export default function Chat({ isGroup, id, username }) {
     const [conversation, dispatch] = useReducer(reducer, null);
     const [text, setText] = useState("");
     const [trigger, setTrigger] = useState(0);
@@ -44,9 +42,7 @@ export default function Chat({ isGroup, id }) {
     useEffect(() => {
         (async () => {
             // If group use id from link parameters else it means it's a private conversation so the id of the friend would be used..
-            const { convo } = isGroup
-                ? await conversationApi.getGroupChat({ id })
-                : await conversationApi.getConversation({ username: friend.username });
+            const { convo } = isGroup ? await conversationApi.getGroupChat({ id }) : await conversationApi.getConversation({ username });
 
             dispatch({ type: "replace conversation", convo });
 
@@ -60,7 +56,7 @@ export default function Chat({ isGroup, id }) {
                 clearTimeout(timeout.current);
             };
         })();
-    }, [friend, trigger, isGroup, id]);
+    }, [trigger, isGroup, id, username]);
 
     function handleSubmit(e) {
         e.preventDefault();
