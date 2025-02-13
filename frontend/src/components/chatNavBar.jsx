@@ -5,9 +5,9 @@ import nitro from "../assets/nitro.svg";
 
 export default function ChatNavBar({ friends, compHandler, friendIdHandler }) {
     return (
-        <div className="w-62 flex flex-col bg-neutral-100">
-            <div className="w-full h-[10px] pt-5 pb-5 mb-5 border-b-2 border-zinc-200 shadow-md shadow-zinc-200 "></div>
-            <div className="flex flex-col gap-1">
+        <div className="w-62 flex flex-col font-noto  bg-neutral-100">
+            <div className="w-full h-[10px] pt-5 pb-5 mb-3 border-b-2 border-zinc-200 shadow-md shadow-zinc-200 "></div>
+            <div className="flex flex-col gap-0.5">
                 <ChatNavBarButton
                     handleClick={() => {
                         compHandler("friend list");
