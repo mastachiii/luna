@@ -3,7 +3,7 @@ import friendsLogo from "../assets/friends.svg";
 import shop from "../assets/shop.svg";
 import nitro from "../assets/nitro.svg";
 
-export default function ChatNavBar({ friends, compHandler, friendIdHandler }) {
+export default function ChatNavBar({ friends, compHandler, friendHandler }) {
     return (
         <div className="w-62 flex flex-col font-noto  bg-neutral-100">
             <div className="w-full h-[10px] pt-5 pb-5 mb-2 border-b-2 border-zinc-200 shadow-md shadow-zinc-200 "></div>
@@ -24,7 +24,7 @@ export default function ChatNavBar({ friends, compHandler, friendIdHandler }) {
                     <ChatNavBarButton
                         handleClick={() => {
                             compHandler("chat friend");
-                            friendIdHandler(f.id);
+                            friendHandler(f);
                         }}
                         image={f.profilePicture}
                         label={f.displayName}

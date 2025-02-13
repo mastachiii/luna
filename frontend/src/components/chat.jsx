@@ -32,7 +32,7 @@ function reducer(state, action) {
     }
 }
 
-export default function Chat({ isGroup, id, username }) {
+export default function Chat({ isGroup, id, friend }) {
     const [conversation, dispatch] = useReducer(reducer, null);
     const [text, setText] = useState("");
     const [trigger, setTrigger] = useState(0);
@@ -42,7 +42,9 @@ export default function Chat({ isGroup, id, username }) {
     useEffect(() => {
         (async () => {
             // If group use id from link parameters else it means it's a private conversation so the id of the friend would be used..
-            const { convo } = isGroup ? await conversationApi.getGroupChat({ id }) : await conversationApi.getConversation({ username });
+            const { convo } = isGroup
+                ? await conversationApi.getGroupChat({ id })
+                : await conversationApi.getConversation({ username: friend.username });
 
             dispatch({ type: "replace conversation", convo });
 
@@ -56,7 +58,7 @@ export default function Chat({ isGroup, id, username }) {
                 clearTimeout(timeout.current);
             };
         })();
-    }, [trigger, isGroup, id, username]);
+    }, [trigger, isGroup, id, friend]);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -79,13 +81,13 @@ export default function Chat({ isGroup, id, username }) {
 
     return (
         <div>
-            {!isGroup && <h2>CHAT - {friend.displayName}</h2>}
+            {!isGroup && <h2>CHAT - {}</h2>}
             {conversation &&
                 conversation.messages.map(m => {
                     return (
                         <div key={m.id} style={{ display: "flex", flexDirection: "column" }}>
                             <span style={{ display: "flex" }}>
-                                <img src={m.user.profilePicture} alt="user profile pic" style={{ width: "100px" }} />
+                                <img src={m.user.profilePicture} alt="user profile pic" className="size-2" />
                                 <b>
                                     {m.user.displayName} at {m.dateSent}
                                 </b>
