@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import NavBar from "./navBar";
 import userApi from "../helpers/userApi";
 import Chat from "./chat";
+import UserLayout from "./userLayout";
 
 export default function Index() {
     const [userData, setUserData] = useState(null);
@@ -22,16 +23,19 @@ export default function Index() {
         })();
     }, []);
 
-    if (userData) console.log(userData);
-
     let comp;
 
     switch (compToRender) {
         case "group": {
             comp = <Chat isGroup={true} id={groupId} />;
+
+            break;
+        }
+
+        case "user": {
+            comp = <UserLayout userData={userData} />;
         }
     }
-    console.log(userData);
 
     if (userData) {
         return (
