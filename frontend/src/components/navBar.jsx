@@ -48,7 +48,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData }) 
                     setSelected("create group");
                 }}
             >
-                <p className="text-2xl font-bold ">+</p>
+                <p className="text-2xl font-bold group-hover: ">+</p>
             </NavBarButton>
         </div>
     );

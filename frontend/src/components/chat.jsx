@@ -79,9 +79,18 @@ export default function Chat({ isGroup, id, friend }) {
         dispatch({ type: "send image", message: URL.createObjectURL(image) });
     }
 
+    console.log(conversation)
+
     return (
-        <div>
-            {!isGroup && <h2>CHAT - {}</h2>}
+        <div className="w-full font-noto  bg-zinc-50">
+            <div className=" w-full h-13 mb-2 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
+                {!isGroup && (
+                    <span className="h-full flex ml-5 items-center gap-3">
+                        <img src={friend.profilePicture} className="size-7 rounded-full" />
+                        <p className="text-sm font-semibold">{friend.displayName}</p>
+                    </span>
+                )}
+            </div>
             {conversation &&
                 conversation.messages.map(m => {
                     return (
