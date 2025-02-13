@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import conversationApi from "../helpers/conversationApi";
+import Message from "./message";
 
 function reducer(state, action) {
     const newMessage = state && {
@@ -79,7 +80,7 @@ export default function Chat({ isGroup, id, friend }) {
         dispatch({ type: "send image", message: URL.createObjectURL(image) });
     }
 
-    console.log(conversation)
+    console.log(conversation);
 
     return (
         <div className="w-full font-noto  bg-zinc-50">
@@ -92,17 +93,18 @@ export default function Chat({ isGroup, id, friend }) {
                 )}
             </div>
             {conversation &&
-                conversation.messages.map(m => {
+                conversation.messages.map((msg, index) => {
                     return (
-                        <div key={m.id} style={{ display: "flex", flexDirection: "column" }}>
-                            <span style={{ display: "flex" }}>
-                                <img src={m.user.profilePicture} alt="user profile pic" className="size-2" />
-                                <b>
-                                    {m.user.displayName} at {m.dateSent}
-                                </b>
-                            </span>
-                            {m.isImage ? <img src={m.message} style={{ width: "200px" }} /> : <p>{m.message}</p>}
-                        </div>
+                        <Message message={msg} previousMessage={conversation.messages[index - 1]} />
+                        // <div key={m.id} style={{ display: "flex", flexDirection: "column" }}>
+                        //     <span style={{ display: "flex" }}>
+                        //         <img src={m.user.profilePicture} alt="user profile pic" className="size-2" />
+                        //         <b>
+                        //             {m.user.displayName} at {m.dateSent}
+                        //         </b>
+                        //     </span>
+                        //     {m.isImage ? <img src={m.message} style={{ width: "200px" }} /> : <p>{m.message}</p>}
+                        // </div>
                     );
                 })}
             <form onSubmit={handleSubmit}>
