@@ -1,4 +1,5 @@
 import dateUtils from "../helpers/compareMsgDate";
+import { format } from "date-fns";
 
 export default function Message({ message, previousMessage }) {
     const user = message.user;
@@ -14,16 +15,20 @@ export default function Message({ message, previousMessage }) {
     // Conditions to check if next message should be spaced
 
     return (
-        <div className={`flex ml-5 ${!skipProfileRender && "mt-5"}`}>
-            {!skipProfileRender && <img src={user.profilePicture} className="size-11 rounded-full" />}
+        <div className={`flex ${!skipProfileRender ? "p-1 mt-6 ml-5" : "pl-1 pr-1 ml-[16.5px]"} group hover:bg-neutral-200 transition duration-100 ease-in`}>
+            {!skipProfileRender ? (
+                <img src={user.profilePicture} className="size-10 rounded-full" />
+            ) : (
+                <p className=" opacity-0 mt-1 text-[10px] text-zinc-700  group-hover:opacity-100">{format(message.dateSent, "p")}</p>
+            )}
             <span className="ml-4">
                 {!skipProfileRender && (
-                    <span className="flex">
-                        <p className="">{user.displayName}</p>
-                        <p className="">{dateUtils.formatMsgDate(message.dateSent)}</p>
+                    <span className="flex items-end gap-2">
+                        <p className="text-sm font-semibold">{user.displayName}</p>
+                        <p className="text-[11px] text-zinc-700 ">{dateUtils.formatMsgDate(message.dateSent)}</p>
                     </span>
                 )}
-                <p className={`${skipProfileRender && "ml-[2.75rem]"}`}>{message.message}</p>
+                <p className={`${skipProfileRender && ""}`}>{message.message}</p>
             </span>
         </div>
     );
