@@ -8,7 +8,7 @@ function reducer(state, action) {
         id: crypto.randomUUID(), // Using the length of the messages is unreliable because the database uses auto increment ids.. this works fine since it will get replaced when the useEffect will run again
         message: action.message,
         isImage: action.type === "send image",
-        dateSent: new Date().toDateString(),
+        dateSent: new Date(),
         user: JSON.parse(localStorage.getItem("user")),
     };
 
