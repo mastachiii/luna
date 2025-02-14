@@ -15,7 +15,7 @@ export default function Message({ message, previousMessage }) {
     // Conditions to check if next message should be spaced
 
     return (
-        <div className={`flex ${!skipProfileRender ? "p-1 mt-6 ml-5" : "pl-1 pr-1 ml-[16.5px]"} group hover:bg-neutral-200 transition duration-100 ease-in`}>
+        <div className={` flex ${!skipProfileRender ? "p-1 mt-6 ml-5" : "pl-1 pr-1 ml-[16.5px]"} rounded-md  group hover:bg-neutral-200 transition duration-100 ease-in`}>
             {!skipProfileRender ? (
                 <img src={user.profilePicture} className="size-10 rounded-full" />
             ) : (
@@ -28,7 +28,7 @@ export default function Message({ message, previousMessage }) {
                         <p className="text-[11px] text-zinc-700 ">{dateUtils.formatMsgDate(message.dateSent)}</p>
                     </span>
                 )}
-                <p className={`${skipProfileRender && ""}`}>{message.message}</p>
+                <p className={`w-[90%] ${skipProfileRender && ""}`}>{message.message}</p>
             </span>
         </div>
     );

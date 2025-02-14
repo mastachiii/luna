@@ -83,7 +83,7 @@ export default function Chat({ isGroup, id, friend }) {
     console.log(conversation);
 
     return (
-        <div className="w-full font-noto  bg-zinc-50">
+        <div className="w-full font-noto bg-zinc-50 ">
             <div className=" w-full h-13 mb-2 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
                 {!isGroup && (
                     <span className="h-full flex ml-5 items-center gap-3">
@@ -92,18 +92,12 @@ export default function Chat({ isGroup, id, friend }) {
                     </span>
                 )}
             </div>
-            {conversation &&
-                conversation.messages.map((msg, index) => {
-                    return <Message message={msg} previousMessage={conversation.messages[index - 1]} />;
-                })}
-            <form onSubmit={handleSubmit}>
-                <input type="text" value={text} onChange={e => setText(e.target.value)} />
-                <button>SEND</button>
-            </form>
-            <form onSubmit={handleImageUpload}>
-                <input type="file" accept="image/*" onChange={e => setImage(e.target.files[0])} />
-                <button>SEND</button>
-            </form>
+            <div className="h-screen overflow-scroll">
+                {conversation &&
+                    conversation.messages.map((msg, index) => {
+                        return <Message message={msg} previousMessage={conversation.messages[index - 1]} />;
+                    })}
+            </div>
         </div>
     );
 }
