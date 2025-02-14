@@ -94,18 +94,7 @@ export default function Chat({ isGroup, id, friend }) {
             </div>
             {conversation &&
                 conversation.messages.map((msg, index) => {
-                    return (
-                        <Message message={msg} previousMessage={conversation.messages[index - 1]} />
-                        // <div key={m.id} style={{ display: "flex", flexDirection: "column" }}>
-                        //     <span style={{ display: "flex" }}>
-                        //         <img src={m.user.profilePicture} alt="user profile pic" className="size-2" />
-                        //         <b>
-                        //             {m.user.displayName} at {m.dateSent}
-                        //         </b>
-                        //     </span>
-                        //     {m.isImage ? <img src={m.message} style={{ width: "200px" }} /> : <p>{m.message}</p>}
-                        // </div>
-                    );
+                    return <Message message={msg} previousMessage={conversation.messages[index - 1]} />;
                 })}
             <form onSubmit={handleSubmit}>
                 <input type="text" value={text} onChange={e => setText(e.target.value)} />
