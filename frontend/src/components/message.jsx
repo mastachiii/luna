@@ -11,15 +11,16 @@ export default function Message({ message, previousMessage }) {
     if (previousMessage && sameUser) {
         skipProfileRender = dateUtils.compareMsgDate(message, previousMessage);
     }
-
-    // Conditions to check if next message should be spaced
-
     return (
-        <div className={` flex ${!skipProfileRender ? "p-1 mt-6 ml-5" : "pl-1 pr-1 ml-[16.5px]"} rounded-md  group hover:bg-neutral-200 transition duration-100 ease-in`}>
+        <div
+            className={`w-[90%] flex ${
+                !skipProfileRender ? "p-1 mt-6 ml-5" : "pl-1 pr-1 ml-[16.5px]"
+            } rounded-md overflow-hidden group hover:bg-neutral-200 transition duration-100 ease-in`}
+        >
             {!skipProfileRender ? (
                 <img src={user.profilePicture} className="size-10 rounded-full" />
             ) : (
-                <p className=" opacity-0 mt-1 text-[10px] text-zinc-700  group-hover:opacity-100">{format(message.dateSent, "p")}</p>
+                <p className=" opacity-0 self-center ml-1 text-[10px] text-zinc-700 group-hover:opacity-100">{format(message.dateSent, "p")}</p>
             )}
             <span className="ml-4">
                 {!skipProfileRender && (
@@ -28,7 +29,7 @@ export default function Message({ message, previousMessage }) {
                         <p className="text-[11px] text-zinc-700 ">{dateUtils.formatMsgDate(message.dateSent)}</p>
                     </span>
                 )}
-                <p className={`w-[90%] ${skipProfileRender && ""}`}>{message.message}</p>
+                {message.isImage ? <img src={message.message} className="w-2xl pt-2 pb-2"/> : <p className={`w-full`}>{message.message}</p>}
             </span>
         </div>
     );

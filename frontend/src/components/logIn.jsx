@@ -43,7 +43,7 @@ export default function LogIn() {
                     errorMessage={isError && "Login or password is invalid"}
                 />
                 <FormButton>{status === "logging in" ? <LoadingSpinner /> : "Log in"}</FormButton>
-                <p className="ml-6 mt-3 text-xs text-start text-neutral-400 max-sm:text-[10px] ">
+                <p className="ml-6 mt-3 text-xs text-start text-neutral-400 max-sm:text-[10px   ] ">
                     Need an account?{" "}
                     <Link to="/sign-up" className="text-pink-400  hover:underline">
                         Register

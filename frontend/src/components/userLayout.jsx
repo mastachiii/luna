@@ -15,7 +15,7 @@ export default function UserLayout({ userData }) {
     }
 
     return (
-        <div className="flex w-full  overflow-hidden">
+        <div className="flex w-full h-screen">
             <ChatNavBar friends={userData.friends} compHandler={setCompToRender} friendHandler={setFriendData} />
             {comp}
         </div>
