@@ -20,11 +20,11 @@ export default function Message({ message, previousMessage }) {
             {!skipProfileRender ? (
                 <img src={user.profilePicture} className="size-10 rounded-full" />
             ) : (
-                <p className=" w-15 opacity-0 self-center ml-1 text-[10px] text-zinc-700 group-hover:opacity-100">
+                <p className="w-12 opacity-0 self-center ml-3 text-[10px] text-center text-zinc-700 group-hover:opacity-100">
                     {format(message.dateSent, "p")}
                 </p>
             )}
-            <span className="ml-4">
+            <span className="w-fit ml-4">
                 {!skipProfileRender && (
                     <span className="flex items-end gap-2">
                         <p className="text-sm font-semibold">{user.displayName}</p>
