@@ -29,7 +29,11 @@ export default function Message({ message, previousMessage }) {
                         <p className="text-[11px] text-zinc-700 ">{dateUtils.formatMsgDate(message.dateSent)}</p>
                     </span>
                 )}
-                {message.isImage ? <img src={message.message} className="w-2xl pt-2 pb-2"/> : <p className={`w-full`}>{message.message}</p>}
+                {message.isImage ? (
+                    <img src={message.message} className="w-2xl pt-2 pb-2 " />
+                ) : (
+                    <p className={`w-full whitespace-pre-wrap`}>{message.message}</p>
+                )}
             </span>
         </div>
     );

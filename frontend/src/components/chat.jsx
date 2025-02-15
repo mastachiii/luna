@@ -40,6 +40,7 @@ export default function Chat({ isGroup, id, friend }) {
     const [trigger, setTrigger] = useState(0);
     const [image, setImage] = useState(null);
     const timeout = useRef();
+    const convoRef = useRef();
 
     useEffect(() => {
         (async () => {
@@ -61,6 +62,10 @@ export default function Chat({ isGroup, id, friend }) {
             };
         })();
     }, [trigger, isGroup, id, friend]);
+
+    useEffect(() => {
+        convoRef.current.scrollTop = convoRef.current.scrollHeight;
+    }, [conversation]);
 
     function handleMessageSend(e) {
         e.preventDefault();
@@ -91,7 +96,7 @@ export default function Chat({ isGroup, id, friend }) {
                     </span>
                 )}
             </div>
-            <div className="h-[85vh] overflow-y-scroll box-border">
+            <div className="h-[85vh] overflow-y-scroll box-border" ref={convoRef}>
                 <div className="z-0">
                     {conversation &&
                         conversation.messages.map((msg, index) => {

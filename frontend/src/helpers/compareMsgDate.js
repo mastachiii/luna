@@ -21,7 +21,6 @@ function compareMsgDate(msg1, msg2) {
 function formatMsgDate(date) {
     const msgDate = new Date(date);
     const dateToday = new Date();
-    console.log(date)
 
     switch (dateToday.getDay() - msgDate.getDay()) {
         case 0:
