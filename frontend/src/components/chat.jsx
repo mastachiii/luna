@@ -2,6 +2,7 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import conversationApi from "../helpers/conversationApi";
 import Message from "./message";
+import MessageInput from "./messageInput";
 
 function reducer(state, action) {
     const newMessage = state && {
@@ -61,10 +62,10 @@ export default function Chat({ isGroup, id, friend }) {
         })();
     }, [trigger, isGroup, id, friend]);
 
-    function handleSubmit(e) {
+    function handleMessageSend(e) {
         e.preventDefault();
 
-        conversationApi.sendMessage({ id: conversation.id, message: text });
+        // conversationApi.sendMessage({ id: conversation.id, message: text });
 
         // Modify current conversation state so that user doesn't have to wait for the effect to run again for their message to display...
         dispatch({ type: "send text", message: text });
@@ -90,14 +91,15 @@ export default function Chat({ isGroup, id, friend }) {
                     </span>
                 )}
             </div>
-            <div className="h-[90vh] overflow-y-scroll box-border">
-                <div>
+            <div className="h-[85vh] overflow-y-scroll box-border">
+                <div className="z-0">
                     {conversation &&
                         conversation.messages.map((msg, index) => {
                             return <Message message={msg} previousMessage={conversation.messages[index - 1]} />;
                         })}
                 </div>
             </div>
+            <MessageInput handleSubmit={handleMessageSend} text={text} textHandler={setText} />
         </div>
     );
 }
