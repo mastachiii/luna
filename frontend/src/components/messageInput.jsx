@@ -36,8 +36,8 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                         }}
                         rows={1 + text.length / 200 + (textNewLines && textNewLines.length)}
                         className="w-[90%] text-sm text-wrap outline-0 resize-none"
-                        />
-                    )}
+                    />
+                )}
                 <div className="flex items-center gap-3">
                     <button type="button">
                         <img src={emoji} className="size-5 cursor-pointer hover:animate-scale" />
@@ -50,7 +50,7 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                     </button>
                 </div>
             </form>
-            <MessageMisc />
+            <MessageMisc textHandler={textHandler} text={text} />
         </div>
     );
 }
