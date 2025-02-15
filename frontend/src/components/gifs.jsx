@@ -5,7 +5,9 @@ const API_KEY = import.meta.env.VITE_GIPHY_API_KEY;
 async function getTrendingGifs() {
     const gifs = fetch(`http://api.giphy.com/v1/gifs/trending?key=${API_KEY}`)
         .then(response => response.json())
-        .then(data => console.log(data.data));
+        .then(data => data.data);
+
+    return gifs;
 }
 
 export default function Gifs() {
@@ -14,8 +16,17 @@ export default function Gifs() {
     useEffect(() => {
         (async () => {
             const data = await getTrendingGifs();
-
+            
             setGifsToShow(data);
         })();
     }, []);
+
+    return (
+        <div>
+            {gifsToShow &&
+                gifsToShow.map(g => {
+                    return <img src={g.images.downsized.url} className="size-10" key={g.slug} />;
+                })}
+        </div>
+    );
 }
