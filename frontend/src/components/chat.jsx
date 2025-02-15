@@ -98,7 +98,7 @@ export default function Chat({ isGroup, id, friend }) {
                         </span>
                     )}
                 </div>
-                <div className="h-[85vh] overflow-y-scroll box-border" ref={convoRef}>
+                <div className="h-[84vh] overflow-y-scroll box-border" ref={convoRef}>
                     <div className="z-0">
                         {conversation &&
                             conversation.messages.map((msg, index) => {
