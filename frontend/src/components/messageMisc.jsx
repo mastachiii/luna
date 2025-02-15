@@ -16,7 +16,7 @@ export default function MessageMisc({ textHandler, text, toShow }) {
 
     return (
         <div
-            className={` size-90 z-10 absolute bottom-15 right-0 rounded-xl font-noto bg-neutral-100 shadow-md shadow-neutral-500 ${
+            className={`size-140 z-10 absolute bottom-15 right-0 rounded-xl font-noto bg-neutral-100 shadow-md shadow-neutral-500 ${
                 toShow ? "block" : "hidden"
             }`}
         >

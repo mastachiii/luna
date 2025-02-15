@@ -34,7 +34,7 @@ export default function Emojis({ handler, text }) {
 
     return (
         <div>
-            <div className="flex h-74 ">
+            <div className="flex h-120 ">
                 <div className="flex flex-col justify-evenly p-2 mt-[1px]  bg-zinc-200">
                     <EmojiSelector handler={() => setEmojiToDisplay("smileys-emotion")} condition={emojiToDisplay === "smileys-emotion"}>
                         &#128512;
