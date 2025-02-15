@@ -63,6 +63,7 @@ export default function Chat({ isGroup, id, friend }) {
         })();
     }, [trigger, isGroup, id, friend]);
 
+    // Scroll to bottom whenever user sends a message...
     useEffect(() => {
         convoRef.current.scrollTop = convoRef.current.scrollHeight;
     }, [conversation]);
@@ -104,7 +105,14 @@ export default function Chat({ isGroup, id, friend }) {
                         })}
                 </div>
             </div>
-            <MessageInput handleSubmit={handleMessageSend} text={text} textHandler={setText} />
+            <MessageInput
+                textSubmit={handleMessageSend}
+                imageSubmit={handleImageUpload}
+                text={text}
+                textHandler={setText}
+                image={image}
+                imageHandler={setImage}
+            />
         </div>
     );
 }
