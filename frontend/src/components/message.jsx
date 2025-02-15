@@ -14,13 +14,15 @@ export default function Message({ message, previousMessage }) {
     return (
         <div
             className={`w-[90%] flex ${
-                !skipProfileRender ? "p-1 mt-6 ml-5" : "pl-1 pr-1 ml-[16.5px]"
+                !skipProfileRender ? "p-1 mt-6 ml-5" : "pl-1 pr-1"
             } rounded-md relative group hover:bg-neutral-200 transition duration-100 ease-in`}
         >
             {!skipProfileRender ? (
                 <img src={user.profilePicture} className="size-10 rounded-full" />
             ) : (
-                <p className=" opacity-0 self-center ml-1 text-[10px] text-zinc-700 group-hover:opacity-100">{format(message.dateSent, "p")}</p>
+                <p className=" w-15 opacity-0 self-center ml-1 text-[10px] text-zinc-700 group-hover:opacity-100">
+                    {format(message.dateSent, "p")}
+                </p>
             )}
             <span className="ml-4">
                 {!skipProfileRender && (
@@ -30,7 +32,7 @@ export default function Message({ message, previousMessage }) {
                     </span>
                 )}
                 {message.isImage ? (
-                    <img src={message.message} className={`w-[50%] pt-2 pb-2 ${skipProfileRender && 'ml-2'}`} />
+                    <img src={message.message} className={`w-[50%] pt-2 pb-2 ${skipProfileRender && "ml-0"}`} />
                 ) : (
                     <p className={`w-full whitespace-pre-wrap`}>{message.message}</p>
                 )}

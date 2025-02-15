@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { data } from "react-router";
 
 const API_KEY = import.meta.env.VITE_GIPHY_API_KEY;
 
@@ -18,7 +19,7 @@ async function getSearchGifs(search) {
     return gifs;
 }
 
-export default function Gifs() {
+export default function Gifs({ handler }) {
     const [gifsToShow, setGifsToShow] = useState(null);
     const [gifSearch, setGifSearch] = useState("");
     const trendingGifs = useRef();
@@ -40,10 +41,15 @@ export default function Gifs() {
         setGifsToShow(gifs);
     }
 
+    function handleChange(e) {
+        if (e.target.value.length === 0) setGifsToShow(trendingGifs.current);
+
+        setGifSearch(e.target.value);
+    }
     return (
-        <div className="h-120 ">
-            <form onSubmit={handleSearchSubmit}>
-                <input type="text" value={gifSearch} onChange={e => setGifSearch(e.target.value)} />
+        <div className="h-115">
+            <form onSubmit={handleSearchSubmit} className="mb-2">
+                <input type="text" value={gifSearch} onChange={handleChange} placeholder={'Search Tenor'} className="w-[90%] p-2 mt-2 ml-3 mr-auto text-sm bg-neutral-200" />
             </form>
             {gifsToShow && (
                 <div className="h-full flex flex-wrap gap-1 p-1 overflow-y-scroll">
@@ -51,8 +57,9 @@ export default function Gifs() {
                         return (
                             <img
                                 src={g.images.downsized.url}
-                                className="w-[48%] border-1 border-zinc-100 rounded-md transition duration-100 ease-in cursor-pointer hover:scale-110"
+                                className="w-[48%] border-1 border-zinc-100 rounded-md transition duration-100 ease-in cursor-pointer hover:scale-105"
                                 key={g.slug}
+                                onClick={() => handler(g.images.downsized_medium.url)}
                             />
                         );
                     })}

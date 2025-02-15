@@ -6,7 +6,7 @@ import gif from "../assets/gif.svg";
 import trash from "../assets/trash.svg";
 import MessageMisc from "./messageMisc";
 
-export default function MessageInput({ textSubmit, imageSubmit, text, textHandler, image, imageHandler }) {
+export default function MessageInput({ textSubmit, imageSubmit, text, textHandler, image, imageHandler, gifHandler }) {
     const textNewLines = text.match(/\n/g);
     const [showMessageMisc, setShowMessageMisc] = useState(false);
 
@@ -64,7 +64,7 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                     </button>
                 </div>
             </form>
-            <MessageMisc textHandler={textHandler} text={text} toShow={showMessageMisc} />
+            <MessageMisc textHandler={textHandler} text={text} toShow={showMessageMisc} gifHandler={gifHandler} />
         </div>
     );
 }

@@ -5,12 +5,14 @@ import Message from "./message";
 import MessageInput from "./messageInput";
 
 function reducer(state, action) {
+    const user = JSON.parse(localStorage.getItem("user"));
     const newMessage = state && {
         id: crypto.randomUUID(), // Using the length of the messages is unreliable because the database uses auto increment ids.. this works fine since it will get replaced when the useEffect will run again
         message: action.message,
         isImage: action.type === "send image",
         dateSent: new Date().toISOString(),
-        user: JSON.parse(localStorage.getItem("user")),
+        user,
+        userId: user.id,
     };
 
     function scrollToBottom() {
@@ -22,6 +24,7 @@ function reducer(state, action) {
     switch (action.type) {
         case "send text":
         case "send image": {
+            console.log(newMessage);
             scrollToBottom();
 
             return {
@@ -74,7 +77,7 @@ export default function Chat({ isGroup, id, friend }) {
     function handleMessageSend(e) {
         e.preventDefault();
 
-        conversationApi.sendMessage({ id: conversation.id, message: text });
+        // conversationApi.sendMessage({ id: conversation.id, message: text });
 
         // Modify current conversation state so that user doesn't have to wait for the effect to run again for their message to display...
         dispatch({ type: "send text", message: text, convoRef });
@@ -84,9 +87,15 @@ export default function Chat({ isGroup, id, friend }) {
     function handleImageUpload(e) {
         e.preventDefault();
 
-        // conversationApi.sendImage({ id: conversation.id, image });
+        conversationApi.sendImage({ id: conversation.id, image });
 
         dispatch({ type: "send image", message: URL.createObjectURL(image), convoRef });
+    }
+
+    function handleGifUpload(gifUrl) {
+        conversationApi.sendMessage({ id: conversation.id, message: gifUrl, isImage: true });
+
+        dispatch({ type: "send image", message: gifUrl, convoRef });
     }
 
     if (conversation) {
@@ -113,6 +122,7 @@ export default function Chat({ isGroup, id, friend }) {
                     imageSubmit={handleImageUpload}
                     text={text}
                     textHandler={setText}
+                    gifHandler={handleGifUpload}
                     image={image}
                     imageHandler={setImage}
                 />

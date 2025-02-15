@@ -23,14 +23,14 @@ class Conversation {
         return chat;
     }
 
-    async sendMessage({ id, message }) {
+    async sendMessage({ id, message, isImage }) {
         await fetch(`${this.conversationUrl}/${id}`, {
             method: "POST",
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ message }),
+            body: JSON.stringify({ message, isImage }),
         });
     }
 

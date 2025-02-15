@@ -11,7 +11,7 @@ function MessageMiscBtn({ handler, condition, label }) {
 }
 
 // Stuff like emojis and gifs
-export default function MessageMisc({ textHandler, text, toShow }) {
+export default function MessageMisc({ textHandler, gifHandler, text, toShow }) {
     const [selected, setSelected] = useState("emojis");
 
     return (
@@ -24,7 +24,7 @@ export default function MessageMisc({ textHandler, text, toShow }) {
                 <MessageMiscBtn handler={() => setSelected("gifs")} condition={selected === "gifs"} label={"GIFs"} />
                 <MessageMiscBtn handler={() => setSelected("emojis")} condition={selected === "emojis"} label={"Emojis"} />
             </div>
-            {selected === "emojis" ? <Emojis handler={textHandler} text={text} /> : <Gifs />}
+            {selected === "emojis" ? <Emojis handler={textHandler} text={text} /> : <Gifs handler={gifHandler} />}
         </div>
     );
 }

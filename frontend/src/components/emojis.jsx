@@ -34,7 +34,7 @@ export default function Emojis({ handler, text }) {
 
     return (
         <div>
-            <div className="flex h-120 ">
+            <div className="flex h-120">
                 <div className="flex flex-col justify-evenly p-2 mt-[1px]  bg-zinc-200">
                     <EmojiSelector handler={() => setEmojiToDisplay("smileys-emotion")} condition={emojiToDisplay === "smileys-emotion"}>
                         &#128512;
@@ -50,7 +50,7 @@ export default function Emojis({ handler, text }) {
                         &#x1F522;
                     </EmojiSelector>
                 </div>
-                <div className="w-[90%] flex flex-wrap gap-0 ml-5 mt-2 overflow-y-scroll">
+                <div className="w-[90%] h-120 flex flex-wrap gap-0 ml-5 mt-2 overflow-y-scroll">
                     {emojis &&
                         emojis.map((e, index) => {
                             if (index >= 100) return;
