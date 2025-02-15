@@ -3,14 +3,15 @@ import send from "../assets/send.svg";
 import emoji from "../assets/emoji.svg";
 import gif from "../assets/gif.svg";
 import trash from "../assets/trash.svg";
+import MessageMisc from "./messageMisc";
 
 export default function MessageInput({ textSubmit, imageSubmit, text, textHandler, image, imageHandler }) {
-    const textNewLines= text.match(/\n/g);
+    const textNewLines = text.match(/\n/g);
 
     return (
         <div className=" w-[80%] h-fit flex align-middle p-3 ml-5 mr-5 mt-10 absolute bottom-10 rounded-md bg-neutral-200">
             <label htmlFor="file" className="flex items-center">
-                <img src={imageSvg} className="size-5 mt-[2px] cursor-pointer" />
+                <img src={imageSvg} className="size-5 mt-[2px] cursor-pointer hover:animate-scale" />
             </label>
             <input type="file" id="file" className="invisible w-0" onChange={e => imageHandler(e.target.files[0])} />
             <form onSubmit={image ? imageSubmit : textSubmit} className="w-full h-fit flex justify-between ml-5 ">
@@ -35,20 +36,21 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                         }}
                         rows={1 + text.length / 200 + (textNewLines && textNewLines.length)}
                         className="w-[90%] text-sm text-wrap outline-0 resize-none"
-                    />
-                )}
+                        />
+                    )}
                 <div className="flex items-center gap-3">
                     <button type="button">
-                        <img src={emoji} className="size-5 cursor-pointer" />
+                        <img src={emoji} className="size-5 cursor-pointer hover:animate-scale" />
                     </button>
                     <button type="button">
-                        <img src={gif} className="size-5 cursor-pointer" />
+                        <img src={gif} className="size-5 cursor-pointer hover:animate-scale" />
                     </button>
                     <button type="submit" className="">
-                        <img src={send} className="size-5 cursor-pointer" />
+                        <img src={send} className="size-5 cursor-pointer hover:animate-scale" />
                     </button>
                 </div>
             </form>
+            <MessageMisc />
         </div>
     );
 }

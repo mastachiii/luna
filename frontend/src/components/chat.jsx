@@ -65,7 +65,7 @@ export default function Chat({ isGroup, id, friend }) {
 
     // Scroll to bottom whenever user sends a message...
     useEffect(() => {
-        convoRef.current.scrollTop = convoRef.current.scrollHeight;
+        if (convoRef.current) convoRef.current.scrollTop = convoRef.current.scrollHeight;
     }, [conversation]);
 
     function handleMessageSend(e) {
@@ -87,32 +87,34 @@ export default function Chat({ isGroup, id, friend }) {
         dispatch({ type: "send image", message: URL.createObjectURL(image) });
     }
 
-    return (
-        <div className="w-full h-full font-noto bg-zinc-50 ">
-            <div className=" w-full h-13 mb-2 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
-                {!isGroup && (
-                    <span className="h-full flex ml-5 items-center gap-3">
-                        <img src={friend.profilePicture} className="size-7 rounded-full" />
-                        <p className="text-sm font-semibold">{friend.displayName}</p>
-                    </span>
-                )}
-            </div>
-            <div className="h-[85vh] overflow-y-scroll box-border" ref={convoRef}>
-                <div className="z-0">
-                    {conversation &&
-                        conversation.messages.map((msg, index) => {
-                            return <Message message={msg} previousMessage={conversation.messages[index - 1]} />;
-                        })}
+    if (conversation) {
+        return (
+            <div className="w-full h-full font-noto bg-zinc-50 ">
+                <div className=" w-full h-13 mb-2 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
+                    {!isGroup && (
+                        <span className="h-full flex ml-5 items-center gap-3">
+                            <img src={friend.profilePicture} className="size-7 rounded-full" />
+                            <p className="text-sm font-semibold">{friend.displayName}</p>
+                        </span>
+                    )}
                 </div>
+                <div className="h-[85vh] overflow-y-scroll box-border" ref={convoRef}>
+                    <div className="z-0">
+                        {conversation &&
+                            conversation.messages.map((msg, index) => {
+                                return <Message message={msg} previousMessage={conversation.messages[index - 1]} />;
+                            })}
+                    </div>
+                </div>
+                <MessageInput
+                    textSubmit={handleMessageSend}
+                    imageSubmit={handleImageUpload}
+                    text={text}
+                    textHandler={setText}
+                    image={image}
+                    imageHandler={setImage}
+                />
             </div>
-            <MessageInput
-                textSubmit={handleMessageSend}
-                imageSubmit={handleImageUpload}
-                text={text}
-                textHandler={setText}
-                image={image}
-                imageHandler={setImage}
-            />
-        </div>
-    );
+        );
+    }
 }
