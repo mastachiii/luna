@@ -68,9 +68,13 @@ function Emojis({ handler, text }) {
 }
 
 // Stuff like emojis and gifs
-export default function MessageMisc({ textHandler, text }) {
+export default function MessageMisc({ textHandler, text, toShow }) {
     return (
-        <div className="size-90 absolute bottom-15 right-18 rounded-xl font-noto  bg-neutral-100 shadow-md shadow-neutral-500">
+        <div
+            className={`opacity-0 size-90 absolute bottom-15 right-0 rounded-xl font-noto bg-neutral-100 shadow-md shadow-neutral-500 ${
+                toShow && "opacity-100"
+            }`}
+        >
             <div className="w-full flex gap-3 border-b-1 p-2 rounded-t-xl shadow-sm shadow-zinc-500">
                 <button className="text-sm p-2 font-semibold rounded-md hover:bg-zinc-200">GIFs</button>
                 <button className="text-sm p-2 font-semibold rounded-md hover:bg-zinc-200">Emojis</button>

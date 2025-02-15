@@ -1,3 +1,4 @@
+import { useState } from "react";
 import imageSvg from "../assets/image.svg";
 import send from "../assets/send.svg";
 import emoji from "../assets/emoji.svg";
@@ -7,6 +8,19 @@ import MessageMisc from "./messageMisc";
 
 export default function MessageInput({ textSubmit, imageSubmit, text, textHandler, image, imageHandler }) {
     const textNewLines = text.match(/\n/g);
+    const [showMessageMisc, setShowMessageMisc] = useState(false);
+
+    function handleShowMsgMisc(value) {
+        switch (showMessageMisc) {
+            case "emoji":
+            case "gif":
+                setShowMessageMisc(false);
+                break;
+
+            default:
+                setShowMessageMisc(value);
+        }
+    }
 
     return (
         <div className=" w-[80%] h-fit flex align-middle p-3 ml-5 mr-5 mt-10 absolute bottom-10 rounded-md bg-neutral-200">
@@ -39,10 +53,10 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                     />
                 )}
                 <div className="flex items-center gap-3">
-                    <button type="button">
+                    <button type="button" onClick={() => handleShowMsgMisc("emoji")}>
                         <img src={emoji} className="size-5 cursor-pointer hover:animate-scale" />
                     </button>
-                    <button type="button">
+                    <button type="button" onClick={() => handleShowMsgMisc("gif")}>
                         <img src={gif} className="size-5 cursor-pointer hover:animate-scale" />
                     </button>
                     <button type="submit" className="">
@@ -50,7 +64,7 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                     </button>
                 </div>
             </form>
-            <MessageMisc textHandler={textHandler} text={text} />
+            <MessageMisc textHandler={textHandler} text={text} toShow={showMessageMisc} />
         </div>
     );
 }

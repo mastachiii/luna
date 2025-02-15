@@ -9,19 +9,22 @@ function reducer(state, action) {
         id: crypto.randomUUID(), // Using the length of the messages is unreliable because the database uses auto increment ids.. this works fine since it will get replaced when the useEffect will run again
         message: action.message,
         isImage: action.type === "send image",
-        dateSent: new Date(),
+        dateSent: new Date().toDateString(),
         user: JSON.parse(localStorage.getItem("user")),
     };
 
-    switch (action.type) {
-        case "send text": {
-            return {
-                ...state,
-                messages: [...state.messages, newMessage],
-            };
-        }
+    function scrollToBottom() {
+        setTimeout(() => {
+            action.convoRef.current.scrollTop = action.convoRef.current.scrollHeight;
+        }, 100);
+    }
 
+    switch (action.type) {
+        case "send text":
         case "send image": {
+            console.log(newMessage);
+            scrollToBottom();
+
             return {
                 ...state,
                 messages: [...state.messages, newMessage],
@@ -29,6 +32,8 @@ function reducer(state, action) {
         }
 
         case "replace conversation": {
+            scrollToBottom();
+
             return action.convo;
         }
     }
@@ -64,27 +69,26 @@ export default function Chat({ isGroup, id, friend }) {
     }, [trigger, isGroup, id, friend]);
 
     // Scroll to bottom whenever user sends a message...
-    useEffect(() => {
-        if (convoRef.current) convoRef.current.scrollTop = convoRef.current.scrollHeight;
-    }, [conversation]);
+    // useEffect(() => {
+    //     if (convoRef.current) convoRef.current.scrollTop = convoRef.current.scrollHeight;
+    // }, []);
 
     function handleMessageSend(e) {
         e.preventDefault();
 
-        // conversationApi.sendMessage({ id: conversation.id, message: text });
+        conversationApi.sendMessage({ id: conversation.id, message: text });
 
         // Modify current conversation state so that user doesn't have to wait for the effect to run again for their message to display...
-        dispatch({ type: "send text", message: text });
-
+        dispatch({ type: "send text", message: text, convoRef });
         setText("");
     }
 
     function handleImageUpload(e) {
         e.preventDefault();
 
-        conversationApi.sendImage({ id: conversation.id, image });
+        // conversationApi.sendImage({ id: conversation.id, image });
 
-        dispatch({ type: "send image", message: URL.createObjectURL(image) });
+        dispatch({ type: "send image", message: URL.createObjectURL(image), convoRef });
     }
 
     if (conversation) {
