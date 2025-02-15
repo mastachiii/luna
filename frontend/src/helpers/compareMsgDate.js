@@ -13,7 +13,7 @@ function compareMsgDate(msg1, msg2) {
 
     // If both messages are not sent on the same day, render a new message div
     if (!sameDay || !sameDate || !sameMonth || !sameYear) return;
-    console.log({ msg1, msg2 });
+
     return date1.getMinutes() - date2.getMinutes() <= 5;
 }
 

@@ -24,7 +24,7 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
 
     return (
         <div className="w-[80%] h-fit flex align-middle p-3 ml-5 mr-5 mt-10 absolute bottom-10 rounded-md bg-neutral-200">
-            <label htmlFor="file" className="flex items-center">
+            <label htmlFor="file" onClick={() => setShowMessageMisc(false)} className="flex items-center">
                 <img src={imageSvg} className="size-5 mt-[2px] cursor-pointer hover:animate-scale" />
             </label>
             <input type="file" id="file" className="invisible w-0" onChange={e => imageHandler(e.target.files[0])} />
