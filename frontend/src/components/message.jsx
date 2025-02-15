@@ -15,7 +15,7 @@ export default function Message({ message, previousMessage }) {
         <div
             className={`w-[90%] flex ${
                 !skipProfileRender ? "p-1 mt-6 ml-5" : "pl-1 pr-1 ml-[16.5px]"
-            } rounded-md overflow-hidden group hover:bg-neutral-200 transition duration-100 ease-in`}
+            } rounded-md relative group hover:bg-neutral-200 transition duration-100 ease-in`}
         >
             {!skipProfileRender ? (
                 <img src={user.profilePicture} className="size-10 rounded-full" />
@@ -30,7 +30,7 @@ export default function Message({ message, previousMessage }) {
                     </span>
                 )}
                 {message.isImage ? (
-                    <img src={message.message} className="w-2xl pt-2 pb-2 " />
+                    <img src={message.message} className="w-2xl pt-2 pb-2" />
                 ) : (
                     <p className={`w-full whitespace-pre-wrap`}>{message.message}</p>
                 )}

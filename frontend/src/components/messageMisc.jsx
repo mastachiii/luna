@@ -71,8 +71,8 @@ function Emojis({ handler, text }) {
 export default function MessageMisc({ textHandler, text, toShow }) {
     return (
         <div
-            className={`opacity-0 size-90 absolute bottom-15 right-0 rounded-xl font-noto bg-neutral-100 shadow-md shadow-neutral-500 ${
-                toShow && "opacity-100"
+            className={`opacity-0 size-90 z-10 absolute bottom-15 right-0 rounded-xl font-noto bg-neutral-100 shadow-md shadow-neutral-500 ${
+                toShow && "opacity-0"
             }`}
         >
             <div className="w-full flex gap-3 border-b-1 p-2 rounded-t-xl shadow-sm shadow-zinc-500">

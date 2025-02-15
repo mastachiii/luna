@@ -23,7 +23,7 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
     }
 
     return (
-        <div className=" w-[80%] h-fit flex align-middle p-3 ml-5 mr-5 mt-10 absolute bottom-10 rounded-md bg-neutral-200">
+        <div className="w-[80%] h-fit flex align-middle p-3 ml-5 mr-5 mt-10 absolute bottom-10 rounded-md bg-neutral-200">
             <label htmlFor="file" className="flex items-center">
                 <img src={imageSvg} className="size-5 mt-[2px] cursor-pointer hover:animate-scale" />
             </label>
@@ -57,7 +57,7 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                         <img src={emoji} className="size-5 cursor-pointer hover:animate-scale" />
                     </button>
                     <button type="button" onClick={() => handleShowMsgMisc("gif")}>
-                        <img src={gif} className="size-5 cursor-pointer hover:animate-scale" />
+                        <img src={gif} className="size-5 cursor-pointer  hover:animate-scale" />
                     </button>
                     <button type="submit" className="">
                         <img src={send} className="size-5 cursor-pointer hover:animate-scale" />

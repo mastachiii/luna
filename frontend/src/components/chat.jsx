@@ -59,6 +59,7 @@ export default function Chat({ isGroup, id, friend }) {
             // set interval doesn't really work in this case...
             timeout.current = setTimeout(() => {
                 setTrigger(trigger + 1);
+                if (trigger === 0) convoRef.current.scrollTop = convoRef.current.scrollHeight; // When user first opens chat always scroll to bottom
             }, 10000);
 
             return () => {
@@ -67,15 +68,13 @@ export default function Chat({ isGroup, id, friend }) {
         })();
     }, [trigger, isGroup, id, friend]);
 
-    // Scroll to bottom 
-    useEffect(() => {
-        if (convoRef.current) convoRef.current.scrollTop = convoRef.current.scrollHeight;
-    }, []);
+    // Scroll to bottom
+    useEffect(() => {}, []);
 
     function handleMessageSend(e) {
         e.preventDefault();
 
-        // conversationApi.sendMessage({ id: conversation.id, message: text });
+        conversationApi.sendMessage({ id: conversation.id, message: text });
 
         // Modify current conversation state so that user doesn't have to wait for the effect to run again for their message to display...
         dispatch({ type: "send text", message: text, convoRef });
