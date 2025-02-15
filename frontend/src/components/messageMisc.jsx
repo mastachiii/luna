@@ -1,7 +1,11 @@
 import { use, useEffect, useState } from "react";
 
 async function fetchEmojis(category) {
-    const emojis = await fetch(`https://emoji-api.com/categories/${category}?access_key=${import.meta.env.VITE_EMOJI_API_KEY}`)
+    const emojis = await fetch(`https://emoji-api.com/categories/${category}?access_key=${import.meta.env.VITE_EMOJI_API_KEY}`, {
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+        },
+    })
         .then(response => response.json())
         .then(data => data);
 
@@ -71,8 +75,8 @@ function Emojis({ handler, text }) {
 export default function MessageMisc({ textHandler, text, toShow }) {
     return (
         <div
-            className={`opacity-0 size-90 z-10 absolute bottom-15 right-0 rounded-xl font-noto bg-neutral-100 shadow-md shadow-neutral-500 ${
-                toShow && "opacity-0"
+            className={` size-90 z-10 absolute bottom-15 right-0 rounded-xl font-noto bg-neutral-100 shadow-md shadow-neutral-500 ${
+                toShow ? "block" : "hidden"
             }`}
         >
             <div className="w-full flex gap-3 border-b-1 p-2 rounded-t-xl shadow-sm shadow-zinc-500">

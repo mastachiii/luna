@@ -13,8 +13,8 @@ function compareMsgDate(msg1, msg2) {
 
     // If both messages are not sent on the same day, render a new message div
     if (!sameDay || !sameDate || !sameMonth || !sameYear) return;
-
-    return date2.getMinutes() - date1.getMinutes() <= 5;
+    console.log({ msg1, msg2 });
+    return date1.getMinutes() - date2.getMinutes() <= 5;
 }
 
 // If message was sent today / yesterday render a diff timestamp
@@ -30,7 +30,7 @@ function formatMsgDate(date) {
             return `Yesterday at ${format(msgDate, "p")}`;
 
         default:
-            return `${format(msgDate, 'Pp')}`
+            return `${format(msgDate, "Pp")}`;
     }
 }
 
