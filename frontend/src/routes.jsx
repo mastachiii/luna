@@ -1,13 +1,13 @@
 import { createBrowserRouter } from "react-router";
-import SignUp from "./components/signUp";
-import LogIn from "./components/logIn";
-import Index from "./components/indexLayout";
+import SignUp from "./components/auth/signUp";
+import LogIn from "./components/auth/logIn";
+import Index from "./components/layout/indexLayout";
 import FriendsPage from "./components/friendsPage";
 import Request from "./components/requestList";
 import Friends from "./components/friends";
-import Chat from "./components/chat";
+import Chat from "./components/chat/chat";
 import CreateGroup from "./components/createGroup";
-import GroupChatList from "./components/groupChatList";
+import GroupChatList from "./components/chat/groupChatList";
 import CustomizeProfile from "./components/customizeProfile";
 
 const routes = createBrowserRouter([

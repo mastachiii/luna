@@ -34,4 +34,12 @@ function formatMsgDate(date) {
     }
 }
 
-export default { compareMsgDate, formatMsgDate };
+// Check if first message in the day
+function checkIfMsgFirstInDay(date, date2) {
+    const msgDate = new Date(date).getDate();
+    const msg2Date = new Date(date2).getDate();
+
+    return msgDate - msg2Date >= 1;
+}
+
+export default { compareMsgDate, formatMsgDate, checkIfMsgFirstInDay };

@@ -1,9 +1,10 @@
 import { useContext, useEffect, useReducer, useRef, useState } from "react";
-import conversationApi from "../helpers/conversationApi";
-import Message from "./message";
-import MessageInput from "./messageInput";
-import { UserContext } from "./userContext";
-import noPfp from "../assets/userUnknown.svg";
+import conversationApi from "../../helpers/conversationApi";
+import Message from "../message/message";
+import MessageInput from "../message/messageInput";
+import { UserContext } from "../userContext";
+import noPfp from "../../assets/userUnknown.svg";
+import ChatBegin from "./chatBegin";
 
 function reducer(state, action) {
     const newMessage = action.user && {
@@ -108,6 +109,7 @@ export default function Chat({ isGroup, id, friend }) {
                     )}
                 </div>
                 <div className="h-[84vh] overflow-y-scroll box-border" ref={convoRef}>
+                {!isGroup && <ChatBegin friendData={friend} />}
                     <div className="z-0">
                         {conversation &&
                             conversation.messages.map((msg, index) => {

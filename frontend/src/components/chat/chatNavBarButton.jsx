@@ -1,4 +1,4 @@
-import online from "../assets/online.svg";
+import online from "../../assets/online.svg";
 
 export default function ChatNavBarButton({ handleClick, image, label, isUser, isOnline }) {
     return (

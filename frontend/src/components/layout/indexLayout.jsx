@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import NavBar from "./navBar";
-import userApi from "../helpers/userApi";
-import Chat from "./chat";
+import NavBar from "../navBar/navBar";
+import userApi from "../../helpers/userApi";
+import Chat from "../chat/chat";
 import UserLayout from "./userLayout";
-import { UserContext } from "./userContext";
+import { UserContext } from "../userContext";
 
 export default function Index() {
     const [userData, setUserData] = useState(null);

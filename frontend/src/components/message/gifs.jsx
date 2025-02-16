@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { data } from "react-router";
 
 const API_KEY = import.meta.env.VITE_GIPHY_API_KEY;
 
@@ -52,7 +51,7 @@ export default function Gifs({ handler }) {
                 <input type="text" value={gifSearch} onChange={handleChange} placeholder={'Search Tenor'} className="w-[90%] p-2 mt-2 ml-3 mr-auto text-sm bg-neutral-200" />
             </form>
             {gifsToShow && (
-                <div className="h-full flex flex-wrap gap-1 p-1 overflow-y-scroll">
+                <div className="h-110 flex flex-wrap gap-1 p-1 overflow-y-scroll">
                     {gifsToShow.map(g => {
                         return (
                             <img

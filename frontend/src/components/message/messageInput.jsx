@@ -1,9 +1,9 @@
 import { useState } from "react";
-import imageSvg from "../assets/image.svg";
-import send from "../assets/send.svg";
-import emoji from "../assets/emoji.svg";
-import gif from "../assets/gif.svg";
-import trash from "../assets/trash.svg";
+import imageSvg from "../../assets/image.svg";
+import send from "../../assets/send.svg";
+import emoji from "../../assets/emoji.svg";
+import gif from "../../assets/gif.svg";
+import trash from "../../assets/trash.svg";
 import MessageMisc from "./messageMisc";
 
 export default function MessageInput({ textSubmit, imageSubmit, text, textHandler, image, imageHandler, gifHandler }) {

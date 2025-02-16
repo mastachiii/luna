@@ -1,8 +1,8 @@
 import ChatNavBarButton from "./chatNavBarButton";
-import friendsLogo from "../assets/friends.svg";
-import shop from "../assets/shop.svg";
-import nitro from "../assets/nitro.svg";
-import noPfp from "../assets/userUnknown.svg";
+import friendsLogo from "../../assets/friends.svg";
+import shop from "../../assets/shop.svg";
+import nitro from "../../assets/nitro.svg";
+import noPfp from "../../assets/userUnknown.svg";
 
 export default function ChatNavBar({ friends, compHandler, friendHandler }) {
     return (

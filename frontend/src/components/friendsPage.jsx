@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import FormField from "./formField";
+import FormField from "./auth/formField";
 import userApi from "../helpers/userApi";
 
 export default function FriendsPage() {

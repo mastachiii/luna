@@ -1,12 +1,11 @@
 import { useState } from "react";
-import userApi from "../helpers/userApi";
+import userApi from "../../helpers/userApi";
 import FormField from "./formField";
 import { Link } from "react-router";
-import logo from "../assets/logo.svg";
 import Form from "./form";
-import Background from "./background";
+import Background from "../background";
 import FormButton from "./formButton";
-import LoadingSpinner from "./loadingSpinner";
+import LoadingSpinner from "../loadingSpinner";
 
 export default function LogIn() {
     const [username, setUsername] = useState("");

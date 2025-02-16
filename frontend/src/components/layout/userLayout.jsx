@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ChatNavBar from "./chatNavBar";
-import Chat from "./chat";
+import ChatNavBar from "../chat/chatNavBar";
+import Chat from "../chat/chat";
 
 export default function UserLayout({ userData }) {
     const [compToRender, setCompToRender] = useState(null);

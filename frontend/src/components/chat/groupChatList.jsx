@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import userApi from "../helpers/userApi";
+import userApi from "../../helpers/userApi";
 import { Link } from "react-router";
 
 export default function GroupChatList() {
