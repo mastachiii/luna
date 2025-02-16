@@ -52,7 +52,7 @@ export default function Gifs({ handler }) {
             </form>
             {gifsToShow && (
                 <div className="h-110 flex flex-wrap gap-1 p-1 overflow-y-scroll">
-                    {gifsToShow.map(g => {
+                    {gifsToShow.map(g => {  
                         return (
                             <img
                                 src={g.images.downsized.url}

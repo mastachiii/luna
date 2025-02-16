@@ -5,6 +5,7 @@ import MessageInput from "../message/messageInput";
 import { UserContext } from "../userContext";
 import noPfp from "../../assets/userUnknown.svg";
 import ChatBegin from "./chatBegin";
+import GroupMemberList from "../groupMemberList";
 
 function reducer(state, action) {
     const newMessage = action.user && {
@@ -98,24 +99,27 @@ export default function Chat({ isGroup, id, friend }) {
     }
 
     if (conversation) {
+        console.log(conversation);
         return (
-            <div className="w-full h-full font-noto bg-zinc-50 ">
+            <div className="w-full h-screen font-noto bg-zinc-50 ">
                 <div className=" w-full h-13 mb-2 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
-                    {!isGroup && (
-                        <span className="h-full flex ml-5 items-center gap-3">
-                            <img src={friend.profilePicture || noPfp} className="size-7 rounded-full" />
-                            <p className="text-sm font-semibold">{friend.displayName}</p>
+                    {
+                        <span className=" flex ml-5 items-center gap-3">
+                            <img src={isGroup ? conversation.picture : friend.profilePicture || noPfp} className="size-7 rounded-full" />
+                            <p className="text-sm font-semibold">{isGroup ? conversation.name : friend.displayName}</p>
                         </span>
-                    )}
+                    }
                 </div>
-                <div className="h-[84vh] overflow-y-scroll box-border" ref={convoRef}>
-                {!isGroup && <ChatBegin friendData={friend} />}
-                    <div className="z-0">
-                        {conversation &&
-                            conversation.messages.map((msg, index) => {
-                                return <Message message={msg} previousMessage={conversation.messages[index - 1]} />;
-                            })}
+                <div className="w-full h-[94%] flex">
+                    <div className={`${isGroup && "grow"} h-[84vh] flex overflow-y-scroll box-border`} ref={convoRef}>
+                        <div className="z-0">
+                            {conversation &&
+                                conversation.messages.map((msg, index) => {
+                                    return <Message message={msg} previousMessage={conversation.messages[index - 1]} />;
+                                })}
+                        </div>
                     </div>
+                    {isGroup && <GroupMemberList />}
                 </div>
                 <MessageInput
                     textSubmit={handleMessageSend}
