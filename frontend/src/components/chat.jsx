@@ -1,18 +1,18 @@
-import { useEffect, useReducer, useRef, useState } from "react";
-import { useLocation, useParams } from "react-router";
+import { useContext, useEffect, useReducer, useRef, useState } from "react";
 import conversationApi from "../helpers/conversationApi";
 import Message from "./message";
 import MessageInput from "./messageInput";
+import { UserContext } from "./userContext";
+import noPfp from "../assets/userUnknown.svg";
 
 function reducer(state, action) {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const newMessage = state && {
+    const newMessage = action.user && {
         id: crypto.randomUUID(), // Using the length of the messages is unreliable because the database uses auto increment ids.. this works fine since it will get replaced when the useEffect will run again
         message: action.message,
         isImage: action.type === "send image",
         dateSent: new Date().toISOString(),
-        user,
-        userId: user.id,
+        user: action.user,
+        userId: action.user.id,
     };
 
     function scrollToBottom() {
@@ -46,6 +46,7 @@ export default function Chat({ isGroup, id, friend }) {
     const [text, setText] = useState("");
     const [trigger, setTrigger] = useState(0);
     const [image, setImage] = useState(null);
+    const userData = useContext(UserContext);
     const timeout = useRef();
     const convoRef = useRef();
 
@@ -56,7 +57,7 @@ export default function Chat({ isGroup, id, friend }) {
                 ? await conversationApi.getGroupChat({ id })
                 : await conversationApi.getConversation({ username: friend.username });
 
-            // dispatch({ type: "replace conversation", convo, convoRef });
+            dispatch({ type: "replace conversation", convo, convoRef });
 
             // Increment interv variable so that effect would run...
             // set interval doesn't really work in this case...
@@ -71,16 +72,13 @@ export default function Chat({ isGroup, id, friend }) {
         })();
     }, [trigger, isGroup, id, friend]);
 
-    // Scroll to bottom
-    useEffect(() => {}, []);
-
     function handleMessageSend(e) {
         e.preventDefault();
 
-        // conversationApi.sendMessage({ id: conversation.id, message: text });
+        conversationApi.sendMessage({ id: conversation.id, message: text });
 
         // Modify current conversation state so that user doesn't have to wait for the effect to run again for their message to display...
-        dispatch({ type: "send text", message: text, convoRef });
+        dispatch({ type: "send text", message: text, convoRef, user: userData });
         setText("");
     }
 
@@ -89,13 +87,13 @@ export default function Chat({ isGroup, id, friend }) {
 
         conversationApi.sendImage({ id: conversation.id, image });
 
-        dispatch({ type: "send image", message: URL.createObjectURL(image), convoRef });
+        dispatch({ type: "send image", message: URL.createObjectURL(image), convoRef, user: userData });
     }
 
     function handleGifUpload(gifUrl) {
         conversationApi.sendMessage({ id: conversation.id, message: gifUrl, isImage: true });
 
-        dispatch({ type: "send image", message: gifUrl, convoRef });
+        dispatch({ type: "send image", message: gifUrl, convoRef, user: userData });
     }
 
     if (conversation) {
@@ -104,7 +102,7 @@ export default function Chat({ isGroup, id, friend }) {
                 <div className=" w-full h-13 mb-2 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
                     {!isGroup && (
                         <span className="h-full flex ml-5 items-center gap-3">
-                            <img src={friend.profilePicture} className="size-7 rounded-full" />
+                            <img src={friend.profilePicture || noPfp} className="size-7 rounded-full" />
                             <p className="text-sm font-semibold">{friend.displayName}</p>
                         </span>
                     )}

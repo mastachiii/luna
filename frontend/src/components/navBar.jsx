@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import logo from "../assets/logo.svg";
 import logoUnfocused from "../assets/logo-unfocused.svg";
 import NavBarButton from "./navBarButton";
