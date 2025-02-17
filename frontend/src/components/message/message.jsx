@@ -13,13 +13,13 @@ export default function Message({ message, previousMessage }) {
     }
 
     return (
-        <div className="flex flex-col">
+        <div className="w-full flex flex-col">
             {!previousMessage ||
                 (dateUtils.checkIfMsgFirstInDay(message.dateSent, previousMessage.dateSent) && (
-                    <div className="flex items-center justify-center mt-2">
-                        <span className="w-[42%] h-[1px]  bg-neutral-300"></span>
+                    <div className="w-full flex items-center justify-center ml-10 mt-2">
+                        <span className="w-[45%] h-[1px]  bg-neutral-300"></span>
                         <p className="ml-2 mr-2 text-[10px] font-semibold text-zinc-500">{format(message.dateSent, "PPP")}</p>
-                        <span className="w-[42%] h-[1px] bg-neutral-300"></span>
+                        <span className="w-[45%] h-[1px] bg-neutral-300"></span>
                     </div>
                 ))}
             <div

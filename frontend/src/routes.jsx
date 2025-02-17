@@ -4,7 +4,6 @@ import LogIn from "./components/auth/logIn";
 import Index from "./components/layout/indexLayout";
 import FriendsPage from "./components/friendsPage";
 import Request from "./components/requestList";
-import Friends from "./components/friends";
 import Chat from "./components/chat/chat";
 import CreateGroup from "./components/createGroup";
 import CustomizeProfile from "./components/customizeProfile";
@@ -29,10 +28,6 @@ const routes = createBrowserRouter([
     {
         path: "/requests",
         element: <Request />,
-    },
-    {
-        path: "/friends",
-        element: <Friends />,
     },
     {
         path: "/chat/:username",
