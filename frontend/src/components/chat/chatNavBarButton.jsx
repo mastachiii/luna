@@ -10,7 +10,7 @@ export default function ChatNavBarButton({ handleClick, image, label, isUser, is
         >
             <img src={image} className={`size-7 ${isUser && "size-8 rounded-full"}`} />
             <p className="text-sm text-zinc-700">{label}</p>
-            {isOnline && <img src={online} className="size-13 ml-auto  animate-pulse" />}
+            {isOnline && <img src={online} className="size-13 ml-auto animate-pulse" />}
         </button>
     );
 }

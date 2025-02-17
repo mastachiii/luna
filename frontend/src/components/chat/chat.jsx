@@ -100,8 +100,8 @@ export default function Chat({ isGroup, id, friend }) {
 
     if (conversation) {
         return (
-            <div className="h-screen flex flex-col grow font-noto bg-zinc-50 ">
-                <div className=" w-full h-13 flex align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
+            <div className="w-[85%] h-screen flex flex-col grow font-noto bg-zinc-50 ">
+                <div className="h-13 flex align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
                     {
                         <span className=" flex ml-5 items-center gap-3">
                             <img src={isGroup ? conversation.picture : friend.profilePicture || noPfp} className="size-7 rounded-full" />
