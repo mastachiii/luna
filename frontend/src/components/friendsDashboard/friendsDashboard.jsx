@@ -3,6 +3,7 @@ import userApi from "../../helpers/userApi";
 import FriendList from "./friendList";
 import Requests from "../requestList";
 import FriendRequests from "./friendRequests";
+import AddFriend from "./addFriend";
 
 export default function FriendsDashboard({ compHandler, friendHandler, selHandler }) {
     const [userData, setUserData] = useState([]);
@@ -37,6 +38,11 @@ export default function FriendsDashboard({ compHandler, friendHandler, selHandle
 
         case "requests": {
             comp = <FriendRequests sentRequests={userData.requestsSent} pendingRequests={userData.requestsReceived} />;
+            break;
+        }
+
+        case "add": {
+            comp = <AddFriend />;
         }
     }
 
@@ -49,7 +55,7 @@ export default function FriendsDashboard({ compHandler, friendHandler, selHandle
                 <button onClick={() => setCompToRender("online")}>Online</button>
                 <button onClick={() => setCompToRender("all")}>All</button>
                 <button onClick={() => setCompToRender("requests")}>Pending</button>
-                <button>Add Friend</button>
+                <button onClick={() => setCompToRender("add")}>Add Friend</button>
             </div>
             {comp}
         </div>
