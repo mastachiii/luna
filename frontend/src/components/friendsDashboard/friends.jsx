@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import userApi from "../../helpers/userApi";
-import Online from "./online";
+import FriendList from "./friendList";
 
-export default function Friends({ compHandler, friendHandler }) {
+export default function Friends({ compHandler, friendHandler, selHandler }) {
     const [userData, setUserData] = useState([]);
     const [compToRender, setCompToRender] = useState(null);
 
@@ -14,16 +14,22 @@ export default function Friends({ compHandler, friendHandler }) {
         })();
     }, []);
 
-    // function handleRemove(id) {
-    //     userApi.removeFriend({ id });
-
-    //     setFriends([...friends].filter(f => f.id !== id));
-    // }
-
     let comp;
     switch (compToRender) {
         case "online": {
-            comp = <Online friends={userData.friends.filter(f => f.online)} compHandler={compHandler} friendHandler={friendHandler} />;
+            comp = (
+                <FriendList
+                    friends={userData.friends.filter(f => f.online)}
+                    compHandler={compHandler}
+                    friendHandler={friendHandler}
+                    selHandler={selHandler}
+                />
+            );
+            break;
+        }
+
+        case "all": {
+            comp = <FriendList friends={userData.friends} compHandler={compHandler} friendHandler={friendHandler} selHandler={selHandler} />;
         }
     }
 
@@ -34,7 +40,7 @@ export default function Friends({ compHandler, friendHandler }) {
                     <p>Friends</p>
                 </span>
                 <button onClick={() => setCompToRender("online")}>Online</button>
-                <button>All</button>
+                <button onClick={() => setCompToRender("all")}>All</button>
                 <button>Pending</button>
                 <button>Add Friend</button>
             </div>

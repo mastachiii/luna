@@ -6,6 +6,7 @@ import Friends from "../friendsDashboard/friends";
 export default function UserLayout({ userData }) {
     const [compToRender, setCompToRender] = useState(null);
     const [friendData, setFriendData] = useState(null);
+    const [navSelected, setNavSelected] = useState(null);
 
     let comp;
 
@@ -16,13 +17,19 @@ export default function UserLayout({ userData }) {
         }
 
         case "friend list": {
-            comp = <Friends compHandler={setCompToRender} friendHandler={setFriendData} />;
+            comp = <Friends compHandler={setCompToRender} friendHandler={setFriendData} selHandler={setNavSelected} />;
         }
     }
 
     return (
         <div className="flex w-full h-screen">
-            <ChatNavBar friends={userData.friends} compHandler={setCompToRender} friendHandler={setFriendData} />
+            <ChatNavBar
+                friends={userData.friends}
+                compHandler={setCompToRender}
+                friendHandler={setFriendData}
+                selHandler={setNavSelected}
+                selected={navSelected}
+            />
             {comp}
         </div>
     );

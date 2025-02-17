@@ -5,9 +5,7 @@ import shop from "../../assets/shop.svg";
 import nitro from "../../assets/nitro.svg";
 import noPfp from "../../assets/userUnknown.svg";
 
-export default function ChatNavBar({ friends, compHandler, friendHandler }) {
-    const [selected, setSelected] = useState(null);
-
+export default function ChatNavBar({ friends, compHandler, friendHandler, selected, selHandler }) {
     return (
         <div className="w-[15%] flex flex-col font-noto bg-neutral-100">
             <div className="w-full h-13 pt-5 pb-5 mb-2 border-b-2 border-zinc-200 shadow-md shadow-zinc-200 "></div>
@@ -15,7 +13,7 @@ export default function ChatNavBar({ friends, compHandler, friendHandler }) {
                 <ChatNavBarButton
                     handleClick={() => {
                         compHandler("friend list");
-                        setSelected("friend");
+                        selHandler("friend");
                     }}
                     image={friendsLogo}
                     label={"Friends"}
@@ -31,7 +29,7 @@ export default function ChatNavBar({ friends, compHandler, friendHandler }) {
                         handleClick={() => {
                             compHandler("chat friend");
                             friendHandler(f);
-                            setSelected(f.id);
+                            selHandler(f.id);
                         }}
                         image={f.profilePicture || noPfp}
                         label={f.displayName}

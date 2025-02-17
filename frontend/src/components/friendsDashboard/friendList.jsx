@@ -15,7 +15,7 @@ function RemoveFriendDialog({ friend, show, ref }) {
     );
 }
 
-export default function Online({ friends, compHandler, friendHandler }) {
+export default function FriendList({ friends, compHandler, friendHandler, selHandler }) {
     const [optionsActive, setOptionsActive] = useState(false);
     const [dialogActive, setDialogActive] = useState(false);
     const dialogRef = useRef();
@@ -30,6 +30,7 @@ export default function Online({ friends, compHandler, friendHandler }) {
                             onClick={() => {
                                 friendHandler(f);
                                 compHandler("chat friend");
+                                selHandler(f.id);
                             }}
                         >
                             CHAT
