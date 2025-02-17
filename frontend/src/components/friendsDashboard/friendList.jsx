@@ -1,28 +1,36 @@
 import { useState, useRef } from "react";
 import userApi from "../../helpers/userApi";
 
-function RemoveFriendDialog({ friend, show, ref }) {
+function RemoveFriendDialog({ friend, friends, friendsHandler, show, ref }) {
     function handleRemoveFriend() {
         userApi.removeFriend({ id: friend.id });
+        friendsHandler(friends.filter(f => f.id !== friend.id));
+        ref.current.close();
     }
 
     return (
         <dialog ref={ref}>
             <button onClick={() => ref.current.close()}>X</button>
-            <p>Are you sure you want to remove blahblah</p>
+            <p>Are you sure you want to remove {friend.displayName} from your friends?</p>
             <button onClick={handleRemoveFriend}>YES</button>
         </dialog>
     );
 }
 
 export default function FriendList({ friends, compHandler, friendHandler, selHandler }) {
-    const [optionsActive, setOptionsActive] = useState(false);
-    const [dialogActive, setDialogActive] = useState(false);
+    const [activeId, setActiveId] = useState(false);
+    const [friendsToShow, setFriendsToShow] = useState(friends); // If user removes a friend, update state. Forcing the page to reload would be messier..
     const dialogRef = useRef();
+
+    function handleOptionsClick(id) {
+        const newId = activeId === id ? null : id; // If user clicks again set null to make opts disappear
+
+        setActiveId(newId);
+    }
 
     return (
         <div>
-            {friends.map(f => {
+            {friendsToShow.map(f => {
                 return (
                     <div key={f.id}>
                         <p>{f.displayName}</p>
@@ -36,15 +44,22 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
                             CHAT
                         </button>
                         <div>
-                            <button onClick={() => setOptionsActive(!optionsActive)}>OOO</button>
-                            <div className={`${optionsActive ? "block" : "hidden"}`}>
+                            <button onClick={() => handleOptionsClick(f.id)}>OOO</button>
+                            <div className={`${activeId === f.id ? "block" : "hidden"}`}>
                                 <button onClick={() => dialogRef.current.showModal()}>Remove friend</button>
                             </div>
                         </div>
-                        <RemoveFriendDialog show={dialogActive} ref={dialogRef} friend={f} />
                     </div>
                 );
             })}
+            {activeId && (
+                <RemoveFriendDialog
+                    ref={dialogRef}
+                    friend={friends.find(f => f.id === activeId)}
+                    friends={friendsToShow}
+                    friendsHandler={setFriendsToShow}
+                />
+            )}
         </div>
     );
 }
