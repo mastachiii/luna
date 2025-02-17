@@ -277,6 +277,37 @@ class User {
 
         return user;
     }
+
+    async getAvailableUsers({ id }) {
+        const users = await prisma.user.findMany({
+            take: 20,
+            where: {
+                AND: [
+                    {
+                        id: {
+                            not: id,
+                        },
+                    },
+                    {
+                        online: {
+                            equals: true,
+                        },
+                    },
+                    {
+                        friends: {
+                            every: {
+                                id: {
+                                    not: id,
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        });
+
+        return users;
+    }
 }
 
 const user = new User();

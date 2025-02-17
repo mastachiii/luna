@@ -10,6 +10,7 @@ const route = express.Router();
 
 // GET
 route.get("/", isAuthenticated, controller.getUserData);
+route.get("/users", isAuthenticated, controller.getAvailableUsers);
 
 // POST
 route.post("/", isAuthenticated, controller.changeUserStatus);

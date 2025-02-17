@@ -1,3 +1,5 @@
+import { da } from "date-fns/locale";
+
 class User {
     constructor() {
         this.userUrl = "http://localhost:8080/user";
@@ -93,8 +95,18 @@ class User {
         })
             .then(response => response.json())
             .then(data => data);
-
+        console.log(user)
         return user;
+    }
+
+    async getAvailableUsers() {
+        const { users } = await fetch(`${this.userUrl}/users`, {
+            credentials: "include",
+        })
+            .then(response => response.json())
+            .then(data => data);
+        console.log(users);
+        return users;
     }
 
     updateProfile({ displayName, profilePicture }) {

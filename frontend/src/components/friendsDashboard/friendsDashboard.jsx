@@ -11,7 +11,7 @@ export default function FriendsDashboard({ compHandler, friendHandler, selHandle
     useEffect(() => {
         (async () => {
             const data = await userApi.getUserData();
-
+            userApi.getAvailableUsers();
             setUserData(data);
         })();
     }, [compToRender]);

@@ -169,6 +169,16 @@ class User {
             next(err);
         }
     }
+
+    async getAvailableUsers(req, res, next) {
+        try {
+            const users = await db.getAvailableUsers({ id: req.user.id });
+
+            return res.status(200).json({ users });
+        } catch (err) {
+            next(err);
+        }
+    }
 }
 
 module.exports = new User();
