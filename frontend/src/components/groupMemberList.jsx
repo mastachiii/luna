@@ -1,8 +1,11 @@
-function UserProfile({ profilePicture, displayName }) {
+import owner from "../assets/owner.svg";
+
+function UserProfile({ profilePicture, displayName, isOwner }) {
     return (
-        <span className="flex align-middle gap-2">
-            <img src={profilePicture} className="size-9 rounded-full" />
-            <p className="self-center text-sm">{displayName}</p>
+        <span className="flex gap-2 mt-2">
+            <img src={profilePicture} className="size-8 rounded-full" />
+            <p className="self-center text-sm ml-1">{displayName}</p>
+            {isOwner && <img src={owner} className="size-4 self-center"/>}
         </span>
     );
 }
@@ -12,15 +15,15 @@ export default function GroupMemberList({ members, ownerId }) {
     const offlineMembers = members.filter(m => !m.online);
 
     return (
-        <div className="w-[17%] h-full overflow-y-scroll scrollbar bg-neutral-200 custom-scrollbar">
-            <p className="">ONLINE - {onlineMembers.length}</p>
+        <div className="w-[17%] h-full p-5 overflow-y-scroll bg-neutral-200 custom-scrollbar">
+            <p className="text-xs text-pink-400 font-semibold">ONLINE - {onlineMembers.length}</p>
             <div>
                 {onlineMembers.map(m => {
-                    return <UserProfile profilePicture={m.profilePicture} displayName={m.displayName} key={m.id} />;
+                    return <UserProfile profilePicture={m.profilePicture} displayName={m.displayName} isOwner={m.id === ownerId} key={m.id} />;
                 })}
             </div>
-            <p>OFFLINE - {offlineMembers.length}</p>
-            <div>
+            <p className="mt-8 text-xs font-semibold text-zinc-500">OFFLINE - {offlineMembers.length}</p>
+            <div className="opacity-70">
                 {offlineMembers.map(m => {
                     return <UserProfile profilePicture={m.profilePicture} displayName={m.displayName} key={m.id} />;
                 })}

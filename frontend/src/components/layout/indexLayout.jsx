@@ -23,7 +23,7 @@ export default function Index() {
 
             setUserData(data);
         })();
-    }, []);
+    }, [compToRender]);
 
     let comp;
 
