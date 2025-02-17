@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ChatNavBar from "../chat/chatNavBar";
 import Chat from "../chat/chat";
-import Friends from "../friendsDashboard/friends";
+import FriendsDashboard from "../friendsDashboard/friendsDashboard";
 
 export default function UserLayout({ userData }) {
     const [compToRender, setCompToRender] = useState(null);
@@ -17,7 +17,7 @@ export default function UserLayout({ userData }) {
         }
 
         case "friend list": {
-            comp = <Friends compHandler={setCompToRender} friendHandler={setFriendData} selHandler={setNavSelected} />;
+            comp = <FriendsDashboard compHandler={setCompToRender} friendHandler={setFriendData} selHandler={setNavSelected} />;
         }
     }
 

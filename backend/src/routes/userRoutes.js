@@ -31,6 +31,7 @@ route.post("/profile", isAuthenticated, upload.single("file"), uploadToSupabase,
 route.post("/add/:id", isAuthenticated, controller.addUser);
 route.post("/accept/:id", isAuthenticated, controller.acceptUser);
 route.post("/reject/:id", isAuthenticated, controller.rejectUser);
+route.post("/cancel/:id", isAuthenticated, controller.cancelRequest);
 route.post("/remove/:id", isAuthenticated, controller.removeFriend);
 
 module.exports = route;

@@ -120,6 +120,16 @@ class User {
         }
     }
 
+    async cancelRequest(req, res, next) {
+        try {
+            await db.cancelFriendRequest({ id: req.user.id, receiverId: +req.params.id });
+
+            return res.sendStatus(200);
+        } catch (err) {
+            next(err);
+        }
+    }
+
     async removeFriend(req, res, next) {
         try {
             await db.removeFriend({ id: req.user.id, friendId: +req.params.id });

@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import userApi from "../../helpers/userApi";
 import FriendList from "./friendList";
+import Requests from "../requestList";
+import FriendRequests from "./friendRequests";
 
-export default function Friends({ compHandler, friendHandler, selHandler }) {
+export default function FriendsDashboard({ compHandler, friendHandler, selHandler }) {
     const [userData, setUserData] = useState([]);
     const [compToRender, setCompToRender] = useState(null);
 
@@ -12,7 +14,7 @@ export default function Friends({ compHandler, friendHandler, selHandler }) {
 
             setUserData(data);
         })();
-    }, []);
+    }, [compToRender]);
 
     let comp;
     switch (compToRender) {
@@ -30,6 +32,11 @@ export default function Friends({ compHandler, friendHandler, selHandler }) {
 
         case "all": {
             comp = <FriendList friends={userData.friends} compHandler={compHandler} friendHandler={friendHandler} selHandler={selHandler} />;
+            break;
+        }
+
+        case "requests": {
+            comp = <FriendRequests sentRequests={userData.requestsSent} pendingRequests={userData.requestsReceived} />;
         }
     }
 
@@ -41,7 +48,7 @@ export default function Friends({ compHandler, friendHandler, selHandler }) {
                 </span>
                 <button onClick={() => setCompToRender("online")}>Online</button>
                 <button onClick={() => setCompToRender("all")}>All</button>
-                <button>Pending</button>
+                <button onClick={() => setCompToRender("requests")}>Pending</button>
                 <button>Add Friend</button>
             </div>
             {comp}

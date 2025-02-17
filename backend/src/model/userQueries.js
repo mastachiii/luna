@@ -128,6 +128,30 @@ class User {
         });
     }
 
+    async cancelFriendRequest({ id, receiverId }) {
+        await prisma.user.update({
+            where: { id },
+            data: {
+                requestsReceived: {
+                    disconnect: {
+                        id: receiverId,
+                    },
+                },
+            },
+        });
+
+        await prisma.user.update({
+            where: { id: senderId },
+            data: {
+                requestsSent: {
+                    disconnect: {
+                        id,
+                    },
+                },
+            },
+        });
+    }
+
     async removeFriend({ id, friendId }) {
         const isFriends = checkIfUserAreFriends({ id, friendId });
 
@@ -183,8 +207,24 @@ class User {
                         id: true,
                     },
                 },
-                requestsReceived: true,
-                requestsSent: true,
+                requestsReceived: {
+                    select: {
+                        username: true,
+                        displayName: true,
+                        profilePicture: true,
+                        online: true,
+                        id: true,
+                    },
+                },
+                requestsSent: {
+                    select: {
+                        username: true,
+                        displayName: true,
+                        profilePicture: true,
+                        online: true,
+                        id: true,
+                    },
+                },
                 profilePicture: true,
                 conversations: {
                     include: {
