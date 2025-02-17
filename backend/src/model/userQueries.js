@@ -132,7 +132,7 @@ class User {
         await prisma.user.update({
             where: { id },
             data: {
-                requestsReceived: {
+                requestsSent: {
                     disconnect: {
                         id: receiverId,
                     },
@@ -141,9 +141,9 @@ class User {
         });
 
         await prisma.user.update({
-            where: { id: senderId },
+            where: { id: receiverId },
             data: {
-                requestsSent: {
+                requestsReceived: {
                     disconnect: {
                         id,
                     },

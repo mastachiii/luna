@@ -80,6 +80,13 @@ class User {
         });
     }
 
+    cancelRequest({ id }) {
+        fetch(`${this.userUrl}/cancel/${id}`, {
+            method: "POST",
+            credentials: "include",
+        });
+    }
+
     async getUserData() {
         const { user } = await fetch(this.userUrl, {
             credentials: "include",
