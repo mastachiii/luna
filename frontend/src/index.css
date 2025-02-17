@@ -38,3 +38,7 @@
         }
     }
 }
+
+.custom-scrollbar {
+    scrollbar-width: none;
+}
