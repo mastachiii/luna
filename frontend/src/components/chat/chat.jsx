@@ -102,7 +102,7 @@ export default function Chat({ isGroup, id, friend }) {
         console.log(conversation);
         return (
             <div className="w-full h-screen font-noto bg-zinc-50 ">
-                <div className=" w-full h-13 mb-2 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
+                <div className=" w-full h-13 flex align-middle mb-2 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
                     {
                         <span className=" flex ml-5 items-center gap-3">
                             <img src={isGroup ? conversation.picture : friend.profilePicture || noPfp} className="size-7 rounded-full" />
@@ -110,7 +110,7 @@ export default function Chat({ isGroup, id, friend }) {
                         </span>
                     }
                 </div>
-                <div className="w-full h-[94%] flex">
+                <div className="w-full h-[92%] flex">
                     <div className={`${isGroup && "grow"} h-[84vh] flex overflow-y-scroll box-border`} ref={convoRef}>
                         <div className="z-0">
                             {conversation &&
