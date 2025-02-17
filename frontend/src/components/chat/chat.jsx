@@ -4,7 +4,6 @@ import Message from "../message/message";
 import MessageInput from "../message/messageInput";
 import { UserContext } from "../userContext";
 import noPfp from "../../assets/userUnknown.svg";
-import ChatBegin from "./chatBegin";
 import GroupMemberList from "../groupMemberList";
 
 function reducer(state, action) {
@@ -111,8 +110,8 @@ export default function Chat({ isGroup, id, friend }) {
                     }
                 </div>
                 <div className="w-full h-[92%] flex">
-                    <div className={`${isGroup && "grow"} h-[84vh] flex overflow-y-scroll box-border`} ref={convoRef}>
-                        <div className="z-0">
+                    <div className={`${isGroup ? "grow" : "w-full"}  h-[87%] flex overflow-y-scroll box-border`} ref={convoRef}>
+                        <div className="w-[90%] h-full">
                             {conversation &&
                                 conversation.messages.map((msg, index) => {
                                     return <Message message={msg} previousMessage={conversation.messages[index - 1]} />;
