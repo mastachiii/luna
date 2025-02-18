@@ -1,29 +1,6 @@
 import { useState, useRef } from "react";
 import userApi from "../../helpers/userApi";
-import unknown from "../../assets/userUnknown.svg";
-import chat from "../../assets/chat.svg";
-import options from "../../assets/options.svg";
-
-function RemoveFriendDialog({ friend, friends, friendsHandler, show, ref }) {
-    function handleRemoveFriend() {
-        userApi.removeFriend({ id: friend.id });
-        friendsHandler(friends.filter(f => f.id !== friend.id));
-        ref.current.close();
-    }
-
-    return (
-        <dialog ref={ref} className="flex flex-col w-lg h-50 m-auto rounded-md">
-            <h4 className="text-lg font-semibold mb-0 p-3 pl-4">Remove '{friend.displayName}'</h4>
-            <p className="text-sm p-3 pl-4">
-                Are you sure you want to remove <b className="font-semibold">{friend.displayName}</b> from your friends?
-            </p>
-            <div className="mt-auto h-[30%] p-0">
-                <button onClick={() => ref.current.close()}>Cancel</button>
-                <button onClick={handleRemoveFriend}>Remove Friend</button>
-            </div>
-        </dialog>
-    );
-}
+import User from "./user";
 
 export default function FriendList({ friends, compHandler, friendHandler, selHandler, label }) {
     const [activeId, setActiveId] = useState(false);
@@ -43,84 +20,51 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
         setFriendsToShow(friends.filter(f => f.displayName.includes(e.target.value) || f.username.includes(e.target.value)));
     }
 
-    return (
-        <div className="w-[70%] p-10">
-            <input
-                type="text"
-                value={search}
-                onChange={handleSearch}
-                placeholder={"Search"}
-                className="w-full p-2 pl-3 rounded-sm text-sm  bg-zinc-200 outline-0"
-            />
-            <div>
-                <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">
-                    {label} - {friendsToShow.length}
-                </p>
-                <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200"></div>
-            </div>
-            {friendsToShow.map(f => {
-                return (
-                    <div key={f.id} className="flex p-2 rounded-lg group hover:bg-zinc-200">
-                        <img src={f.profilePicture || unknown} className="size-9 rounded-full" />
-                        <div className="ml-3">
-                            <span className="flex">
-                                <p className="text-sm font-semibold">{f.displayName}</p>
-                                <p className="text-xs mt-[3px] ml-1 text-zinc-600 opacity-0 group-hover:opacity-100">{f.username}</p>
-                            </span>
-                            <span className="flex items-center">
-                                <p className="text-xs text-zinc-700">{f.online ? "Online" : "Offline"}</p>
-                                {f.online && <div className="size-[6px] ml-2 mt-0.5 self-center bg-green-400 rounded-full animate-pulse"></div>}
-                            </span>
-                        </div>
-                        <div className="flex items-center gap-3 ml-auto relative">
-                            <button
-                                onClick={() => {
-                                    friendHandler(f);
-                                    compHandler("chat friend");
-                                    selHandler(f.id);
-                                }}
-                                className="p-2 bg-neutral-200 rounded-full group cursor-pointer hover:*:opacity-100"
-                            >
-                                <img src={chat} alt="" className="size-4" />
-                                <p className="opacity-0 absolute bottom-9 right-6 p-2 text-xs bg-white shadow-md shadow-stone-500 rounded-lg transition duration-100 ease-in">
-                                    Message
-                                </p>
-                            </button>
-                            <div>
-                                <button
-                                    onClick={() => handleOptionsClick(f.id)}
-                                    className="p-2 bg-neutral-200 rounded-full relative cursor-pointer hover:*:opacity-100"
-                                >
-                                    <img src={options} className="size-4" />
-                                    <p className="opacity-0 absolute bottom-9 left-[-9px] p-2 text-xs bg-white shadow-md shadow-stone-500 rounded-lg  transition duration-100 ease-in">
-                                        More
-                                    </p>
-                                </button>
-                                <div
-                                    className={`${
-                                        activeId === f.id ? "block" : "hidden"
-                                    } w-35 absolute left-15 p-2 bg-white rounded-sm shadow-md shadow-zinc-600`}
-                                >
-                                    <button
-                                        onClick={() => dialogRef.current.showModal()}
-                                        className="w-full p-2 text-xs text-start rounded-sm text-red-500 cursor-pointer hover:bg-red-500 hover:text-white"
-                                    >
-                                        Remove friend
-                                    </button>
-                                </div>
-                            </div>
+    if (friends) {
+        const friend = friends.find(f => f.id === activeId) || {};
+
+        return (
+            <div className="w-[70%] p-10">
+                <input
+                    type="text"
+                    value={search}
+                    onChange={handleSearch}
+                    placeholder={"Search"}
+                    className="w-full p-2 pl-3 rounded-sm text-sm  bg-zinc-200 outline-0"
+                />
+                <div>
+                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">
+                        {label} - {friendsToShow.length}
+                    </p>
+                    <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200"></div>
+                </div>
+                {friendsToShow.map(f => {
+                    return (
+                        <User
+                            user={f}
+                            friendHandler={friendHandler}
+                            compHandler={compHandler}
+                            selHandler={selHandler}
+                            optionsHandler={handleOptionsClick}
+                            condition={activeId === f.id}
+                            ref={dialogRef}
+                            key={f.id}
+                        />
+                    );
+                })}
+                <dialog ref={dialogRef} className="m-auto">
+                    <div className="m-auto">
+                        <h4 className="text-lg font-semibold mb-0 p-3 pl-4">Remove '{friend.displayName}'</h4>
+                        <p className="text-sm p-3 pl-4">
+                            Are you sure you want to remove <b className="font-semibold">{friend.displayName}</b> from your friends?
+                        </p>
+                        <div className="mt-auto h-[30%] p-0">
+                            <button onClick={() => dialogRef.current.close()}>Cancel</button>
+                            <button>Remove Friend</button>
                         </div>
                     </div>
-                );
-            })}
-            {activeId && (
-                <RemoveFriendDialog
-                    ref={dialogRef}
-                    friend={friends.find(f => f.id === activeId)}
-                    friends={friendsToShow}
-                    friendsHandler={setFriendsToShow}
-                />
-            )}
-        </div>
-    );
+                </dialog>
+            </div>
+        );
+    }
 }
