@@ -91,8 +91,8 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
                                         More
                                     </p>
                                 </button>
-                                <div className={`${activeId === f.id ? "block" : "hidden"}`}>
-                                    <button onClick={() => dialogRef.current.showModal()}>Remove friend</button>
+                                <div className={`${activeId === f.id ? "block" : "hidden"} w-35 absolute left-15 p-2 bg-white rounded-sm shadow-md shadow-zinc-600`}>
+                                    <button onClick={() => dialogRef.current.showModal()} className="w-full p-2 text-xs text-start rounded-sm text-red-500 cursor-pointer hover:bg-red-500 hover:text-white">Remove friend</button>
                                 </div>
                             </div>
                         </div>
