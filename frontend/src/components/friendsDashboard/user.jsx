@@ -17,7 +17,7 @@ export default function User({ user, friendHandler, compHandler, selHandler, opt
                     {user.online && <div className="size-[6px] ml-2 mt-0.5 self-center bg-green-400 rounded-full animate-pulse"></div>}
                 </span>
             </div>
-            <div className="flex items-center gap-3 ml-auto relative">
+            <div className="flex items-center gap-3 ml-auto">
                 <InteractButton
                     handler={() => {
                         friendHandler(user);
@@ -26,9 +26,9 @@ export default function User({ user, friendHandler, compHandler, selHandler, opt
                     }}
                     image={chat}
                     label={"Message"}
-                    labelPosition={"bottom-9 right-10"}
+                    labelPosition={"bottom-9 left-[-15px]"}
                 />
-                <InteractButton handler={() => optionsHandler(user.id)} image={options} label={"More"} labelPosition={"bottom-9 right-[5px]"} />
+                <InteractButton handler={() => optionsHandler(user.id)} image={options} label={"More"} labelPosition={"bottom-9 left-[-7px]"} />
                 <div>
                     <div
                         className={`${condition ? "block" : "hidden"} w-35 absolute top-8 left-15 p-2 bg-white rounded-sm shadow-md shadow-zinc-600`}

@@ -10,6 +10,7 @@ export default function Index() {
     const [groupId, setGroupId] = useState(null);
     const [compToRender, setCompToRender] = useState("user");
     const [trigger, setTrigger] = useState(0);
+    const [status, setStatus] = useState("loading");
     const timeout = useRef();
     // Some components need to access stuff like user id, thought it would be better to use a context rather than storing in localStorage where users can mutate the data.
 
@@ -31,14 +32,17 @@ export default function Index() {
                 }, 10000);
             }
 
+            setStatus("done");
+
             return () => {
                 clearTimeout(timeout.current);
             };
         })();
     }, [compToRender, trigger]);
 
+    if (status === "loading") return;
+    
     let comp;
-
     switch (compToRender) {
         case "group": {
             comp = <Chat isGroup={true} id={groupId} />;

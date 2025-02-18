@@ -30,22 +30,34 @@ function User({ userData, type, previousState, handler }) {
                 <p className="text-sm font-semibold">{userData.displayName}</p>
                 <p className="text-xs text-zinc-600">{userData.username}</p>
             </span>
-            {type === "received" ? (
-                <div className="flex gap-3 ml-auto self-center">
-                    <InteractButton handler={() => handleClick("accept")} image={accept} label={"Accept"} labelPosition={'top-1'} />
-                    <button onClick={() => handleClick("reject")} className="p-3 bg-neutral-200 rounded-full">
-                        <img src={cancel} className="size-3" />
-                    </button>
-                </div>
-            ) : (
-                <button
-                    onClick={() => {
-                        handleClick("cancel");
-                    }}
-                >
-                    CANCEL
-                </button>
-            )}
+            <div className="flex gap-3 ml-auto self-center">
+                {type === "received" ? (
+                    <>
+                        {" "}
+                        <InteractButton
+                            handler={() => handleClick("accept")}
+                            image={accept}
+                            label={"Accept"}
+                            labelPosition={"bottom-10 left-[-12px]"}
+                        />
+                        <InteractButton
+                            handler={() => handleClick("reject")}
+                            image={cancel}
+                            imageSize={4}
+                            label={"Ignore"}
+                            labelPosition={"bottom-10 left-[-12px]"}
+                        />
+                    </>
+                ) : (
+                    <InteractButton
+                        handler={() => handleClick("cancel")}
+                        image={cancel}
+                        imageSize={4}
+                        label={"Cancel"}
+                        labelPosition={"bottom-10 left-[-12px]"}
+                    />
+                )}
+            </div>
         </div>
     );
 }
@@ -76,8 +88,9 @@ export default function FriendRequests({ sentRequests, pendingRequests }) {
             )}
             {sentRequestsToShow.length >= 1 && (
                 <>
-                    <p>Sent - {sentRequestsToShow.length}</p>
-                    <div>
+                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">SENT - {sentRequestsToShow.length}</p>
+                    <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200"></div>
+                    <div className="flex flex-col gap-4">
                         {sentRequests &&
                             sentRequestsToShow.map(p => (
                                 <User userData={p} key={p.id} previousState={sentRequestsToShow} handler={setSentRequestsToShow} />
