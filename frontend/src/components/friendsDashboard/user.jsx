@@ -1,6 +1,7 @@
 import unknown from "../../assets/userUnknown.svg";
 import chat from "../../assets/chat.svg";
 import options from "../../assets/options.svg";
+import InteractButton from "./userInteractButton";
 
 export default function User({ user, friendHandler, compHandler, selHandler, optionsHandler, condition, ref }) {
     return (
@@ -17,30 +18,21 @@ export default function User({ user, friendHandler, compHandler, selHandler, opt
                 </span>
             </div>
             <div className="flex items-center gap-3 ml-auto relative">
-                <button
-                    onClick={() => {
+                <InteractButton
+                    handler={() => {
                         friendHandler(user);
                         compHandler("chat friend");
                         selHandler(user.id);
                     }}
-                    className="p-2 bg-neutral-200 rounded-full group cursor-pointer hover:*:opacity-100"
-                >
-                    <img src={chat} alt="" className="size-4" />
-                    <p className="opacity-0 absolute bottom-9 right-6 p-2 text-xs bg-white shadow-md shadow-stone-500 rounded-lg transition duration-100 ease-in">
-                        Message
-                    </p>
-                </button>
+                    image={chat}
+                    label={"Message"}
+                    labelPosition={"bottom-9 right-10"}
+                />
+                <InteractButton handler={() => optionsHandler(user.id)} image={options} label={"More"} labelPosition={"bottom-9 right-[5px]"} />
                 <div>
-                    <button
-                        onClick={() => optionsHandler(user.id)}
-                        className="p-2 bg-neutral-200 rounded-full relative cursor-pointer hover:*:opacity-100"
+                    <div
+                        className={`${condition ? "block" : "hidden"} w-35 absolute top-8 left-15 p-2 bg-white rounded-sm shadow-md shadow-zinc-600`}
                     >
-                        <img src={options} className="size-4" />
-                        <p className="opacity-0 absolute bottom-9 left-[-9px] p-2 text-xs bg-white shadow-md shadow-stone-500 rounded-lg  transition duration-100 ease-in">
-                            More
-                        </p>
-                    </button>
-                    <div className={`${condition ? "block" : "hidden"} w-35 absolute left-15 p-2 bg-white rounded-sm shadow-md shadow-zinc-600`}>
                         <button
                             onClick={() => {
                                 console.log("yes");
