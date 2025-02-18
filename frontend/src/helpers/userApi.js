@@ -50,8 +50,8 @@ class User {
             });
     }
 
-    addFriend({ username }) {
-        fetch(`${this.userUrl}/add/${username}`, {
+    async addFriend({ username }) {
+        await fetch(`${this.userUrl}/add/${username}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
