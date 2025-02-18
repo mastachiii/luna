@@ -1,4 +1,5 @@
 import { useState } from "react";
+import InteractButton from "./userInteractButton";
 import unknown from "../../assets/userUnknown.svg";
 import userApi from "../../helpers/userApi";
 import cancel from "../../assets/cancel.svg";
@@ -31,9 +32,7 @@ function User({ userData, type, previousState, handler }) {
             </span>
             {type === "received" ? (
                 <div className="flex gap-3 ml-auto self-center">
-                    <button onClick={() => handleClick("accept")} className="w-9 p-2 bg-neutral-200 rounded-full">
-                        <img src={accept} className="size-4 m-auto" />
-                    </button>
+                    <InteractButton handler={() => handleClick("accept")} image={accept} label={"Accept"} labelPosition={'top-1'} />
                     <button onClick={() => handleClick("reject")} className="p-3 bg-neutral-200 rounded-full">
                         <img src={cancel} className="size-3" />
                     </button>
