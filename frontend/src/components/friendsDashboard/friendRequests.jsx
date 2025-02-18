@@ -48,6 +48,7 @@ function User({ userData, type, previousState, handler }) {
 export default function FriendRequests({ sentRequests, pendingRequests }) {
     const [sentRequestsToShow, setSentRequestsToShow] = useState(sentRequests);
     const [pendingRequestsToShow, setPendingRequestsToShow] = useState(pendingRequests);
+
     return (
         <div>
             <div>

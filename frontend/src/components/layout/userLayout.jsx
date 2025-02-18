@@ -4,9 +4,9 @@ import Chat from "../chat/chat";
 import FriendsDashboard from "../friendsDashboard/friendsDashboard";
 
 export default function UserLayout({ userData }) {
-    const [compToRender, setCompToRender] = useState(null);
+    const [compToRender, setCompToRender] = useState("friend list");
     const [friendData, setFriendData] = useState(null);
-    const [navSelected, setNavSelected] = useState(null);
+    const [navSelected, setNavSelected] = useState('friend');
 
     let comp;
 

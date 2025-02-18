@@ -8,7 +8,7 @@ import { UserContext } from "../userContext";
 export default function Index() {
     const [userData, setUserData] = useState(null);
     const [groupId, setGroupId] = useState(null);
-    const [compToRender, setCompToRender] = useState(null);
+    const [compToRender, setCompToRender] = useState("user");
     const [trigger, setTrigger] = useState(0);
     const timeout = useRef();
     // Some components need to access stuff like user id, thought it would be better to use a context rather than storing in localStorage where users can mutate the data.
@@ -22,11 +22,10 @@ export default function Index() {
             window.addEventListener("beforeunload", () => {
                 userApi.goOffline();
             });
-            console.log(true);
             setUserData(data);
 
             // Update every 10 secs
-            if (compToRender === 'user') {
+            if (compToRender === "user") {
                 timeout.current = setTimeout(() => {
                     setTrigger(trigger + 1);
                 }, 10000);
@@ -51,6 +50,7 @@ export default function Index() {
             comp = <UserLayout userData={userData} />;
         }
     }
+
     if (userData) {
         return (
             <UserContext.Provider value={userData}>

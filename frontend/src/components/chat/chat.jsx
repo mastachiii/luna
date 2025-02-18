@@ -64,7 +64,7 @@ export default function Chat({ isGroup, id, friend }) {
             // Increment interv variable so that effect would run...
             // set interval doesn't really work in this case...
 
-            if (trigger === 0) convoRef.current.scrollTop = convoRef.current.scrollHeight; // When user first opens chat always scroll to bottom
+            if (trigger === 0 && convoRef.current) convoRef.current.scrollTop = convoRef.current.scrollHeight; // When user first opens chat always scroll to bottom
 
             timeout.current = setTimeout(() => {
                 setTrigger(trigger + 1);

@@ -27,15 +27,20 @@ function Button({ handler, label, condition, pendingRequestsLength }) {
 
 export default function FriendsDashboard({ compHandler, friendHandler, selHandler }) {
     const [userData, setUserData] = useState([]);
-    const [compToRender, setCompToRender] = useState(null);
+    const [compToRender, setCompToRender] = useState("online");
+    const [status, setStatus] = useState("loading");
 
     useEffect(() => {
         (async () => {
             const data = await userApi.getUserData();
             userApi.getAvailableUsers();
             setUserData(data);
+            setStatus("done");
         })();
     }, [compToRender]);
+
+    // TODO: Loading spinner
+    if (status === "loading") return;
 
     let comp;
     switch (compToRender) {
