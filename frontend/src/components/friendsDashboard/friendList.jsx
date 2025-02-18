@@ -17,9 +17,10 @@ function RemoveFriendDialog({ friend, friends, friendsHandler, show, ref }) {
     );
 }
 
-export default function FriendList({ friends, compHandler, friendHandler, selHandler }) {
+export default function FriendList({ friends, compHandler, friendHandler, selHandler, label }) {
     const [activeId, setActiveId] = useState(false);
     const [friendsToShow, setFriendsToShow] = useState(friends); // If user removes a friend, update state. Forcing the page to reload would be messier..
+    const [search, setSearch] = useState("");
     const dialogRef = useRef();
 
     function handleOptionsClick(id) {
@@ -28,8 +29,29 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
         setActiveId(newId);
     }
 
+    function handleSearch(e) {
+        setSearch(e.target.value);
+
+        setFriendsToShow(friends.filter(f => f.displayName.includes(e.target.value) || f.username.includes(e.target.value)));
+    }
+
     return (
-        <div>
+        <div className="w-[70%] p-10">
+            <input
+                type="text"
+                value={search}
+                onChange={handleSearch}
+                placeholder={"Search"}
+                className="w-full p-2 pl-3 rounded-sm text-sm  bg-zinc-200"
+            />
+            <div>
+                <p className="mt-5 mb-5 ml-1 text-xs font-semibold text-zinc-600">
+                    {label} - {friendsToShow.length}
+                </p>
+                <div className="w-full h-[1px] ml-1  bg-zinc-200">
+
+                </div>
+            </div>
             {friendsToShow.map(f => {
                 return (
                     <div key={f.id}>

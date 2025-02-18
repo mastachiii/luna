@@ -39,6 +39,7 @@ export default function FriendsDashboard({ compHandler, friendHandler, selHandle
                     compHandler={compHandler}
                     friendHandler={friendHandler}
                     selHandler={selHandler}
+                    label={"ONLINE"}
                 />
             );
             break;
