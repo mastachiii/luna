@@ -50,7 +50,7 @@ class User {
             });
     }
 
-    async addFriend({ username }) {
+    async addFriend({ username, statusHandler }) {
         await fetch(`${this.userUrl}/add/${username}`, {
             method: "POST",
             headers: {
@@ -58,6 +58,8 @@ class User {
             },
             credentials: "include",
             body: JSON.stringify({ receiverUsername: username }),
+        }).then(response => {
+            response.status === 400 ? statusHandler("FAILED") : statusHandler("OKAY");
         });
     }
 
