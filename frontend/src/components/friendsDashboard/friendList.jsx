@@ -12,10 +12,15 @@ function RemoveFriendDialog({ friend, friends, friendsHandler, show, ref }) {
     }
 
     return (
-        <dialog ref={ref}>
-            <button onClick={() => ref.current.close()}>X</button>
-            <p>Are you sure you want to remove {friend.displayName} from your friends?</p>
-            <button onClick={handleRemoveFriend}>YES</button>
+        <dialog ref={ref} className="flex flex-col w-lg h-50 m-auto rounded-md">
+            <h4 className="text-lg font-semibold mb-0 p-3 pl-4">Remove '{friend.displayName}'</h4>
+            <p className="text-sm p-3 pl-4">
+                Are you sure you want to remove <b className="font-semibold">{friend.displayName}</b> from your friends?
+            </p>
+            <div className="mt-auto h-[30%] p-0">
+                <button onClick={() => ref.current.close()}>Cancel</button>
+                <button onClick={handleRemoveFriend}>Remove Friend</button>
+            </div>
         </dialog>
     );
 }
@@ -91,8 +96,17 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
                                         More
                                     </p>
                                 </button>
-                                <div className={`${activeId === f.id ? "block" : "hidden"} w-35 absolute left-15 p-2 bg-white rounded-sm shadow-md shadow-zinc-600`}>
-                                    <button onClick={() => dialogRef.current.showModal()} className="w-full p-2 text-xs text-start rounded-sm text-red-500 cursor-pointer hover:bg-red-500 hover:text-white">Remove friend</button>
+                                <div
+                                    className={`${
+                                        activeId === f.id ? "block" : "hidden"
+                                    } w-35 absolute left-15 p-2 bg-white rounded-sm shadow-md shadow-zinc-600`}
+                                >
+                                    <button
+                                        onClick={() => dialogRef.current.showModal()}
+                                        className="w-full p-2 text-xs text-start rounded-sm text-red-500 cursor-pointer hover:bg-red-500 hover:text-white"
+                                    >
+                                        Remove friend
+                                    </button>
                                 </div>
                             </div>
                         </div>
