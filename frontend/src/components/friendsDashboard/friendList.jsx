@@ -1,5 +1,8 @@
 import { useState, useRef } from "react";
 import userApi from "../../helpers/userApi";
+import unknown from "../../assets/userUnknown.svg";
+import chat from "../../assets/chat.svg";
+import options from "../../assets/options.svg";
 
 function RemoveFriendDialog({ friend, friends, friendsHandler, show, ref }) {
     function handleRemoveFriend() {
@@ -42,33 +45,55 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
                 value={search}
                 onChange={handleSearch}
                 placeholder={"Search"}
-                className="w-full p-2 pl-3 rounded-sm text-sm  bg-zinc-200"
+                className="w-full p-2 pl-3 rounded-sm text-sm  bg-zinc-200 outline-0"
             />
             <div>
-                <p className="mt-5 mb-5 ml-1 text-xs font-semibold text-zinc-600">
+                <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">
                     {label} - {friendsToShow.length}
                 </p>
-                <div className="w-full h-[1px] ml-1  bg-zinc-200">
-
-                </div>
+                <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200"></div>
             </div>
             {friendsToShow.map(f => {
                 return (
-                    <div key={f.id}>
-                        <p>{f.displayName}</p>
-                        <button
-                            onClick={() => {
-                                friendHandler(f);
-                                compHandler("chat friend");
-                                selHandler(f.id);
-                            }}
-                        >
-                            CHAT
-                        </button>
-                        <div>
-                            <button onClick={() => handleOptionsClick(f.id)}>OOO</button>
-                            <div className={`${activeId === f.id ? "block" : "hidden"}`}>
-                                <button onClick={() => dialogRef.current.showModal()}>Remove friend</button>
+                    <div key={f.id} className="flex p-2 rounded-lg group hover:bg-zinc-200">
+                        <img src={f.profilePicture || unknown} className="size-9 rounded-full" />
+                        <div className="ml-3">
+                            <span className="flex">
+                                <p className="text-sm font-semibold">{f.displayName}</p>
+                                <p className="text-xs mt-[3px] ml-1 text-zinc-600 opacity-0 group-hover:opacity-100">{f.username}</p>
+                            </span>
+                            <span className="flex items-center">
+                                <p className="text-xs text-zinc-700">{f.online ? "Online" : "Offline"}</p>
+                                {f.online && <div className="size-[6px] ml-2 mt-0.5 self-center bg-green-400 rounded-full animate-pulse"></div>}
+                            </span>
+                        </div>
+                        <div className="flex items-center gap-3 ml-auto relative">
+                            <button
+                                onClick={() => {
+                                    friendHandler(f);
+                                    compHandler("chat friend");
+                                    selHandler(f.id);
+                                }}
+                                className="p-2 bg-neutral-200 rounded-full group cursor-pointer hover:*:opacity-100"
+                            >
+                                <img src={chat} alt="" className="size-4" />
+                                <p className="opacity-0 absolute bottom-9 right-6 p-2 text-xs bg-white shadow-md shadow-stone-500 rounded-lg transition duration-100 ease-in">
+                                    Message
+                                </p>
+                            </button>
+                            <div>
+                                <button
+                                    onClick={() => handleOptionsClick(f.id)}
+                                    className="p-2 bg-neutral-200 rounded-full relative cursor-pointer hover:*:opacity-100"
+                                >
+                                    <img src={options} className="size-4" />
+                                    <p className="opacity-0 absolute bottom-9 left-[-9px] p-2 text-xs bg-white shadow-md shadow-stone-500 rounded-lg  transition duration-100 ease-in">
+                                        More
+                                    </p>
+                                </button>
+                                <div className={`${activeId === f.id ? "block" : "hidden"}`}>
+                                    <button onClick={() => dialogRef.current.showModal()}>Remove friend</button>
+                                </div>
                             </div>
                         </div>
                     </div>
