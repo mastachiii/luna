@@ -12,29 +12,30 @@ export default function Message({ message, previousMessage }) {
         skipProfileRender = dateUtils.compareMsgDate(message, previousMessage);
     }
 
+    if (!previousMessage) console.log(message);
+
     return (
-        <div className="w-full flex flex-col">
-            {!previousMessage ||
-                (dateUtils.checkIfMsgFirstInDay(message.dateSent, previousMessage.dateSent) && (
-                    <div className="w-full flex items-center justify-center ml-10 mt-2">
-                        <span className="w-[40%] h-[1px]  bg-neutral-300"></span>
-                        <p className="ml-2 mr-2 text-[10px] font-semibold text-zinc-500">{format(message.dateSent, "PPP")}</p>
-                        <span className="w-[40%] h-[1px] bg-neutral-300"></span>
-                    </div>
-                ))}
-            <div
-                className={`w-[90%] flex ${
-                    !skipProfileRender ? "p-1 mt-3 ml-5" : "pl-1 pr-1"
-                } rounded-md relative group hover:bg-neutral-200 transition duration-100 ease-in`}
-            >
+        <div className={`w-full flex flex-col ${skipProfileRender ? "" : "mt-6"}`}>
+            {!previousMessage || dateUtils.checkIfMsgFirstInDay(message.dateSent, previousMessage.dateSent) ? (
+                <div className="flex grow items-center justify-center ml-10 mt-2 mb-5">
+                    <span className="w-[40%] h-[1px]  bg-neutral-300"></span>
+                    <p className="ml-2 mr-2 text-[10px] font-semibold text-zinc-500">{format(message.dateSent, "PPP")}</p>
+                    <span className="w-[40%] h-[1px] bg-neutral-300"></span>
+                </div>
+            ) : (
+                ""
+            )}
+            <div className={`flex pt-0.5 relative group hover:bg-neutral-100 transition duration-100 ease-in`}>
                 {!skipProfileRender ? (
-                    <img src={user.profilePicture} className="size-10 rounded-full" />
+                    <div className="w-12 ml-5">
+                        <img src={user.profilePicture} className="size-10  rounded-full" />
+                    </div>
                 ) : (
-                    <p className="w-12 opacity-0 self-center ml-3 text-[10px] text-center text-zinc-700 group-hover:opacity-100">
+                    <p className="w-15 ml-2 opacity-0 self-center text-[10px] text-start text-zinc-700 group-hover:opacity-100">
                         {format(message.dateSent, "p")}
                     </p>
                 )}
-                <span className="w-fit ml-4">
+                <span className="w-fit">
                     {!skipProfileRender && (
                         <span className="flex items-end gap-2">
                             <p className="text-sm font-semibold">{user.displayName}</p>

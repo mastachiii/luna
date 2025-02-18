@@ -22,13 +22,15 @@ export default function Index() {
             window.addEventListener("beforeunload", () => {
                 userApi.goOffline();
             });
-            console.log(data)
+            console.log(true);
             setUserData(data);
 
             // Update every 10 secs
-            timeout.current = setTimeout(() => {
-                setTrigger(trigger + 1);
-            }, 10000);
+            if (compToRender === 'user') {
+                timeout.current = setTimeout(() => {
+                    setTrigger(trigger + 1);
+                }, 10000);
+            }
 
             return () => {
                 clearTimeout(timeout.current);
@@ -52,7 +54,7 @@ export default function Index() {
     if (userData) {
         return (
             <UserContext.Provider value={userData}>
-                <div className="flex">
+                <div className="flex w-full h-screen">
                     <NavBar
                         componentHandler={setCompToRender}
                         groupIdHandler={setGroupId}

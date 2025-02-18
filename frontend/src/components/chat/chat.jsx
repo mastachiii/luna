@@ -103,7 +103,7 @@ export default function Chat({ isGroup, id, friend }) {
     if (conversation) {
         return (
             <div className="w-[85%] h-screen flex flex-col grow font-noto bg-zinc-50 ">
-                <div className="h-13 flex align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
+                <div className="h-13 flex shrink-0 align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
                     {
                         <span className=" flex ml-5 items-center gap-3">
                             <img src={isGroup ? conversation.picture : friend.profilePicture || noPfp} className="size-7 rounded-full" />
@@ -111,13 +111,13 @@ export default function Chat({ isGroup, id, friend }) {
                         </span>
                     }
                 </div>
-                <div className="w-full h-[92%] flex">
+                <div className="w-full h-[96%] flex">
                     <div className={`${isGroup ? "grow" : "w-full"}  h-[87%] flex flex-col overflow-y-scroll box-border`} ref={convoRef}>
                         {!isGroup && <ChatBegin friendData={friend} />}
-                        <div className="w-[90%] h-full">
+                        <div className="w-full h-full">
                             {conversation &&
                                 conversation.messages.map((msg, index) => {
-                                    return <Message message={msg} previousMessage={conversation.messages[index - 1]} />;
+                                    return <Message message={msg} previousMessage={conversation.messages[index - 1]} key={msg.id} />;
                                 })}
                         </div>
                     </div>

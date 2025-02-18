@@ -39,6 +39,7 @@ function checkIfMsgFirstInDay(date, date2) {
     const msgDate = new Date(date).getDate();
     const msg2Date = new Date(date2).getDate();
 
+    console.log({ date, date2 });
     return msgDate - msg2Date >= 1;
 }
 
