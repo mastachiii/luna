@@ -105,7 +105,7 @@ class User {
         })
             .then(response => response.json())
             .then(data => data);
-        console.log(users);
+
         return users;
     }
 

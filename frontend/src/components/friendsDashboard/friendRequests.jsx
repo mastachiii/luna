@@ -16,7 +16,7 @@ function User({ userData, type, previousState, handler }) {
             case "cancel":
                 userApi.cancelRequest({ id: userData.id });
         }
-
+        
         handler(previousState.filter(p => p.id !== userData.id));
     }
 
@@ -35,7 +35,7 @@ function User({ userData, type, previousState, handler }) {
             ) : (
                 <button
                     onClick={() => {
-                        userApi.cancelRequest({ id: userData.id });
+                        handleClick("cancel");
                     }}
                 >
                     CANCEL
@@ -55,7 +55,7 @@ export default function FriendRequests({ sentRequests, pendingRequests }) {
                 <p>Received - {pendingRequestsToShow.length}</p>
                 <div>
                     {pendingRequests &&
-                        pendingRequests.map(p => (
+                        pendingRequestsToShow.map(p => (
                             <User
                                 userData={p}
                                 key={p.id}
@@ -68,7 +68,9 @@ export default function FriendRequests({ sentRequests, pendingRequests }) {
                 <p>Sent - {sentRequestsToShow.length}</p>
                 <div>
                     {sentRequests &&
-                        sentRequests.map(p => <User userData={p} key={p.id} previousState={sentRequestsToShow} handler={setSentRequestsToShow} />)}
+                        sentRequestsToShow.map(p => (
+                            <User userData={p} key={p.id} previousState={sentRequestsToShow} handler={setSentRequestsToShow} />
+                        ))}
                 </div>
             </div>
         </div>

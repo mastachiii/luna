@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import userApi from "../../helpers/userApi";
+import unknown from "../../assets/userUnknown.svg"
 
 export default function AddFriend() {
     const [availableUsers, setAvailableUsers] = useState(null);
@@ -7,14 +8,14 @@ export default function AddFriend() {
 
     useEffect(() => {
         (async () => {
-            const users = userApi.getAvailableUsers();
+            const users = await userApi.getAvailableUsers();
 
             setAvailableUsers(users);
         })();
-    });
+    }, []);
 
-    function handleAddFriend() {
-        userApi.addFriend({ username });
+    async function handleAddFriend() {
+        await userApi.addFriend({ username });
 
         setUsername("");
     }
@@ -30,7 +31,7 @@ export default function AddFriend() {
                     availableUsers.map(u => {
                         return (
                             <div key={u.id}>
-                                <img src={u.profilePicture} className="size-7" />
+                                <img src={u.profilePicture || unknown} className="size-7" />
                                 <p>{u.displayName}</p>
                                 <button onClick={() => userApi.addFriend({ username: u.username })}>ADD</button>
                             </div>

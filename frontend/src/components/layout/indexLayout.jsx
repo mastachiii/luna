@@ -14,7 +14,7 @@ export default function Index() {
     useEffect(() => {
         (async () => {
             const data = await userApi.getUserData();
-
+            console.log(data)
             userApi.goOnline();
 
             window.addEventListener("beforeunload", () => {

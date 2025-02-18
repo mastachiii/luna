@@ -236,6 +236,13 @@ class User {
                                 user: true,
                             },
                         },
+                        users: {
+                            where: {
+                                id: {
+                                    not: id,
+                                },
+                            },
+                        },
                     },
                 },
             },

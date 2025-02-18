@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ChatNavBarButton from "./chatNavBarButton";
 import friendsLogo from "../../assets/friends.svg";
 import shop from "../../assets/shop.svg";
