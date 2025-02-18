@@ -198,6 +198,7 @@ class User {
                 id: true,
                 username: true,
                 displayName: true,
+                online: true,
                 friends: {
                     select: {
                         username: true,

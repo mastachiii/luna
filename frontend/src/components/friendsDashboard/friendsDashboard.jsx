@@ -50,7 +50,7 @@ export default function FriendsDashboard({ compHandler, friendHandler, selHandle
             break;
         }
 
-        case "requests": {
+        case "pending": {
             comp = <FriendRequests sentRequests={userData.requestsSent} pendingRequests={userData.requestsReceived} />;
             break;
         }

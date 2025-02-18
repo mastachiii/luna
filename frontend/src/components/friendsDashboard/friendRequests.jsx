@@ -16,7 +16,7 @@ function User({ userData, type, previousState, handler }) {
             case "cancel":
                 userApi.cancelRequest({ id: userData.id });
         }
-        
+
         handler(previousState.filter(p => p.id !== userData.id));
     }
 
@@ -48,7 +48,7 @@ function User({ userData, type, previousState, handler }) {
 export default function FriendRequests({ sentRequests, pendingRequests }) {
     const [sentRequestsToShow, setSentRequestsToShow] = useState(sentRequests);
     const [pendingRequestsToShow, setPendingRequestsToShow] = useState(pendingRequests);
-
+    console.log({ sentRequests, pendingRequests });
     return (
         <div>
             <div>

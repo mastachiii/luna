@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import NavBar from "../navBar/navBar";
 import userApi from "../../helpers/userApi";
 import Chat from "../chat/chat";
@@ -9,21 +9,32 @@ export default function Index() {
     const [userData, setUserData] = useState(null);
     const [groupId, setGroupId] = useState(null);
     const [compToRender, setCompToRender] = useState(null);
+    const [trigger, setTrigger] = useState(0);
+    const timeout = useRef();
     // Some components need to access stuff like user id, thought it would be better to use a context rather than storing in localStorage where users can mutate the data.
 
     useEffect(() => {
         (async () => {
             const data = await userApi.getUserData();
-            console.log(data)
-            userApi.goOnline();
+
+            if (!data.online) userApi.goOnline();
 
             window.addEventListener("beforeunload", () => {
                 userApi.goOffline();
             });
-
+            console.log(data)
             setUserData(data);
+
+            // Update every 10 secs
+            timeout.current = setTimeout(() => {
+                setTrigger(trigger + 1);
+            }, 10000);
+
+            return () => {
+                clearTimeout(timeout.current);
+            };
         })();
-    }, [compToRender]);
+    }, [compToRender, trigger]);
 
     let comp;
 
