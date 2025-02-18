@@ -21,11 +21,11 @@ function User({ userData, type, previousState, handler }) {
     }
 
     return (
-        <div>
-            <img src={userData.profilePicture || unknown} className="size-10" />
-            <span>
-                <p>{userData.displayName}</p>
-                <p>{userData.username}</p>
+        <div className="flex">
+            <img src={userData.profilePicture || unknown} className="size-9 rounded-full" />
+            <span className="ml-3">
+                <p className="text-sm font-semibold">{userData.displayName}</p>
+                <p className="text-xs">{userData.username}</p>
             </span>
             {type === "received" ? (
                 <div>
@@ -48,30 +48,39 @@ function User({ userData, type, previousState, handler }) {
 export default function FriendRequests({ sentRequests, pendingRequests }) {
     const [sentRequestsToShow, setSentRequestsToShow] = useState(sentRequests);
     const [pendingRequestsToShow, setPendingRequestsToShow] = useState(pendingRequests);
+
     return (
-        <div>
-            <div>
-                <p>Received - {pendingRequestsToShow.length}</p>
-                <div>
-                    {pendingRequests &&
-                        pendingRequestsToShow.map(p => (
-                            <User
-                                userData={p}
-                                key={p.id}
-                                type={"received"}
-                                handler={setPendingRequestsToShow}
-                                previousState={pendingRequestsToShow}
-                            />
-                        ))}
-                </div>
-                <p>Sent - {sentRequestsToShow.length}</p>
-                <div>
-                    {sentRequests &&
-                        sentRequestsToShow.map(p => (
-                            <User userData={p} key={p.id} previousState={sentRequestsToShow} handler={setSentRequestsToShow} />
-                        ))}
-                </div>
-            </div>
+        <div className="w-[70%] h-[95%] p-10">
+            {pendingRequestsToShow.length >= 1 && (
+                <>
+                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">Received - {pendingRequestsToShow.length}</p>
+                    <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200"></div>
+                    <div className="mb-10">
+                        {pendingRequests &&
+                            pendingRequestsToShow.map(p => (
+                                <User
+                                    userData={p}
+                                    key={p.id}
+                                    type={"received"}
+                                    handler={setPendingRequestsToShow}
+                                    previousState={pendingRequestsToShow}
+                                />
+                            ))}
+                    </div>
+                </>
+            )}
+            {sentRequestsToShow.length >= 1 && (
+                <>
+                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">Sent - {sentRequestsToShow.length}</p>
+                    <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200"></div>
+                    <div>
+                        {sentRequests &&
+                            sentRequestsToShow.map(p => (
+                                <User userData={p} key={p.id} previousState={sentRequestsToShow} handler={setSentRequestsToShow} />
+                            ))}
+                    </div>
+                </>
+            )}
         </div>
     );
 }
