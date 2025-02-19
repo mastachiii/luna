@@ -62,6 +62,20 @@ class Conversation {
         });
     }
 
+    async updateConversationInfo({ name, image, id }) {
+        if (image.type.split("/")[0] !== "image") return;
+
+        const formData = new FormData();
+        formData.append("file", image);
+        formData.append("name", name);
+
+        await fetch(`${this.conversationUrl}/group/${id}`, {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+        });
+    }
+
     async updateConversationMembers({ id, userId, action }) {
         fetch(`${this.conversationUrl}/group/${action === "kick" ? "remove" : "add"}/${id}`, {
             method: "POST",

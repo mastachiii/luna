@@ -27,6 +27,11 @@ export default function EditGroupChat({ data, ref }) {
         setImage(URL.createObjectURL(e.target.files[0]));
     }
 
+    async function handleUpdate() {
+        console.log("updating....");
+        await conversationApi.updateConversationInfo({ name: groupName, image: file, id: data.id });
+    }
+
     async function handleAdd(userId) {
         await conversationApi.updateConversationMembers({ id: data.id, action: "add", userId });
         setFriendsToShow(membersToShow.filter(m => m.id !== userId));
@@ -44,6 +49,7 @@ export default function EditGroupChat({ data, ref }) {
                 <img src={image} className="size-7" />
                 <input type="file" onChange={handleImageChange} />
                 <input type="text" value={groupName} onChange={e => setGroupName(e.target.value)} />
+                <button onClick={handleUpdate}>Save changes</button>
                 <div>
                     {membersToShow.map(m => {
                         if (m.id === data.ownerId) return;
