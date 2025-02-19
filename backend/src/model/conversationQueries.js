@@ -34,15 +34,10 @@ class Conversation {
         });
     }
 
-    async editGroupConversation({ id, userIds, name, picture }) {
-        const ids = userIds.map(id => ({ id }));
-
+    async editGroupConversation({ id, name, picture }) {
         await prisma.conversation.update({
             where: { id },
             data: {
-                users: {
-                    connect: ids,
-                },
                 picture,
                 name,
             },
@@ -63,6 +58,19 @@ class Conversation {
     }
 
     async kickUserFromConversation({ id, userId }) {
+        await prisma.conversation.update({
+            where: { id },
+            data: {
+                users: {
+                    disconnect: {
+                        id: userId,
+                    },
+                },
+            },
+        });
+    }
+
+    async leaveConversation({ id, userId }) {
         await prisma.conversation.update({
             where: { id },
             data: {

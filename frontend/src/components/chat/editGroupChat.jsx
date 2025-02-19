@@ -14,6 +14,15 @@ function User({ user, handler, label }) {
     );
 }
 
+function leaveDialog({ conversation, handler, ref }) {
+    return (
+        <dialog ref={ref}>
+            <p>Are you sure you want to leave</p>
+            <button onClick={() => ref.current.close()}>Cancel</button>
+        </dialog>
+    );
+}
+
 export default function EditGroupChat({ data, ref }) {
     const userData = useContext(UserContext);
     const [image, setImage] = useState(data.picture);
@@ -56,6 +65,7 @@ export default function EditGroupChat({ data, ref }) {
                         return <User user={m} handler={() => handleAdd(m.id)} label={"ADD"} key={m.id} />;
                     })}
                 </div>
+                <button>LEAVE</button>
             </div>
         </dialog>
     );

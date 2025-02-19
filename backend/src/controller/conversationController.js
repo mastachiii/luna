@@ -57,9 +57,7 @@ class Conversation {
 
     async updateGroupConversation(req, res, next) {
         try {
-            const ids = JSON.parse(req.body.userIds);
-
-            await db.editGroupConversation({ id: +req.params.id, userIds: ids, picture: req.publicUrl, name: req.body.name });
+            await db.editGroupConversation({ id: +req.params.id, picture: req.publicUrl, name: req.body.name });
 
             return res.sendStatus(200);
         } catch (err) {
@@ -82,6 +80,16 @@ class Conversation {
             await db.kickUserFromConversation({ id: +req.params.id, userId: req.body.userId });
 
             return res.sendStatus(200);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async leaveConversation(req, res, next) {
+        try {
+            await db.leaveConversation({ id: +req.params.id, userId: req.user.id });
+
+            return res.send
         } catch (err) {
             next(err);
         }

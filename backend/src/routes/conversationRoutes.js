@@ -19,5 +19,6 @@ route.post("/image/:id", isAuthenticated, upload.single("file"), uploadToSupabas
 route.post("/delete/:id", controller.deleteConversation);
 route.post("/group/add/:id", isAuthenticated, controller.addUser);
 route.post("/group/remove/:id", isAuthenticated, controller.kickUser);
+route.post("/group/leave/:id", isAuthenticated, controller.leaveConversation);
 
 module.exports = route;

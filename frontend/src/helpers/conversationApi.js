@@ -72,6 +72,13 @@ class Conversation {
             body: JSON.stringify({ userId }),
         });
     }
+
+    async leaveConversation({ id }) {
+        fetch(`${this.conversationUrl}/group/leave/${id}`, {
+            method: "POST",
+            credentials: "include",
+        });
+    }
 }
 
 export default new Conversation();
