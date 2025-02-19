@@ -23,6 +23,7 @@ export default function Index() {
             window.addEventListener("beforeunload", () => {
                 userApi.goOffline();
             });
+            
             setUserData(data);
 
             // Update every 10 secs
@@ -41,7 +42,7 @@ export default function Index() {
     }, [compToRender, trigger]);
 
     if (status === "loading") return;
-    
+
     let comp;
     switch (compToRender) {
         case "group": {

@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import userApi from "../../helpers/userApi";
 import unknown from "../../assets/userUnknown.svg";
+import add from "../../assets/add.svg";
+import online from "../../assets/online.svg";
+import InteractButton from "./userInteractButton";
+
+// Goes through friend array and if this function returns true show user on friend suggestion... Adds a little bit of randomness to friend suggestion
+function showSuggestedFriend() {
+    return Math.floor(Math.random() * 2) === 1;
+}
 
 export default function AddFriend() {
     const [availableUsers, setAvailableUsers] = useState(null);
@@ -11,7 +19,7 @@ export default function AddFriend() {
         (async () => {
             const users = await userApi.getAvailableUsers();
 
-            setAvailableUsers(users);
+            setAvailableUsers(users.filter(u => showSuggestedFriend()));
         })();
     }, []);
 
@@ -31,7 +39,13 @@ export default function AddFriend() {
                         status === "OKAY" ? "border-green-500" : status === "FAILED" ? "border-red-500" : "border-zinc-300"
                     }`}
                 >
-                    <input type="text" value={username} onChange={e => setUsername(e.target.value)} maxLength={40} className="w-[60%] outline-0 text-sm" />
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
+                        maxLength={40}
+                        className="w-[60%] outline-0 text-sm"
+                    />
                     <button
                         onClick={handleAddFriend}
                         disabled={!username}
@@ -45,14 +59,37 @@ export default function AddFriend() {
                 {status === "FAILED" && <p className="ml-1 mt-1 text-xs text-red-500">That didn't work. Make sure the username is correct</p>}
                 {status === "OKAY" && <p className="ml-1 mt-1 text-xs text-green-500">Success! Your friend request was sent</p>}
             </div>
+            <div className="w-full h-[1px] mb-5  bg-zinc-200"></div>
+            <p className="mb-3 text-sm font-semibold">SUGGESTED FRIENDS</p>
             <div>
                 {availableUsers &&
                     availableUsers.map(u => {
                         return (
-                            <div key={u.id}>
-                                <img src={u.profilePicture || unknown} className="size-7" />
-                                <p>{u.displayName}</p>
-                                <button onClick={() => userApi.addFriend({ username: u.username })}>ADD</button>
+                            <div key={u.id} className="flex items-center p-2 rounded-lg group hover:bg-zinc-200">
+                                <img src={u.profilePicture || unknown} className="size-9 rounded-full" />
+                                <span className="ml-2">
+                                    <span className="flex items-center gap-1">
+                                        <p className="text-sm font-semibold">{u.displayName}</p>
+                                        <p className="mt-[3px] opacity-0 text-xs text-zinc-600 group-hover:opacity-100">{u.username}</p>
+                                    </span>
+                                    <span className="flex items-center">
+                                        <p className="text-xs">{u.online ? "Online" : "Offline"}</p>
+                                        {u.online && (
+                                            <div className="size-[6px] ml-2 mt-[2px] self-center rounded-full bg-green-500 animate-pulse"></div>
+                                        )}
+                                    </span>
+                                </span>
+                                <div className="ml-auto">
+                                    <InteractButton
+                                        handler={() => {
+                                            setAvailableUsers(availableUsers.filter(a => a.username !== u.username));
+                                            userApi.addFriend({ username: u.username });
+                                        }}
+                                        image={add}
+                                        label={"Add Friend"}
+                                        labelPosition={"bottom-9 left-[-10px]"}
+                                    />
+                                </div>
                             </div>
                         );
                     })}

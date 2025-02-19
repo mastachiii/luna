@@ -27,7 +27,7 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
             <label htmlFor="file" onClick={() => setShowMessageMisc(false)} className="flex items-center">
                 <img src={imageSvg} className="size-5 mt-[2px] cursor-pointer hover:animate-scale" />
             </label>
-            <input type="file" id="file" className="invisible w-0" onChange={e => imageHandler(e.target.files[0])} />
+            <input type="file" id="file" accept={'image/*'}onChange={e => imageHandler(e.target.files[0])} className="invisible w-0" />
             <form onSubmit={image ? imageSubmit : textSubmit} className="w-full h-fit flex justify-between ml-5 ">
                 {image ? (
                     <span className="flex relative">

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import userApi from "../../helpers/userApi";
 import User from "./user";
+import Empty from "./empty";
 
 function RemoveFriendDialog({ friends, friendsHandler, id, ref }) {
     const friend = friends.find(f => f.id === id) || {};
@@ -70,6 +71,15 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
                     </p>
                     <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200"></div>
                 </div>
+                {friendsToShow.length === 0 && (
+                    <Empty
+                        text={
+                            online
+                                ? "There's no one online right now... Come back later!"
+                                : "You currently don't have any friends but don't worry, Luna's here to keep you company!"
+                        }
+                    />
+                )}
                 {friendsToShow.map(f => {
                     return (
                         <User
