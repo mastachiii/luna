@@ -1,4 +1,5 @@
 import owner from "../assets/owner.svg";
+import unknown from "../assets/userUnknown.svg"
 
 function UserProfile({ profilePicture, displayName, isOwner }) {
     return (
@@ -19,7 +20,7 @@ export default function GroupMemberList({ members, ownerId }) {
             <p className="text-xs text-pink-400 font-semibold">ONLINE - {onlineMembers.length}</p>
             <div>
                 {onlineMembers.map(m => {
-                    return <UserProfile profilePicture={m.profilePicture} displayName={m.displayName} isOwner={m.id === ownerId} key={m.id} />;
+                    return <UserProfile profilePicture={m.profilePicture || unknown} displayName={m.displayName} isOwner={m.id === ownerId} key={m.id} />;
                 })}
             </div>
             <p className="mt-8 text-xs font-semibold text-zinc-500">OFFLINE - {offlineMembers.length}</p>
