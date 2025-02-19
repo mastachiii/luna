@@ -89,7 +89,7 @@ class Conversation {
         try {
             await db.leaveConversation({ id: +req.params.id, userId: req.user.id });
 
-            return res.send
+            return res.sendStatus(200);
         } catch (err) {
             next(err);
         }
