@@ -23,7 +23,7 @@ export default function Index() {
             window.addEventListener("beforeunload", () => {
                 userApi.goOffline();
             });
-            console.log({data})
+
             setUserData(data);
 
             // Update every 10 secs
@@ -52,7 +52,7 @@ export default function Index() {
         }
 
         case "user": {
-            comp = <UserLayout userData={userData} />;
+            comp = <UserLayout />;
         }
     }
 

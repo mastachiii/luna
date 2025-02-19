@@ -1,11 +1,14 @@
 import { useContext, useEffect, useReducer, useRef, useState } from "react";
-import conversationApi from "../../helpers/conversationApi";
+import ChatBegin from "./chatBegin";
 import Message from "../message/message";
 import MessageInput from "../message/messageInput";
-import { UserContext } from "../userContext";
-import noPfp from "../../assets/userUnknown.svg";
-import ChatBegin from "./chatBegin";
 import GroupMemberList from "../groupMemberList";
+import { UserContext } from "../userContext";
+import conversationApi from "../../helpers/conversationApi";
+import noPfp from "../../assets/userUnknown.svg";
+import edit from "../../assets/edit.svg";
+import InteractButton from "../friendsDashboard/userInteractButton";
+import EditGroupChat from "./editGroupChat";
 
 function reducer(state, action) {
     const newMessage = action.user && {
@@ -50,6 +53,7 @@ export default function Chat({ isGroup, id, friend }) {
     const userData = useContext(UserContext);
     const timeout = useRef();
     const convoRef = useRef();
+    const dialogRef = useRef();
 
     useEffect(() => {
         (async () => {
@@ -100,13 +104,25 @@ export default function Chat({ isGroup, id, friend }) {
     }
 
     if (conversation) {
+        console.log(userData);
         return (
-            <div className="w-[85%] h-[98%] flex flex-col grow font-noto bg-zinc-50 ">
+            <div className="w-[85%] h-[98%] flex flex-col grow font-noto bg-zinc-50">
                 <div className="h-13 flex shrink-0 align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
                     {
-                        <span className=" flex ml-5 items-center gap-3">
+                        <span className="flex ml-5 items-center gap-3">
                             <img src={isGroup ? conversation.picture : friend.profilePicture || noPfp} className="size-7 rounded-full" />
                             <p className="text-sm font-semibold">{isGroup ? conversation.name : friend.displayName}</p>
+                            {userData.id === conversation.ownerId && (
+                                <button
+                                    onClick={() => {
+                                        console.log(dialogRef.current);
+                                        dialogRef.current.showModal();
+                                    }}
+                                    className="cursor-pointer"
+                                >
+                                    <img src={edit} alt="" className="size-4 mt-1" />
+                                </button>
+                            )}
                         </span>
                     }
                 </div>
@@ -131,6 +147,7 @@ export default function Chat({ isGroup, id, friend }) {
                     image={image}
                     imageHandler={setImage}
                 />
+                {isGroup && <EditGroupChat ref={dialogRef} data={conversation} />}
             </div>
         );
     }
