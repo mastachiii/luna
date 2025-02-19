@@ -1,10 +1,12 @@
 import conversationApi from "../../helpers/conversationApi";
 
-export default function LeaveGroup({ conversation, ref }) {
+export default function LeaveGroup({ conversation, ref, compHandler }) {
+    // Wait for api call to finish then redirect user back to user layout..
     async function handleLeave() {
         await conversationApi.leaveConversation({ id: conversation.id });
 
         ref.current.close();
+        compHandler("user");
     }
 
     return (

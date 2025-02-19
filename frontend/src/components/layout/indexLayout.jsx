@@ -46,7 +46,7 @@ export default function Index() {
     let comp;
     switch (compToRender) {
         case "group": {
-            comp = <Chat isGroup={true} id={groupId} />;
+            comp = <Chat isGroup={true} id={groupId} compHandler={setCompToRender} />;
 
             break;
         }

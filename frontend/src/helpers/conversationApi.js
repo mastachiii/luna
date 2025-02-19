@@ -74,7 +74,7 @@ class Conversation {
     }
 
     async leaveConversation({ id }) {
-        fetch(`${this.conversationUrl}/group/leave/${id}`, {
+        await fetch(`${this.conversationUrl}/group/leave/${id}`, {
             method: "POST",
             credentials: "include",
         });

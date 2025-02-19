@@ -46,7 +46,7 @@ function reducer(state, action) {
     }
 }
 
-export default function Chat({ isGroup, id, friend }) {
+export default function Chat({ isGroup, id, friend, compHandler }) {
     const [conversation, dispatch] = useReducer(reducer, null);
     const [text, setText] = useState("");
     const [trigger, setTrigger] = useState(0);
@@ -125,7 +125,7 @@ export default function Chat({ isGroup, id, friend }) {
                                         <img src={edit} alt="" className="size-4 mt-1" />
                                     </button>
                                 ) : (
-                                    <LeaveGroup conversation={conversation} ref={leaveRef} />
+                                    <LeaveGroup conversation={conversation} ref={leaveRef} compHandler={compHandler} />
                                 )
                             ) : null}
                         </span>
