@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import userApi from "../../helpers/userApi";
 import unknown from "../../assets/userUnknown.svg";
 import add from "../../assets/add.svg";
-import online from "../../assets/online.svg";
 import InteractButton from "./userInteractButton";
+import Empty from "./empty";
 
 // Goes through friend array and if this function returns true show user on friend suggestion... Adds a little bit of randomness to friend suggestion
 function showSuggestedFriend() {
@@ -62,6 +62,9 @@ export default function AddFriend() {
             <div className="w-full h-[1px] mb-5  bg-zinc-200"></div>
             <p className="mb-3 text-sm font-semibold">SUGGESTED FRIENDS</p>
             <div>
+                {availableUsers && availableUsers.length === 0 && <div className="mt-20">
+                    <Empty text={'Luna is finding the right friends, come back later!'}/>
+                </div>}
                 {availableUsers &&
                     availableUsers.map(u => {
                         return (

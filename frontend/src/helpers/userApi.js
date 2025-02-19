@@ -59,7 +59,7 @@ class User {
             credentials: "include",
             body: JSON.stringify({ receiverUsername: username }),
         }).then(response => {
-            response.status === 400 ? statusHandler("FAILED") : statusHandler("OKAY");
+            response.status === 400 && statusHandler ? statusHandler("FAILED") : statusHandler("OKAY");
         });
     }
 

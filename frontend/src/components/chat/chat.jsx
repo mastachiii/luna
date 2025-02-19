@@ -26,7 +26,6 @@ function reducer(state, action) {
     switch (action.type) {
         case "send text":
         case "send image": {
-            console.log(newMessage);
             scrollToBottom();
 
             return {
@@ -102,7 +101,7 @@ export default function Chat({ isGroup, id, friend }) {
 
     if (conversation) {
         return (
-            <div className="w-[85%] h-screen flex flex-col grow font-noto bg-zinc-50 ">
+            <div className="w-[85%] h-[98%] flex flex-col grow font-noto bg-zinc-50 ">
                 <div className="h-13 flex shrink-0 align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
                     {
                         <span className=" flex ml-5 items-center gap-3">
@@ -112,7 +111,7 @@ export default function Chat({ isGroup, id, friend }) {
                     }
                 </div>
                 <div className="w-full h-[96%] flex">
-                    <div className={`${isGroup ? "grow" : "w-full"}  h-[87%] flex flex-col overflow-y-scroll box-border`} ref={convoRef}>
+                    <div className={`${isGroup ? "grow" : "w-full"}  h-[90%] flex flex-col overflow-y-scroll box-border`} ref={convoRef}>
                         {!isGroup && <ChatBegin friendData={friend} />}
                         <div className="w-full h-full">
                             {conversation &&

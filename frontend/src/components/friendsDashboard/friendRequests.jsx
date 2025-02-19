@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Empty from "./empty";
 import InteractButton from "./userInteractButton";
 import unknown from "../../assets/userUnknown.svg";
 import userApi from "../../helpers/userApi";
@@ -67,7 +68,12 @@ export default function FriendRequests({ sentRequests, pendingRequests }) {
     const [pendingRequestsToShow, setPendingRequestsToShow] = useState(pendingRequests);
 
     return (
-        <div className="w-[70%] h-[50%] p-10">
+        <div className="w-[70%] p-10">
+            {pendingRequestsToShow.length === 0 && sentRequestsToShow.length === 0 ? (
+                <div className="translate-y-65">
+                    <Empty text={"There are currently no pending friend requests."} />
+                </div>
+            ) : null}
             {pendingRequestsToShow.length >= 1 && (
                 <>
                     <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">RECEIVED - {pendingRequestsToShow.length}</p>

@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import userApi from "../../helpers/userApi";
 import FriendList from "./friendList";
 import FriendRequests from "./friendRequests";
 import AddFriend from "./addFriend";
 import friends from "../../assets/friends.svg";
+import { UserContext } from "../userContext";
 
 function Button({ handler, label, condition, pendingRequestsLength }) {
     return (
@@ -26,22 +27,10 @@ function Button({ handler, label, condition, pendingRequestsLength }) {
 }
 
 export default function FriendsDashboard({ compHandler, friendHandler, selHandler }) {
-    const [userData, setUserData] = useState([]);
     const [compToRender, setCompToRender] = useState("online");
-    const [status, setStatus] = useState("loading");
+    const userData = useContext(UserContext);
 
-    useEffect(() => {
-        (async () => {
-            const data = await userApi.getUserData();
-            userApi.getAvailableUsers();
-            setUserData(data);
-            setStatus("done");
-        })();
-    }, [compToRender]);
-
-    // TODO: Loading spinner
-    if (status === "loading") return;
-
+    
     let comp;
     switch (compToRender) {
         case "online": {
