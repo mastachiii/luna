@@ -15,19 +15,25 @@ function User({ user, handler, label }) {
 }
 
 export default function EditGroupChat({ data, ref }) {
+    const userData = useContext(UserContext);
     const [image, setImage] = useState(data.picture);
     const [groupName, setGroupName] = useState(data.name);
     const [membersToShow, setMembersToShow] = useState(data.users);
+    const [friendsToShow, setFriendsToShow] = useState(userData.friends);
     const [file, setFile] = useState();
-    const userData = useContext(UserContext);
 
     function handleImageChange(e) {
         setFile(e.target.files[0]);
         setImage(URL.createObjectURL(e.target.files[0]));
     }
 
+    async function handleAdd(userId) {
+        await conversationApi.updateConversationMembers({ id: data.id, action: "add", userId });
+        setFriendsToShow(membersToShow.filter(m => m.id !== userId));
+    }
+
     async function handleKick(userId) {
-        await conversationApi.kickFromConversation({ id: data.id, userId });
+        await conversationApi.updateConversationMembers({ id: data.id, action: "kick", userId });
         setMembersToShow(membersToShow.filter(m => m.id !== userId));
     }
 
@@ -44,10 +50,10 @@ export default function EditGroupChat({ data, ref }) {
 
                         return <User user={m} handler={() => handleKick(m.id)} label={"KICK"} key={m.id} />;
                     })}
-                    {userData.friends.map(m => {
-                        if (!checkIfUserIsInConversation({ conversationUsers: data.users, userId: m.id })) return;
+                    {friendsToShow.map(m => {
+                        if (checkIfUserIsInConversation({ conversationUsers: data.users, userId: m.id })) return;
 
-                        return;
+                        return <User user={m} handler={() => handleAdd(m.id)} label={"ADD"} key={m.id} />;
                     })}
                 </div>
             </div>

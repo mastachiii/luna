@@ -62,8 +62,8 @@ class Conversation {
         });
     }
 
-    async kickFromConversation({ id, userId }) {
-        fetch(`${this.conversationUrl}/group/remove/${id}`, {
+    async updateConversationMembers({ id, userId, action }) {
+        fetch(`${this.conversationUrl}/group/${action === "kick" ? "remove" : "add"}/${id}`, {
             method: "POST",
             credentials: "include",
             headers: {
