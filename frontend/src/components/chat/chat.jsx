@@ -83,6 +83,8 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
 
     function handleMessageSend(e) {
         e.preventDefault();
+        
+        if (!text.trim()) return;
 
         conversationApi.sendMessage({ id: conversation.id, message: text });
 

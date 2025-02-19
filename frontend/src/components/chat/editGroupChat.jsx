@@ -15,7 +15,7 @@ function User({ user, handler, label }) {
                 <p className="text-xs text-zinc-700">{user.username}</p>
             </span>
             <button
-                className="opacity-0 w-13 h-7 p-1 ml-auto mt-auto mb-auto border-1 border-black text-xs font-semibold rounded-sm cursor-pointer group-hover:opacity-100  hover:bg-red-500 hover:text-white"
+                className={`opacity-0 w-13 h-7 p-1 ml-auto mt-auto mb-auto border-1 border-black text-xs font-semibold rounded-sm cursor-pointer group-hover:opacity-100  ${label === 'KICK' ?'hover:bg-red-500' : 'hover:bg-green-500'} hover:text-white`}
                 onClick={handler}
             >
                 {label}
@@ -28,11 +28,14 @@ export default function EditGroupChat({ data, ref }) {
     const userData = useContext(UserContext);
     const [image, setImage] = useState(data.picture);
     const [groupName, setGroupName] = useState(data.name);
+    const [file, setFile] = useState();
     const [membersToShow, setMembersToShow] = useState(data.users);
     const [friendsToShow, setFriendsToShow] = useState(userData.friends);
-    const [file, setFile] = useState();
     const [memberSearch, setMemberSearch] = useState("");
     const [memberSelected, setMemberSelected] = useState(null);
+    const [showMembers, setShowMembers] = useState(false);
+    const [friendSearch, setFriendSearch] = useState("");
+    const [showFriends, setShowFriends] = useState(false);
     const kickDialog = useRef();
 
     function handleImageChange(e) {
@@ -58,7 +61,7 @@ export default function EditGroupChat({ data, ref }) {
     return (
         <dialog ref={ref} className="relative m-auto p-7 rounded-md animate-appear">
             <h4 className="text-xl font-semibold">Server Settings</h4>
-            <div className="w-3xl h-1000 p-5 overflow-x-scroll">
+            <div className="w-3xl h-120 p-5 overflow-x-scroll">
                 <div className="flex">
                     <span className="w-[30%] flex flex-col items-center p-2">
                         <img src={image} className="size-30 mb-3 rounded-full shadow-sm shadow-black" />
@@ -80,7 +83,13 @@ export default function EditGroupChat({ data, ref }) {
                         />
                     </span>
                 </div>
-                <EditorUserList label={"MEMBERS"} inputValue={memberSearch} inputHandler={setMemberSearch}>
+                <EditorUserList
+                    label={"MEMBERS"}
+                    inputValue={memberSearch}
+                    inputHandler={setMemberSearch}
+                    show={showMembers}
+                    showHandler={setShowMembers}
+                >
                     <div className="w-[90%] flex gap-3 pl-1 pt-2">
                         {membersToShow.map(m => {
                             if (m.id === data.ownerId) return;
@@ -99,11 +108,19 @@ export default function EditGroupChat({ data, ref }) {
                         })}
                     </div>
                 </EditorUserList>
-                {friendsToShow.map(m => {
-                    if (checkIfUserIsInConversation({ conversationUsers: data.users, userId: m.id })) return;
+                <EditorUserList
+                    label={"ADD FRIENDS"}
+                    inputValue={friendSearch}
+                    inputHandler={setFriendSearch}
+                    show={showFriends}
+                    showHandler={setShowFriends}
+                >
+                    {friendsToShow.map(m => {
+                        if (checkIfUserIsInConversation({ conversationUsers: data.users, userId: m.id })) return;
 
-                    return <User user={m} handler={() => handleAdd(m.id)} label={"ADD"} key={m.id} />;
-                })}
+                        return <User user={m} handler={() => handleAdd(m.id)} label={"ADD"} key={m.id} />;
+                    })}
+                </EditorUserList>
             </div>
             <div className="sticky bottom-0 flex justify-end gap-3 text-sm">
                 <button onClick={() => ref.current.close()} className="text-zinc-700 cursor-pointer hover:underline">
