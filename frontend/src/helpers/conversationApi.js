@@ -61,6 +61,17 @@ class Conversation {
             body: formData,
         });
     }
+
+    async kickFromConversation({ id, userId }) {
+        fetch(`${this.conversationUrl}/group/remove/${id}`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userId }),
+        });
+    }
 }
 
 export default new Conversation();

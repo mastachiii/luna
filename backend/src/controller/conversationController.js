@@ -59,7 +59,27 @@ class Conversation {
         try {
             const ids = JSON.parse(req.body.userIds);
 
-            await db.updateGroupConversation({ userIds: ids, picture: req.publicUrl, name: req.body.name });
+            await db.editGroupConversation({ id: +req.params.id, userIds: ids, picture: req.publicUrl, name: req.body.name });
+
+            return res.sendStatus(200);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async addUser(req, res, next) {
+        try {
+            await db.addUserToConversation({ id: +req.params.id, userId: req.body.userId });
+
+            return res.sendStatus(200);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async kickUser(req, res, next) {
+        try {
+            await db.kickUserFromConversation({ id: +req.params.id, userId: req.body.userId });
 
             return res.sendStatus(200);
         } catch (err) {

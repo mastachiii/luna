@@ -49,6 +49,32 @@ class Conversation {
         });
     }
 
+    async addUserToConversation({ id, userId }) {
+        await prisma.conversation.update({
+            where: { id },
+            data: {
+                users: {
+                    connect: {
+                        id: userId,
+                    },
+                },
+            },
+        });
+    }
+
+    async kickUserFromConversation({ id, userId }) {
+        await prisma.conversation.update({
+            where: { id },
+            data: {
+                users: {
+                    disconnect: {
+                        id: userId,
+                    },
+                },
+            },
+        });
+    }
+
     async addMessageToConversation({ id, message, senderId, isImage }) {
         const userInConvo = await checkIfUserIsInConversation({ id, userId: senderId });
 

@@ -23,7 +23,7 @@ export default function Index() {
             window.addEventListener("beforeunload", () => {
                 userApi.goOffline();
             });
-
+            console.log({data})
             setUserData(data);
 
             // Update every 10 secs
