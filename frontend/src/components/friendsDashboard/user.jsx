@@ -29,13 +29,12 @@ export default function User({ user, friendHandler, compHandler, selHandler, opt
                     labelPosition={"bottom-9 left-[-15px]"}
                 />
                 <InteractButton handler={() => optionsHandler(user.id)} image={options} label={"More"} labelPosition={"bottom-9 left-[-7px]"} />
-                <div>
+                <div className="relative">
                     <div
-                        className={`${condition ? "block" : "hidden"} w-35 absolute top-8 left-15 p-2 bg-white rounded-sm shadow-md shadow-zinc-600`}
+                        className={`${condition ? "block" : "hidden"} w-35 absolute top-2 left-[-20px] z-10 p-2 bg-white rounded-sm shadow-md shadow-zinc-600`}
                     >
                         <button
                             onClick={() => {
-                                console.log("yes");
                                 ref.current.showModal();
                             }}
                             className="w-full p-2 text-xs text-start rounded-sm text-red-500 cursor-pointer hover:bg-red-500 hover:text-white"
