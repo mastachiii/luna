@@ -9,6 +9,7 @@ import MessageMisc from "./messageMisc";
 export default function MessageInput({ textSubmit, imageSubmit, text, textHandler, image, imageHandler, gifHandler }) {
     const textNewLines = text.match(/\n/g);
     const [showMessageMisc, setShowMessageMisc] = useState(false);
+    const [shiftPressed, setShiftPressed] = useState(false);
 
     function handleShowMsgMisc(value) {
         switch (showMessageMisc) {
@@ -27,7 +28,7 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
             <label htmlFor="file" onClick={() => setShowMessageMisc(false)} className="flex items-center">
                 <img src={imageSvg} className="size-5 mt-[2px] cursor-pointer hover:animate-scale" />
             </label>
-            <input type="file" id="file" accept={'image/*'}onChange={e => imageHandler(e.target.files[0])} className="invisible w-0" />
+            <input type="file" id="file" accept={"image/*"} onChange={e => imageHandler(e.target.files[0])} className="invisible w-0" />
             <form onSubmit={image ? imageSubmit : textSubmit} className="w-full h-fit flex justify-between ml-5 ">
                 {image ? (
                     <span className="flex relative">
@@ -47,6 +48,14 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                         value={text}
                         onChange={e => {
                             textHandler(e.target.value);
+                        }}
+                        onKeyDown={e => {
+                            if (e.key === "Shift") setShiftPressed(true);
+                            console.log(shiftPressed);
+                        }}
+                        onKeyUp={e => {
+                            if (e.key === "Shift") setShiftPressed(false);
+                            console.log(shiftPressed);
                         }}
                         rows={1 + text.length / 200 + (textNewLines && textNewLines.length)}
                         className="w-[90%] text-sm text-wrap outline-0 resize-none"
