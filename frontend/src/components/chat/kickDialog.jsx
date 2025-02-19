@@ -1,8 +1,9 @@
 import conversationApi from "../../helpers/conversationApi";
 
-export default function KickDialog({ member = {}, conversation, ref }) {
+export default function KickDialog({ member = {}, conversation, members, memberHandler, ref }) {
     async function handleKick(userId) {
         await conversationApi.updateConversationMembers({ id: conversation.id, action: "kick", userId: member.id });
+        memberHandler(members.filter(m => m.id !== member.id));
 
         ref.current.close();
     }

@@ -4,6 +4,7 @@ import conversationApi from "../../helpers/conversationApi";
 import { UserContext } from "../userContext";
 import unknown from "../../assets/userUnknown.svg";
 import KickDialog from "./kickDialog";
+import EditorUserList from "../editorUserList";
 
 function User({ user, handler, label }) {
     return (
@@ -79,41 +80,30 @@ export default function EditGroupChat({ data, ref }) {
                         />
                     </span>
                 </div>
-                <div className="w-[90%] h-[1px] mt-3 ml-1 mb-3 bg-zinc-200"></div>
-                <div className="pl-3">
-                    <div className="">
-                        <p className="text-xs font-semibold text-zinc-700">MEMBERS</p>
-                        <input
-                            type="text"
-                            value={memberSearch}
-                            onChange={handleSearch}
-                            placeholder="Search"
-                            className="w-[40%] h-8 p-2 mt-2 text-xs bg-zinc-100 border-1 border-zinc-200 outline-0 rounded-md"
-                        />
-                        <div className="flex gap-3 pl-1 pt-2">
-                            {membersToShow.map(m => {
-                                if (m.id === data.ownerId) return;
+                <EditorUserList label={"MEMBERS"} inputValue={memberSearch} inputHandler={setMemberSearch}>
+                    <div className="w-[90%] flex gap-3 pl-1 pt-2">
+                        {membersToShow.map(m => {
+                            if (m.id === data.ownerId) return;
 
-                                return (
-                                    <User
-                                        user={m}
-                                        handler={() => {
-                                            setMemberSelected(m);
-                                            kickDialog.current.showModal();
-                                        }}
-                                        label={"KICK"}
-                                        key={m.id}
-                                    />
-                                );
-                            })}
-                        </div>
+                            return (
+                                <User
+                                    user={m}
+                                    handler={() => {
+                                        setMemberSelected(m);
+                                        kickDialog.current.showModal();
+                                    }}
+                                    label={"KICK"}
+                                    key={m.id}
+                                />
+                            );
+                        })}
                     </div>
-                    {friendsToShow.map(m => {
-                        if (checkIfUserIsInConversation({ conversationUsers: data.users, userId: m.id })) return;
+                </EditorUserList>
+                {friendsToShow.map(m => {
+                    if (checkIfUserIsInConversation({ conversationUsers: data.users, userId: m.id })) return;
 
-                        return <User user={m} handler={() => handleAdd(m.id)} label={"ADD"} key={m.id} />;
-                    })}
-                </div>
+                    return <User user={m} handler={() => handleAdd(m.id)} label={"ADD"} key={m.id} />;
+                })}
             </div>
             <div className="sticky bottom-0 flex justify-end gap-3 text-sm">
                 <button onClick={() => ref.current.close()} className="text-zinc-700 cursor-pointer hover:underline">
@@ -123,7 +113,15 @@ export default function EditGroupChat({ data, ref }) {
                     Save changes
                 </button>
             </div>
-            {<KickDialog ref={kickDialog} member={memberSelected || {}} conversation={data} />}
+            {
+                <KickDialog
+                    ref={kickDialog}
+                    member={memberSelected || {}}
+                    conversation={data}
+                    members={membersToShow}
+                    memberHandler={setMembersToShow}
+                />
+            }
         </dialog>
     );
 }
