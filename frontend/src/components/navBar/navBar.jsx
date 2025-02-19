@@ -36,7 +36,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData }) 
                         }}
                         key={c.id}
                     >
-                        <img src={c.picture} alt="group profile" className={`w-fit rounded-full`} />
+                        <img src={c.picture} alt="group profile" className={`rounded-full ${selected === c.id ? 'size-9 m-auto' : 'size-12'}`} />
                     </NavBarButton>
                 );
             })}

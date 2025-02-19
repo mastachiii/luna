@@ -70,7 +70,7 @@ export default function FriendRequests({ sentRequests, pendingRequests }) {
     return (
         <div className="w-[70%] p-10">
             {pendingRequestsToShow.length === 0 && sentRequestsToShow.length === 0 ? (
-                <div className="translate-y-65">
+                <div className="translate-y-[50%]">
                     <Empty text={"There are currently no pending friend requests."} />
                 </div>
             ) : null}

@@ -4,13 +4,14 @@ export default function NavBarButton({ handleClick, condition, children, dialogL
     const [hovered, setHovered] = useState(false);
 
     return (
-        <div className=" relative mb-2 group">
+        <div className="relative mb-2 group">
             <button
                 onClick={handleClick}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
-                className={`w-12 h-12 mt-2 rounded-full transition-all duration-200 cursor-pointer ease-in  hover:rounded-xl hover:translate-x-1 hover:p-2 hover:bg-pink-300 ${
-                    condition ? "translate-x-1 bg-pink-300 p-2 rounded-xl" : "hover:translate-x-1"
+                className={`w-12 h-12 mt-2 rounded-xl transition-all duration-200 cursor-pointer ease-in  
+                    hover:*:size-8 hover:*:m-auto hover:translate-x-1  hover:bg-pink-300 ${
+                    condition ? "translate-x-1 bg-pink-300" : "hover:translate-x-1"
                 }`}
             >
                 {children}

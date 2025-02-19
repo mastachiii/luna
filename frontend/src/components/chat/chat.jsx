@@ -9,6 +9,7 @@ import noPfp from "../../assets/userUnknown.svg";
 import edit from "../../assets/edit.svg";
 import InteractButton from "../friendsDashboard/userInteractButton";
 import EditGroupChat from "./editGroupChat";
+import LeaveGroup from "./leaveGroup";
 
 function reducer(state, action) {
     const newMessage = action.user && {
@@ -111,7 +112,7 @@ export default function Chat({ isGroup, id, friend }) {
                         <span className="flex ml-5 items-center gap-3">
                             <img src={isGroup ? conversation.picture : friend.profilePicture || noPfp} className="size-7 rounded-full" />
                             <p className="text-sm font-semibold">{isGroup ? conversation.name : friend.displayName}</p>
-                            {userData.id === conversation.ownerId && (
+                            {userData.id === conversation.ownerId ? (
                                 <button
                                     onClick={() => {
                                         console.log(dialogRef.current);
@@ -121,6 +122,8 @@ export default function Chat({ isGroup, id, friend }) {
                                 >
                                     <img src={edit} alt="" className="size-4 mt-1" />
                                 </button>
+                            ) : (
+                                <LeaveGroup />
                             )}
                         </span>
                     }
