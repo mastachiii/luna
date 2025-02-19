@@ -34,6 +34,21 @@ class Conversation {
         });
     }
 
+    async editGroupConversation({ id, userIds, name, picture }) {
+        const ids = userIds.map(id => ({ id }));
+
+        await prisma.conversation.update({
+            where: { id },
+            data: {
+                users: {
+                    connect: ids,
+                },
+                picture,
+                name,
+            },
+        });
+    }
+
     async addMessageToConversation({ id, message, senderId, isImage }) {
         const userInConvo = await checkIfUserIsInConversation({ id, userId: senderId });
 

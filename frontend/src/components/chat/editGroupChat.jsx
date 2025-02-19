@@ -1,5 +1,7 @@
+import { useState } from "react";
 
 export default function EditGroupChat({ data, ref }) {
+    const [image, setImage] = useState(data.image);
     return (
         <dialog ref={ref}>
             <div>

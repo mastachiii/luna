@@ -55,6 +55,18 @@ class Conversation {
         }
     }
 
+    async updateGroupConversation(req, res, next) {
+        try {
+            const ids = JSON.parse(req.body.userIds);
+
+            await db.updateGroupConversation({ userIds: ids, picture: req.publicUrl, name: req.body.name });
+
+            return res.sendStatus(200);
+        } catch (err) {
+            next(err);
+        }
+    }
+
     async deleteConversation(req, res, next) {
         try {
             await db.deleteConversation({ id: +req.params.id, userId: req.body.id });

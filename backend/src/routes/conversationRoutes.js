@@ -14,6 +14,7 @@ route.get("/private/:username", isAuthenticated, controller.getPrivateConversati
 // POST
 route.post("/group", isAuthenticated, upload.single("file"), uploadToSupabase, controller.createGroupConversation);
 route.post("/:id", isAuthenticated, controller.sendMessage);
+route.post("/group/create", isAuthenticated, upload.single("file"), uploadToSupabase, controller.updateGroupConversation);
 route.post("/image/:id", isAuthenticated, upload.single("file"), uploadToSupabase, controller.sendImage);
 route.post("/delete/:id", controller.deleteConversation);
 
