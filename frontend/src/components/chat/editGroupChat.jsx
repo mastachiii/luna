@@ -8,14 +8,16 @@ import EditorUserList from "../editorUserList";
 
 function User({ user, handler, label }) {
     return (
-        <div key={user.id} className="w-[50%] p-2 flex rounded-sm group hover:bg-zinc-300">
+        <div key={user.id} className="w-[50%] p-2 flex rounded-sm group hover:bg-zinc-100">
             <img src={user.profilePicture || unknown} alt="" className="size-11 rounded-full" />
             <span className="ml-2">
                 <p className="text-sm">{user.displayName}</p>
                 <p className="text-xs text-zinc-700">{user.username}</p>
             </span>
             <button
-                className={`opacity-0 w-13 h-7 p-1 ml-auto mt-auto mb-auto border-1 border-black text-xs font-semibold rounded-sm cursor-pointer group-hover:opacity-100  ${label === 'KICK' ?'hover:bg-red-500' : 'hover:bg-green-500'} hover:text-white`}
+                className={`opacity-0 w-13 h-7 p-1 ml-auto mt-auto mb-auto border-1 border-black text-xs font-semibold rounded-sm cursor-pointer group-hover:opacity-100  ${
+                    label === "KICK" ? "hover:bg-red-500" : "hover:bg-green-500"
+                } hover:text-white`}
                 onClick={handler}
             >
                 {label}
@@ -29,12 +31,12 @@ export default function EditGroupChat({ data, ref }) {
     const [image, setImage] = useState(data.picture);
     const [groupName, setGroupName] = useState(data.name);
     const [file, setFile] = useState();
+    const [memberSelected, setMemberSelected] = useState(null);
+    const [memberSearch, setMemberSearch] = useState("");
+    const [friendSearch, setFriendSearch] = useState("");
     const [membersToShow, setMembersToShow] = useState(data.users);
     const [friendsToShow, setFriendsToShow] = useState(userData.friends);
-    const [memberSearch, setMemberSearch] = useState("");
-    const [memberSelected, setMemberSelected] = useState(null);
     const [showMembers, setShowMembers] = useState(false);
-    const [friendSearch, setFriendSearch] = useState("");
     const [showFriends, setShowFriends] = useState(false);
     const kickDialog = useRef();
 
@@ -44,7 +46,6 @@ export default function EditGroupChat({ data, ref }) {
     }
 
     async function handleUpdate() {
-        console.log("updating....");
         await conversationApi.updateConversationInfo({ name: groupName, image: file, id: data.id });
     }
 
@@ -53,13 +54,8 @@ export default function EditGroupChat({ data, ref }) {
         setFriendsToShow(membersToShow.filter(m => m.id !== userId));
     }
 
-    function handleSearch(e) {
-        setMembersToShow(data.users.filter(m => m.username.includes(e.target.value) || m.displayName.includes(e.target.value)));
-        setMemberSearch(e.target.value);
-    }
-
     return (
-        <dialog ref={ref} className="relative m-auto p-7 rounded-md animate-appear">
+        <dialog ref={ref} className="z-10 m-auto mt p-7 rounded-md animate-appear">
             <h4 className="text-xl font-semibold">Group Settings</h4>
             <div className="w-3xl h-120 p-5">
                 <div className="flex">
@@ -91,21 +87,23 @@ export default function EditGroupChat({ data, ref }) {
                     showHandler={setShowMembers}
                 >
                     <div className="w-[90%] flex gap-3 pl-1 pt-2">
-                        {membersToShow.map(m => {
-                            if (m.id === data.ownerId) return;
+                        {membersToShow
+                            .filter(u => u.username.includes(memberSearch) || u.displayName.includes(memberSearch))
+                            .map(m => {
+                                if (m.id === data.ownerId) return;
 
-                            return (
-                                <User
-                                    user={m}
-                                    handler={() => {
-                                        setMemberSelected(m);
-                                        kickDialog.current.showModal();
-                                    }}
-                                    label={"KICK"}
-                                    key={m.id}
-                                />
-                            );
-                        })}
+                                return (
+                                    <User
+                                        user={m}
+                                        handler={() => {
+                                            setMemberSelected(m);
+                                            kickDialog.current.showModal();
+                                        }}
+                                        label={"KICK"}
+                                        key={m.id}
+                                    />
+                                );
+                            })}
                     </div>
                 </EditorUserList>
                 <EditorUserList
@@ -115,11 +113,13 @@ export default function EditGroupChat({ data, ref }) {
                     show={showFriends}
                     showHandler={setShowFriends}
                 >
-                    {friendsToShow.map(m => {
-                        if (checkIfUserIsInConversation({ conversationUsers: data.users, userId: m.id })) return;
+                    {friendsToShow
+                        .filter(u => u.username.includes(friendSearch) || u.displayName.includes(friendSearch))
+                        .map(m => {
+                            if (checkIfUserIsInConversation({ conversationUsers: data.users, userId: m.id })) return;
 
-                        return <User user={m} handler={() => handleAdd(m.id)} label={"ADD"} key={m.id} />;
-                    })}
+                            return <User user={m} handler={() => handleAdd(m.id)} label={"ADD"} key={m.id} />;
+                        })}
                 </EditorUserList>
             </div>
             <div className="sticky bottom-0 flex justify-end gap-3 text-sm">

@@ -13,7 +13,7 @@ export default function KickDialog({ member = {}, conversation, members, memberH
                 <h4 className="text-lg font-semibold">Kick '{member.displayName}'</h4>
                 <p>Are you sure you want to kick {member.displayName}?</p>
             </div>
-            <div className="w-full h-[30%] mt-auto flex justify-end p-3  bg-zinc-200">
+            <div className="w-full h-[30%] mt-auto flex justify-end p-3  bg-zinc-100">
                 <button onClick={() => ref.current.close()} className="mr-5 text-zinc-700 text-sm cursor-pointer hover:underline">
                     Cancel
                 </button>
