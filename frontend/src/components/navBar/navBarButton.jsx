@@ -1,10 +1,19 @@
 import { useRef, useState } from "react";
 import EditGroupChat from "../chat/editGroupChat";
 
+function NavOptions({ condition, active, ref }) {
+    return (
+        <div className={`absolute left-10 ${active ? "block" : "hidden"}`}>
+            {condition ? <button onClick={() => ref.current.showModal()}>Group Settings</button> : <button>Leave Server</button>}
+        </div>
+    );
+}
+
 export default function NavBarButton({ handleClick, condition, children, dialogLabel, conversation }) {
     const [hovered, setHovered] = useState(false);
+    const [active, setActive] = useState(false);
     const dialogRef = useRef();
-    console.log({ conversation });
+
     return (
         <>
             <div className="relative mb-2 group">
@@ -12,7 +21,7 @@ export default function NavBarButton({ handleClick, condition, children, dialogL
                     onClick={handleClick}
                     onMouseEnter={() => setHovered(true)}
                     onMouseLeave={() => setHovered(false)}
-                    onMouseDown={e => dialogRef.current.showModal()}
+                    onMouseDown={e => setActive(!active)}
                     onContextMenu={e => e.preventDefault()}
                     className={`w-12 h-12 mt-2 rounded-xl transition-all duration-200 cursor-pointer ease-in  
                     hover:*:size-8 hover:*:m-auto hover:translate-x-1  hover:bg-pink-300 ${
@@ -28,6 +37,7 @@ export default function NavBarButton({ handleClick, condition, children, dialogL
                 >
                     <p className="text-sm font-noto font-semibold">{dialogLabel}</p>
                 </span>
+                {conversation && conversation.isGroup && <NavOptions condition={true} active={active} ref={dialogRef} />}
             </div>
             {conversation && <EditGroupChat data={conversation} ref={dialogRef} />}
         </>
