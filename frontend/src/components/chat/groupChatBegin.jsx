@@ -1,5 +1,4 @@
 export default function GroupChatBegin({ group, ref }) {
-    console.log(group);
     return (
         <div className="ml-10 mt-5">
             <span className="text-center">

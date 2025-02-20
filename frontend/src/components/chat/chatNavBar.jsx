@@ -1,4 +1,5 @@
 import ChatNavBarButton from "./chatNavBarButton";
+import UserNavBar from "../user/userNavBar";
 import friendsLogo from "../../assets/friends.svg";
 import shop from "../../assets/shop.svg";
 import nitro from "../../assets/nitro.svg";
@@ -6,7 +7,7 @@ import noPfp from "../../assets/userUnknown.svg";
 
 export default function ChatNavBar({ friends, compHandler, friendHandler, selected, selHandler }) {
     return (
-        <div className="w-[15%] flex flex-col font-noto bg-neutral-100">
+        <div className="w-[17%] flex flex-col font-noto bg-neutral-100">
             <div className="w-full h-13 pt-5 pb-5 mb-2 border-b-2 border-zinc-200 shadow-md shadow-zinc-200 "></div>
             <div className="flex flex-col gap-0.5">
                 <ChatNavBarButton
@@ -39,6 +40,7 @@ export default function ChatNavBar({ friends, compHandler, friendHandler, select
                     />
                 );
             })}
+            <UserNavBar compHandler={compHandler}/>
         </div>
     );
 }

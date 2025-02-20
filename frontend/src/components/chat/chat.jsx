@@ -107,7 +107,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
 
     if (conversation) {
         return (
-            <div className="w-[85%] h-[92%] flex flex-col grow font-noto bg-zinc-50">
+            <div className="w-full h-[92%] flex flex-col grow font-noto bg-zinc-50">
                 <div className="h-13 flex shrink-0 align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
                     {
                         <span className="flex ml-5 items-center gap-3">

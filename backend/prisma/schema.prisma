@@ -20,6 +20,8 @@ model User {
   email            String         @unique
   displayName      String
   profilePicture   String?
+  banner           String?
+  bio              String?
   friends          User[]         @relation("UserFriends")
   conversations    Conversation[]
   messages         Message[]

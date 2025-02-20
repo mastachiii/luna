@@ -3,6 +3,7 @@ import ChatNavBar from "../chat/chatNavBar";
 import Chat from "../chat/chat";
 import FriendsDashboard from "../friendsDashboard/friendsDashboard";
 import { UserContext } from "../userContext";
+import EditUser from "../user/editUser";
 
 export default function UserLayout() {
     const [compToRender, setCompToRender] = useState("friend list");
@@ -17,8 +18,13 @@ export default function UserLayout() {
             break;
         }
 
+        case "edit profile": {
+            comp = <EditUser />;
+            break;
+        }
+
         case "friend list": {
-            comp = <FriendsDashboard  compHandler={setCompToRender} friendHandler={setFriendData} selHandler={setNavSelected} />;
+            comp = <FriendsDashboard compHandler={setCompToRender} friendHandler={setFriendData} selHandler={setNavSelected} />;
         }
     }
 
