@@ -32,8 +32,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData }) 
                         condition={selected === c.id}
                         groupCondition={c.ownerId === userData.id}
                         dialogLabel={c.name}
-                        handleClick={e => {
-                            console.log(e.preventDefault());
+                        handleClick={() => {
                             componentHandler("group");
                             setSelected(c.id);
                             groupIdHandler(c.id);

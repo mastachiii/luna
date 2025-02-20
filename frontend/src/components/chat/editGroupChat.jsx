@@ -52,7 +52,8 @@ export default function EditGroupChat({ data, ref }) {
     async function handleAdd(userId) {
         await conversationApi.updateConversationMembers({ id: data.id, action: "add", userId });
 
-        setFriendsToShow(membersToShow.filter(m => m.id !== userId));
+        setFriendsToShow(friendsToShow.filter(m => m.id !== userId));
+        setMembersToShow([...membersToShow, friendsToShow.find(f => f.id === userId)]);
     }
 
     async function handleKick() {

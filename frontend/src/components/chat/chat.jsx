@@ -115,21 +115,6 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                         <span className="flex ml-5 items-center gap-3">
                             <img src={isGroup ? conversation.picture : friend.profilePicture || noPfp} className="size-7 rounded-full" />
                             <p className="text-sm font-semibold">{isGroup ? conversation.name : friend.displayName}</p>
-                            {isGroup ? (
-                                userData.id === conversation.ownerId ? (
-                                    <button
-                                        onClick={() => {
-                                            console.log(dialogRef.current);
-                                            dialogRef.current.showModal();
-                                        }}
-                                        className="cursor-pointer"
-                                    >
-                                        <img src={edit} alt="" className="size-4 mt-1" />
-                                    </button>
-                                ) : (
-                                    <LeaveGroup conversation={conversation} ref={leaveRef} compHandler={compHandler} />
-                                )
-                            ) : null}
                         </span>
                     }
                 </div>

@@ -1,15 +1,21 @@
 import { useRef, useState } from "react";
 import EditGroupChat from "../chat/editGroupChat";
-import LeaveDialog from "../chat/leaveDialog";
+import AlertDialog from "../alertDialog";
+import conversationApi from "../../helpers/conversationApi";
 
 function NavOptions({ condition, active, groupOptionsRef, leaveDialogRef }) {
     return (
-        <div className={`absolute left-10 ${active ? "block" : "hidden"}`}>
-            {condition ? (
-                <button onClick={() => groupOptionsRef.current.showModal()}>Group Settings</button>
-            ) : (
-                <button onClick={() => leaveDialogRef.current.showModal()}>Leave Server</button>
-            )}
+        <div className={`w-40 absolute left-10 top-12 z-20 p-2 pl-2 pr-3 rounded-sm bg-white font-noto ${active ? "block" : "hidden"}`}>
+            {condition && groupOptionsRef ? (
+                <button onClick={() => groupOptionsRef.current.showModal()} className=" w-full h-8 cursor-pointer rounded-sm  group ">
+                    <p className="w-full pl-2 pt-2 pb-2 text-xs text-start rounded-sm hover:bg-pink-300 hover:text-white">Group Settings</p>
+                </button>
+            ) : null}
+            {!condition && leaveDialogRef ? (
+                <button onClick={() => leaveDialogRef.current.showModal()} className="w-full cursor-pointer">
+                    <p className="w-full pl-2 pt-2 pb-2 text-xs text-red-500 text-start rounded-sm hover:bg-red-500 hover:text-white">Leave Server</p>
+                </button>
+            ) : null}
         </div>
     );
 }
@@ -27,7 +33,9 @@ export default function NavBarButton({ handleClick, condition, groupCondition, c
                     onClick={handleClick}
                     onMouseEnter={() => setHovered(true)}
                     onMouseLeave={() => setHovered(false)}
-                    onMouseDown={e => setActive(!active)}
+                    onMouseDown={e => {
+                        if (e.button === 2) setActive(!active);
+                    }}
                     onContextMenu={e => e.preventDefault()}
                     className={`w-12 h-12 mt-2 rounded-xl transition-all duration-200 cursor-pointer ease-in  
                     hover:*:size-8 hover:*:m-auto hover:translate-x-1  hover:bg-pink-300 ${
@@ -50,7 +58,17 @@ export default function NavBarButton({ handleClick, condition, groupCondition, c
             {conversation && (
                 <>
                     <EditGroupChat data={conversation} ref={dialogRef} />
-                    <LeaveDialog data={conversation} ref={leaveDialogRef} />
+                    <AlertDialog
+                        handler={async () => {
+                            await conversationApi.leaveConversation({ id: conversation.id });
+                            leaveDialogRef.current.close();
+                        }}
+                        ref={leaveDialogRef}
+                        label={`Leave ${conversation.name}`}
+                        btnLabel={"Leave Server"}
+                    >
+                        <p>Are you sure you want to leave {conversation.name}? You won't be able to rejoin unless you are invited again</p>
+                    </AlertDialog>
                 </>
             )}
         </>
