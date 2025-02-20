@@ -21,27 +21,29 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                 setShowMessageMisc(value);
         }
     }
-    console.log({image})
+    
     return (
         <>
             <div className="w-[77%] h-fit flex align-middle p-3 ml-5 mr-5 mt-10 absolute bottom-7 rounded-md bg-neutral-200">
                 {image && (
-                    <span className=" w-full h-70 flex absolute bottom-10 left-[-0.1px] right-[1px] p-4 pl-8 bg-neutral-200 border-b-1 border-zinc-300 rounded-t-md">
-                        <div className="h-52 relative p-2 pl-4 pr-4 bg-zinc-100  rounded-md">
-                            <img src={URL.createObjectURL(image)} className="w-30 p-2 m-auto bg-zinc-300" />
-                            <p>{image.name}</p>
-                            <button className="h-10">
+                    <span className=" w-full h-60 flex absolute bottom-10 left-[-0.1px] right-[1px] p-4 pl-8 bg-neutral-200 border-b-1 border-zinc-300 rounded-t-md">
+                        <div className="h-52 w-50 relative flex flex-col p-2 pl-4 pr-4 bg-neutral-300  rounded-md">
+                            <div className="w-full h-fit p-2 m-auto  bg-neutral-200 rounded-md ">
+                                <img src={URL.createObjectURL(image)} className="w-auto h-auto " />
+                            </div>
+                            <button className="h-10 absolute top-2 right-5">
                                 <img
                                     src={trash}
                                     alt=""
-                                    className="size-7 absolute top-20 bg-neutral-200 rounded-full p-1 cursor-pointer"
+                                    className="size-7 bg-neutral-200 rounded-md p-1 cursor-pointer hover:scale-110 transition duration-75 ease-in"
                                     onClick={() => imageHandler(null)}
                                 />
                             </button>
+                            <p className="text-xs overflow-hidden overflow-ellipsis">{image.name}</p>
                         </div>
                     </span>
                 )}
-                <label htmlFor="file" onClick={() => setShowMessageMisc(false)} className="flex items-center">
+                <label htmlFor="file" onClick={() => setShowMessageMisc(false)} onKeyDown={e => console.log(e.key)} className="flex items-center">
                     <img src={imageSvg} className="size-5 mt-[2px] cursor-pointer hover:animate-scale" />
                 </label>
                 <input type="file" id="file" accept={"image/*"} onChange={e => imageHandler(e.target.files[0])} className="invisible w-0" />

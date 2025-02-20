@@ -60,8 +60,8 @@ export default function EditGroupChat({ data, ref }) {
 
     return (
         <dialog ref={ref} className="relative m-auto p-7 rounded-md animate-appear">
-            <h4 className="text-xl font-semibold">Server Settings</h4>
-            <div className="w-3xl h-120 p-5 overflow-x-scroll">
+            <h4 className="text-xl font-semibold">Group Settings</h4>
+            <div className="w-3xl h-120 p-5">
                 <div className="flex">
                     <span className="w-[30%] flex flex-col items-center p-2">
                         <img src={image} className="size-30 mb-3 rounded-full shadow-sm shadow-black" />
@@ -74,7 +74,7 @@ export default function EditGroupChat({ data, ref }) {
                         <input type="file" onChange={handleImageChange} id="groupImage" className="hidden" />
                     </span>
                     <span className="w-[70%] mt-5 pl-7">
-                        <p className="text-xs font-semibold text-zinc-700">SERVER NAME</p>
+                        <p className="text-xs font-semibold text-zinc-700">GROUP NAME</p>
                         <input
                             type="text"
                             value={groupName}
