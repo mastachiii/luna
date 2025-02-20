@@ -51,7 +51,7 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                         }}
                         onKeyDown={e => {
                             if (e.key === "Shift") setShiftPressed(true);
-                            console.log(shiftPressed);
+                            if (!shiftPressed && e.key === "Enter") textSubmit(e);
                         }}
                         onKeyUp={e => {
                             if (e.key === "Shift") setShiftPressed(false);
