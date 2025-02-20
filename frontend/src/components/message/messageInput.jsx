@@ -9,7 +9,6 @@ import MessageMisc from "./messageMisc";
 export default function MessageInput({ textSubmit, imageSubmit, text, textHandler, image, imageHandler, gifHandler }) {
     const textNewLines = text.match(/\n/g);
     const [showMessageMisc, setShowMessageMisc] = useState(false);
-    const [shiftPressed, setShiftPressed] = useState(false);
 
     function handleShowMsgMisc(value) {
         switch (showMessageMisc) {
@@ -22,58 +21,56 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                 setShowMessageMisc(value);
         }
     }
-
+    console.log({image})
     return (
-        <div className="w-[77%] h-fit flex align-middle p-3 ml-5 mr-5 mt-10 absolute bottom-7 rounded-md bg-neutral-200">
-            <label htmlFor="file" onClick={() => setShowMessageMisc(false)} className="flex items-center">
-                <img src={imageSvg} className="size-5 mt-[2px] cursor-pointer hover:animate-scale" />
-            </label>
-            <input type="file" id="file" accept={"image/*"} onChange={e => imageHandler(e.target.files[0])} className="invisible w-0" />
-            <form onSubmit={image ? imageSubmit : textSubmit} className="w-full h-fit flex justify-between ml-5 ">
-                {image ? (
-                    <span className="flex relative">
-                        <img src={URL.createObjectURL(image)} className="w-60" />
-                        <button className="h-10">
-                            <img
-                                src={trash}
-                                alt=""
-                                className="size-7 absolute right-2 top-2 bg-neutral-200 rounded-full p-1 cursor-pointer"
-                                onClick={() => imageHandler(null)}
-                            />
-                        </button>
+        <>
+            <div className="w-[77%] h-fit flex align-middle p-3 ml-5 mr-5 mt-10 absolute bottom-7 rounded-md bg-neutral-200">
+                {image && (
+                    <span className=" w-full h-70 flex absolute bottom-10 left-[-0.1px] right-[1px] p-4 pl-8 bg-neutral-200 border-b-1 border-zinc-300 rounded-t-md">
+                        <div className="h-52 relative p-2 pl-4 pr-4 bg-zinc-100  rounded-md">
+                            <img src={URL.createObjectURL(image)} className="w-30 p-2 m-auto bg-zinc-300" />
+                            <p>{image.name}</p>
+                            <button className="h-10">
+                                <img
+                                    src={trash}
+                                    alt=""
+                                    className="size-7 absolute top-20 bg-neutral-200 rounded-full p-1 cursor-pointer"
+                                    onClick={() => imageHandler(null)}
+                                />
+                            </button>
+                        </div>
                     </span>
-                ) : (
-                    <textarea
-                        placeholder="Message..."
-                        value={text}
-                        onChange={e => {
-                            textHandler(e.target.value);
-                        }}
-                        onKeyDown={e => {
-                            if (e.key === "Shift") setShiftPressed(true);
-                            if (!shiftPressed && e.key === "Enter") textSubmit(e);
-                        }}
-                        onKeyUp={e => {
-                            if (e.key === "Shift") setShiftPressed(false);
-                            console.log(shiftPressed);
-                        }}
-                        rows={1 + text.length / 200 + (textNewLines && textNewLines.length)}
-                        className="w-[90%] text-sm text-wrap outline-0 resize-none"
-                    />
                 )}
-                <div className="flex items-center gap-3">
-                    <button type="button" onClick={() => handleShowMsgMisc("emoji")}>
-                        <img src={emoji} className="size-5 cursor-pointer hover:animate-scale" />
-                    </button>
-                    <button type="button" onClick={() => handleShowMsgMisc("gif")}>
-                        <img src={gif} className="size-5 cursor-pointer  hover:animate-scale" />
-                    </button>
-                    <button type="submit" className="">
-                        <img src={send} className="size-5 cursor-pointer hover:animate-scale" />
-                    </button>
-                </div>
-            </form>
-            <MessageMisc textHandler={textHandler} text={text} toShow={showMessageMisc} gifHandler={gifHandler} />
-        </div>
+                <label htmlFor="file" onClick={() => setShowMessageMisc(false)} className="flex items-center">
+                    <img src={imageSvg} className="size-5 mt-[2px] cursor-pointer hover:animate-scale" />
+                </label>
+                <input type="file" id="file" accept={"image/*"} onChange={e => imageHandler(e.target.files[0])} className="invisible w-0" />
+                <form onSubmit={image ? imageSubmit : textSubmit} className="w-full h-fit flex justify-between ml-5 ">
+                    {!image && (
+                        <textarea
+                            placeholder="Message..."
+                            value={text}
+                            onChange={e => {
+                                textHandler(e.target.value);
+                            }}
+                            rows={1 + text.length / 200 + (textNewLines && textNewLines.length)}
+                            className="w-[90%] text-sm text-wrap outline-0 resize-none"
+                        />
+                    )}
+                    <div className="flex items-center gap-3 ml-auto">
+                        <button type="button" onClick={() => handleShowMsgMisc("emoji")}>
+                            <img src={emoji} className="size-5 cursor-pointer hover:animate-scale" />
+                        </button>
+                        <button type="button" onClick={() => handleShowMsgMisc("gif")}>
+                            <img src={gif} className="size-5 cursor-pointer  hover:animate-scale" />
+                        </button>
+                        <button type="submit" className="">
+                            <img src={send} className="size-5 cursor-pointer hover:animate-scale" />
+                        </button>
+                    </div>
+                </form>
+                <MessageMisc textHandler={textHandler} text={text} toShow={showMessageMisc} gifHandler={gifHandler} />
+            </div>
+        </>
     );
 }
