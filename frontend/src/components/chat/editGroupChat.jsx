@@ -80,7 +80,7 @@ export default function EditGroupChat({ data, ref }) {
                         </label>
                         <input type="file" onChange={handleImageChange} id="groupImage" className="hidden" />
                     </span>
-                    <span className="w-[70%] mt-5 pl-7">
+                    <span className="w-[70%] flex flex-col mt-5 pl-7">
                         <p className="text-xs font-semibold text-zinc-700">GROUP NAME</p>
                         <input
                             type="text"
@@ -88,6 +88,7 @@ export default function EditGroupChat({ data, ref }) {
                             onChange={e => setGroupName(e.target.value)}
                             className="w-[80%] p-2 mt-2 rounded-sm text-sm  bg-zinc-200 outline-0"
                         />
+                        <button className="w-[25%] mt-auto mb-3 pl-3 pr-3 pt-2 pb-2 text-xs font-semibold bg-red-500 rounded-sm cursor-pointer hover:text-white hover:bg-red-600 transition duration-100 ease-in">DELETE GROUP</button>
                     </span>
                 </div>
                 <EditorUserList

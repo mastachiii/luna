@@ -47,12 +47,11 @@ class Conversation {
         });
     }
 
-    async createGroupConversation({ userIds, image, name }) {
+    async createGroupConversation({ image, name }) {
         if (image.type.split("/")[0] !== "image") return;
 
         const formData = new FormData();
         formData.append("file", image);
-        formData.append("userIds", JSON.stringify(userIds));
         formData.append("name", name);
 
         fetch(`${this.conversationUrl}/group`, {

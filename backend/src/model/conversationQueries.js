@@ -18,13 +18,13 @@ class Conversation {
         });
     }
 
-    async createGroupConversation({ userIds, picture, name, ownerId }) {
-        const ids = userIds.map(id => ({ id }));
-
+    async createGroupConversation({ picture, name, ownerId }) {
         await prisma.conversation.create({
             data: {
                 users: {
-                    connect: ids,
+                    connect: {
+                        id: ownerId,
+                    },
                 },
                 isGroup: true,
                 picture,
