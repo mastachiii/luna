@@ -3,6 +3,7 @@ import NavBar from "../navBar/navBar";
 import userApi from "../../helpers/userApi";
 import Chat from "../chat/chat";
 import UserLayout from "./userLayout";
+import CreateGroup from "../chat/createGroupDialog";
 import { UserContext } from "../userContext";
 
 export default function Index() {
@@ -12,6 +13,7 @@ export default function Index() {
     const [trigger, setTrigger] = useState(0);
     const [status, setStatus] = useState("loading");
     const timeout = useRef();
+    const createGroupRef = useRef();
     // Some components need to access stuff like user id, thought it would be better to use a context rather than storing in localStorage where users can mutate the data.
 
     useEffect(() => {
@@ -23,7 +25,7 @@ export default function Index() {
             window.addEventListener("beforeunload", () => {
                 userApi.goOffline();
             });
-            console.log({ data });
+
             setUserData(data);
 
             // Update every 10 secs
@@ -62,9 +64,11 @@ export default function Index() {
                         componentHandler={setCompToRender}
                         groupIdHandler={setGroupId}
                         groupData={userData.conversations.filter(c => c.isGroup)}
+                        dialogRef={createGroupRef}
                     />
                     {comp}
                 </div>
+                <CreateGroup ref={createGroupRef} />
             </UserContext.Provider>
         );
     }

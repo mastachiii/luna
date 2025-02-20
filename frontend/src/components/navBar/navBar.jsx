@@ -5,7 +5,7 @@ import NavBarButton from "./navBarButton";
 import { UserContext } from "../userContext";
 
 // Separated the button styling to avoid duplication
-export default function NavBar({ componentHandler, groupIdHandler, groupData }) {
+export default function NavBar({ componentHandler, groupIdHandler, groupData, dialogRef }) {
     const [userBtnHover, setUserBtnHover] = useState(false);
     const [selected, setSelected] = useState(true);
     const userData = useContext(UserContext);
@@ -52,8 +52,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData }) 
                 condition={selected === "create group"}
                 dialogLabel={"Create a group chat"}
                 handleClick={() => {
-                    componentHandler("create group");
-                    setSelected("create group");
+                    dialogRef.current.showModal();
                 }}
             >
                 <p className="text-2xl font-bold group-hover: ">+</p>

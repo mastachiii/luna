@@ -58,6 +58,8 @@ export default function EditGroupChat({ data, ref }) {
 
     async function handleKick() {
         await conversationApi.updateConversationMembers({ id: data.id, action: "kick", userId: memberSelected.id });
+
+        setFriendsToShow([...friendsToShow, membersToShow.find(f => f.id === memberSelected.id)]);
         setMembersToShow(membersToShow.filter(m => m.id !== memberSelected.id));
 
         kickDialog.current.close();
@@ -126,7 +128,7 @@ export default function EditGroupChat({ data, ref }) {
                         .filter(u => u.username.includes(friendSearch) || u.displayName.includes(friendSearch))
                         .map(m => {
                             if (checkIfUserIsInConversation({ conversationUsers: data.users, userId: m.id })) return;
-
+                            console.log(m.id);
                             return <User user={m} handler={() => handleAdd(m.id)} label={"ADD"} key={m.id} />;
                         })}
                 </EditorUserList>
