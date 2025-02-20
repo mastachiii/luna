@@ -39,6 +39,7 @@ export default function EditGroupChat({ data, ref }) {
     const [showMembers, setShowMembers] = useState(false);
     const [showFriends, setShowFriends] = useState(false);
     const kickDialog = useRef();
+    const deleteDialog = useRef();
 
     function handleImageChange(e) {
         setFile(e.target.files[0]);
@@ -65,6 +66,13 @@ export default function EditGroupChat({ data, ref }) {
         kickDialog.current.close();
     }
 
+    async function handleDelete() {
+        await conversationApi.deleteConversation({ id: data.id });
+
+        deleteDialog.current.close();
+        ref.current.close();
+    }
+
     return (
         <dialog ref={ref} className="z-10 m-auto mt p-7 rounded-md animate-appear">
             <h4 className="text-xl font-semibold">Group Settings</h4>
@@ -88,7 +96,12 @@ export default function EditGroupChat({ data, ref }) {
                             onChange={e => setGroupName(e.target.value)}
                             className="w-[80%] p-2 mt-2 rounded-sm text-sm  bg-zinc-200 outline-0"
                         />
-                        <button className="w-[25%] mt-auto mb-3 pl-3 pr-3 pt-2 pb-2 text-xs font-semibold bg-red-500 rounded-sm cursor-pointer hover:text-white hover:bg-red-600 transition duration-100 ease-in">DELETE GROUP</button>
+                        <button
+                            onClick={() => deleteDialog.current.showModal()}
+                            className="w-[25%] mt-auto mb-3 pl-3 pr-3 pt-2 pb-2 text-xs font-semibold bg-red-500 rounded-sm cursor-pointer hover:text-white hover:bg-red-600 transition duration-100 ease-in"
+                        >
+                            DELETE GROUP
+                        </button>
                     </span>
                 </div>
                 <EditorUserList
@@ -142,11 +155,13 @@ export default function EditGroupChat({ data, ref }) {
                     Save changes
                 </button>
             </div>
-            {
-                <AlertDialog handler={handleKick} label={`Kick '${memberSelected.displayName}'`} ref={kickDialog} btnLabel={"Kick"}>
-                    <p>Are you sure you want to kick {memberSelected.displayName}?</p>
-                </AlertDialog>
-            }
+
+            <AlertDialog handler={handleKick} label={`Kick '${memberSelected.displayName}'`} ref={kickDialog} btnLabel={"Kick"}>
+                <p>Are you sure you want to kick {memberSelected.displayName}?</p>
+            </AlertDialog>
+            <AlertDialog handler={handleDelete} label={`Delete '${data.name}'`} ref={deleteDialog} btnLabel={"Delete"}>
+                <p>Are you sure you want to delete {data.name}?</p>
+            </AlertDialog>
         </dialog>
     );
 }

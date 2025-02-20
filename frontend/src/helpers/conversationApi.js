@@ -92,6 +92,13 @@ class Conversation {
             credentials: "include",
         });
     }
+
+    async deleteConversation({ id }) {
+        await fetch(`${this.conversationUrl}/group/delete/${id}`, {
+            method: "POST",
+            credentials: "include",
+        });
+    }
 }
 
 export default new Conversation();

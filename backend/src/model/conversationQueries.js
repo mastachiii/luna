@@ -170,7 +170,8 @@ class Conversation {
     async deleteConversation({ id, userId }) {
         await prisma.conversation.delete({
             where: {
-                AND: [{ id }, { ownerId: userId }],
+                id,
+                ownerId: userId,
             },
         });
     }
