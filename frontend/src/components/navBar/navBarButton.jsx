@@ -1,18 +1,24 @@
 import { useRef, useState } from "react";
 import EditGroupChat from "../chat/editGroupChat";
+import LeaveDialog from "../chat/leaveDialog";
 
-function NavOptions({ condition, active, ref }) {
+function NavOptions({ condition, active, groupOptionsRef, leaveDialogRef }) {
     return (
         <div className={`absolute left-10 ${active ? "block" : "hidden"}`}>
-            {condition ? <button onClick={() => ref.current.showModal()}>Group Settings</button> : <button>Leave Server</button>}
+            {condition ? (
+                <button onClick={() => groupOptionsRef.current.showModal()}>Group Settings</button>
+            ) : (
+                <button onClick={() => leaveDialogRef.current.showModal()}>Leave Server</button>
+            )}
         </div>
     );
 }
 
-export default function NavBarButton({ handleClick, condition, children, dialogLabel, conversation }) {
+export default function NavBarButton({ handleClick, condition, groupCondition, children, dialogLabel, conversation }) {
     const [hovered, setHovered] = useState(false);
     const [active, setActive] = useState(false);
     const dialogRef = useRef();
+    const leaveDialogRef = useRef();
 
     return (
         <>
@@ -37,9 +43,16 @@ export default function NavBarButton({ handleClick, condition, children, dialogL
                 >
                     <p className="text-sm font-noto font-semibold">{dialogLabel}</p>
                 </span>
-                {conversation && conversation.isGroup && <NavOptions condition={true} active={active} ref={dialogRef} />}
+                {conversation && conversation.isGroup && (
+                    <NavOptions condition={groupCondition} active={active} groupOptionsRef={dialogRef} leaveDialogRef={leaveDialogRef} />
+                )}
             </div>
-            {conversation && <EditGroupChat data={conversation} ref={dialogRef} />}
+            {conversation && (
+                <>
+                    <EditGroupChat data={conversation} ref={dialogRef} />
+                    <LeaveDialog data={conversation} ref={leaveDialogRef} />
+                </>
+            )}
         </>
     );
 }

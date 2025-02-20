@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import userApi from "../../helpers/userApi";
 import User from "./user";
 import Empty from "./empty";
+import AlertDialog from "../alertDialog";
 
 function RemoveFriendDialog({ friends, friendsHandler, id, ref }) {
     const friend = friends.find(f => f.id === id) || {};
@@ -37,6 +38,7 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
     const [activeId, setActiveId] = useState(false);
     const [friendsToShow, setFriendsToShow] = useState(null); // If user removes a friend, update state. Forcing the page to reload would be messier..
     const [search, setSearch] = useState("");
+    const friend = (friendsToShow && friendsToShow.find(f => f.id === activeId)) || {};
     const dialogRef = useRef();
 
     function handleOptionsClick(id) {
@@ -49,6 +51,13 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
         setSearch(e.target.value);
 
         setFriendsToShow(friends.filter(f => f.displayName.includes(e.target.value) || f.username.includes(e.target.value)));
+    }
+
+    function handleRemoveFriend() {
+        userApi.removeFriend({ id: friend.id });
+        setFriendsToShow(friendsToShow.filter(f => f.id !== friend.id));
+
+        dialogRef.current.close();
     }
 
     useEffect(() => {
@@ -94,7 +103,13 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
                         />
                     );
                 })}
-                {activeId && <RemoveFriendDialog friends={friendsToShow} friendsHandler={setFriendsToShow} ref={dialogRef} id={activeId} />}
+                {activeId && (
+                    <AlertDialog label={`Remove '${friend.displayName}'`} ref={dialogRef} handler={handleRemoveFriend} btnLabel={"Remove Friend"}>
+                        <p className="text-sm p-3 pl-4">
+                            Are you sure you want to remove <b className="font-semibold">{friend.displayName}</b> from your friends?
+                        </p>
+                    </AlertDialog>
+                )}
             </div>
         );
     }

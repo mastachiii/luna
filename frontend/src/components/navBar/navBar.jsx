@@ -2,11 +2,13 @@ import { useContext, useState } from "react";
 import logo from "../../assets/logo.svg";
 import logoUnfocused from "../../assets/logo-unfocused.svg";
 import NavBarButton from "./navBarButton";
+import { UserContext } from "../userContext";
 
 // Separated the button styling to avoid duplication
 export default function NavBar({ componentHandler, groupIdHandler, groupData }) {
     const [userBtnHover, setUserBtnHover] = useState(false);
     const [selected, setSelected] = useState(true);
+    const userData = useContext(UserContext);
 
     return (
         <div className="h-screen flex flex-col items-center pl-3 pr-3 bg-neutral-200">
@@ -28,6 +30,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData }) 
                 return (
                     <NavBarButton
                         condition={selected === c.id}
+                        groupCondition={c.ownerId === userData.id}
                         dialogLabel={c.name}
                         handleClick={e => {
                             console.log(e.preventDefault());
