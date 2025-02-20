@@ -168,14 +168,9 @@ class Conversation {
     }
 
     async deleteConversation({ id, userId }) {
-        await prisma.conversation.update({
-            where: { id },
-            data: {
-                users: {
-                    disconnect: {
-                        id: userId,
-                    },
-                },
+        await prisma.conversation.delete({
+            where: {
+                AND: [{ id }, { ownerId: userId }],
             },
         });
     }
