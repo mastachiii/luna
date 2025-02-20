@@ -4,36 +4,6 @@ import User from "./user";
 import Empty from "./empty";
 import AlertDialog from "../alertDialog";
 
-function RemoveFriendDialog({ friends, friendsHandler, id, ref }) {
-    const friend = friends.find(f => f.id === id) || {};
-
-    function handleRemoveFriend() {
-        userApi.removeFriend({ id: friend.id });
-        friendsHandler(friends.filter(f => f.id !== friend.id));
-        ref.current.close();
-    }
-
-    return (
-        <dialog ref={ref} className={`m-auto  rounded-md`}>
-            <h4 className="text-lg font-semibold mb-0 p-3 pl-4">Remove '{friend.displayName}'</h4>
-            <p className="text-sm p-3 pl-4">
-                Are you sure you want to remove <b className="font-semibold">{friend.displayName}</b> from your friends?
-            </p>
-            <div className="h-15 flex justify-end items-center gap-5 mt-5 pr-4 bg-zinc-100">
-                <button onClick={() => ref.current.close()} className="text-sm cursor-pointer hover:underline">
-                    Cancel
-                </button>
-                <button
-                    onClick={handleRemoveFriend}
-                    className="p-2 pl-3 pr-3 text-sm text-white rounded-sm  bg-red-500 cursor-pointer hover:bg-red-700"
-                >
-                    Remove Friend
-                </button>
-            </div>
-        </dialog>
-    );
-}
-
 export default function FriendList({ friends, compHandler, friendHandler, selHandler, label, online }) {
     const [activeId, setActiveId] = useState(false);
     const [friendsToShow, setFriendsToShow] = useState(null); // If user removes a friend, update state. Forcing the page to reload would be messier..

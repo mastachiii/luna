@@ -3,8 +3,8 @@ import { checkIfUserIsInConversation } from "../../helpers/conversationHelpers";
 import conversationApi from "../../helpers/conversationApi";
 import { UserContext } from "../userContext";
 import unknown from "../../assets/userUnknown.svg";
-import KickDialog from "./kickDialog";
 import EditorUserList from "../editorUserList";
+import AlertDialog from "../alertDialog";
 
 function User({ user, handler, label }) {
     return (
@@ -31,7 +31,7 @@ export default function EditGroupChat({ data, ref }) {
     const [image, setImage] = useState(data.picture);
     const [groupName, setGroupName] = useState(data.name);
     const [file, setFile] = useState();
-    const [memberSelected, setMemberSelected] = useState(null);
+    const [memberSelected, setMemberSelected] = useState({});
     const [memberSearch, setMemberSearch] = useState("");
     const [friendSearch, setFriendSearch] = useState("");
     const [membersToShow, setMembersToShow] = useState(data.users);
@@ -51,13 +51,21 @@ export default function EditGroupChat({ data, ref }) {
 
     async function handleAdd(userId) {
         await conversationApi.updateConversationMembers({ id: data.id, action: "add", userId });
+
         setFriendsToShow(membersToShow.filter(m => m.id !== userId));
+    }
+
+    async function handleKick() {
+        await conversationApi.updateConversationMembers({ id: data.id, action: "kick", userId: memberSelected.id });
+        setMembersToShow(membersToShow.filter(m => m.id !== memberSelected.id));
+
+        kickDialog.current.close();
     }
 
     return (
         <dialog ref={ref} className="z-10 m-auto mt p-7 rounded-md animate-appear">
             <h4 className="text-xl font-semibold">Group Settings</h4>
-            <div className="w-3xl h-120 p-5">
+            <div className="w-3xl h-120 p-5 overflow-y-scroll">
                 <div className="flex">
                     <span className="w-[30%] flex flex-col items-center p-2">
                         <img src={image} className="size-30 mb-3 rounded-full shadow-sm shadow-black" />
@@ -122,22 +130,18 @@ export default function EditGroupChat({ data, ref }) {
                         })}
                 </EditorUserList>
             </div>
-            <div className="sticky bottom-0 flex justify-end gap-3 text-sm">
-                <button onClick={() => ref.current.close()} className="text-zinc-700 cursor-pointer hover:underline">
+            <div className="sticky bottom-0 flex justify-end items-center gap-3 text-sm">
+                <button onClick={() => ref.current.close()} className="p-2 mt-5 text-zinc-700 cursor-pointer hover:underline">
                     Cancel
                 </button>
-                <button onClick={handleUpdate} className="p-2 border-1 bg-pink-300 text-white rounded-sm cursor-pointer  hover:bg-pink-500">
+                <button onClick={handleUpdate} className="p-2 mt-5 border-1  bg-pink-300 text-white rounded-sm cursor-pointer  hover:bg-pink-500">
                     Save changes
                 </button>
             </div>
             {
-                <KickDialog
-                    ref={kickDialog}
-                    member={memberSelected || {}}
-                    conversation={data}
-                    members={membersToShow}
-                    memberHandler={setMembersToShow}
-                />
+                <AlertDialog handler={handleKick} label={`Kick '${memberSelected.displayName}'`} ref={kickDialog} btnLabel={"Kick"}>
+                    <p>Are you sure you want to kick {memberSelected.displayName}?</p>
+                </AlertDialog>
             }
         </dialog>
     );

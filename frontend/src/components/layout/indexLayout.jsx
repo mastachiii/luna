@@ -23,15 +23,13 @@ export default function Index() {
             window.addEventListener("beforeunload", () => {
                 userApi.goOffline();
             });
-            console.log({data})
+            console.log({ data });
             setUserData(data);
 
             // Update every 10 secs
-            if (compToRender === "user") {
-                timeout.current = setTimeout(() => {
-                    setTrigger(trigger + 1);
-                }, 10000);
-            }
+            timeout.current = setTimeout(() => {
+                setTrigger(trigger + 1);
+            }, 10000);
 
             setStatus("done");
 
