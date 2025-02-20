@@ -26,7 +26,7 @@ function User({ user, handler, label }) {
     );
 }
 
-export default function EditGroupChat({ data, ref }) {
+export default function EditGroupChat({ data, ref, compHandler }) {
     const userData = useContext(UserContext);
     const [image, setImage] = useState(data.picture);
     const [groupName, setGroupName] = useState(data.name);
@@ -71,6 +71,7 @@ export default function EditGroupChat({ data, ref }) {
 
         deleteDialog.current.close();
         ref.current.close();
+        compHandler("user");
     }
 
     return (
@@ -98,7 +99,7 @@ export default function EditGroupChat({ data, ref }) {
                         />
                         <button
                             onClick={() => deleteDialog.current.showModal()}
-                            className="w-[25%] mt-auto mb-3 pl-3 pr-3 pt-2 pb-2 text-xs font-semibold bg-red-500 rounded-sm cursor-pointer hover:text-white hover:bg-red-600 transition duration-100 ease-in"
+                            className="w-[25%] mt-auto mb-3 pl-3 pr-3 pt-2 pb-2 text-xs font-semibold bg-red-500 rounded-sm cursor-pointer text-white hover:bg-red-600 transition duration-100 ease-in"
                         >
                             DELETE GROUP
                         </button>
@@ -138,13 +139,15 @@ export default function EditGroupChat({ data, ref }) {
                     show={showFriends}
                     showHandler={setShowFriends}
                 >
-                    {friendsToShow
-                        .filter(u => u.username.includes(friendSearch) || u.displayName.includes(friendSearch))
-                        .map(m => {
-                            if (checkIfUserIsInConversation({ conversationUsers: data.users, userId: m.id })) return;
-                            console.log(m.id);
-                            return <User user={m} handler={() => handleAdd(m.id)} label={"ADD"} key={m.id} />;
-                        })}
+                    <div className="w-[90%] flex gap-3 pl-1 pt-2">
+                        {friendsToShow
+                            .filter(u => u.username.includes(friendSearch) || u.displayName.includes(friendSearch))
+                            .map(m => {
+                                if (checkIfUserIsInConversation({ conversationUsers: data.users, userId: m.id })) return;
+
+                                return <User user={m} handler={() => handleAdd(m.id)} label={"ADD"} key={m.id} />;
+                            })}
+                    </div>
                 </EditorUserList>
             </div>
             <div className="sticky bottom-0 flex justify-end items-center gap-3 text-sm">
@@ -155,7 +158,6 @@ export default function EditGroupChat({ data, ref }) {
                     Save changes
                 </button>
             </div>
-
             <AlertDialog handler={handleKick} label={`Kick '${memberSelected.displayName}'`} ref={kickDialog} btnLabel={"Kick"}>
                 <p>Are you sure you want to kick {memberSelected.displayName}?</p>
             </AlertDialog>

@@ -1,15 +1,14 @@
 import { useContext, useEffect, useReducer, useRef, useState } from "react";
 import ChatBegin from "./chatBegin";
+import GroupChatBegin from "./groupChatBegin";
 import Message from "../message/message";
 import MessageInput from "../message/messageInput";
 import GroupMemberList from "../groupMemberList";
 import { UserContext } from "../userContext";
 import conversationApi from "../../helpers/conversationApi";
 import noPfp from "../../assets/userUnknown.svg";
-import edit from "../../assets/edit.svg";
-import InteractButton from "../friendsDashboard/userInteractButton";
 import EditGroupChat from "./editGroupChat";
-import LeaveGroup from "./leaveGroup";
+import settings from "../../assets/settings.svg";
 
 function reducer(state, action) {
     const newMessage = action.user && {
@@ -55,7 +54,6 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
     const timeout = useRef();
     const convoRef = useRef();
     const dialogRef = useRef();
-    const leaveRef = useRef();
 
     useEffect(() => {
         (async () => {
@@ -83,13 +81,13 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
 
     function handleMessageSend(e) {
         e.preventDefault();
-        
-        if (!text.trim()) return;
 
-        conversationApi.sendMessage({ id: conversation.id, message: text });
+        if (!text.trim()) return; // Text only contains white space
+
+        conversationApi.sendMessage({ id: conversation.id, message: text.trim() });
 
         // Modify current conversation state so that user doesn't have to wait for the effect to run again for their message to display...
-        dispatch({ type: "send text", message: text, convoRef, user: userData });
+        dispatch({ type: "send text", message: text.trim(), convoRef, user: userData });
         setText("");
     }
 
@@ -109,18 +107,25 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
 
     if (conversation) {
         return (
-            <div className="w-[85%] h-[98%] flex flex-col grow font-noto bg-zinc-50">
+            <div className="w-[85%] h-[92%] flex flex-col grow font-noto bg-zinc-50">
                 <div className="h-13 flex shrink-0 align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
                     {
                         <span className="flex ml-5 items-center gap-3">
                             <img src={isGroup ? conversation.picture : friend.profilePicture || noPfp} className="size-7 rounded-full" />
-                            <p className="text-sm font-semibold">{isGroup ? conversation.name : friend.displayName}</p>
+                            <span className="flex gap-1">
+                                <p className="text-sm font-semibold">{isGroup ? conversation.name : friend.displayName}</p>
+                                {isGroup && conversation.ownerId === userData.id && (
+                                    <button onClick={() => dialogRef.current.showModal()}>
+                                        <img src={settings} className="size-3 mt-1 cursor-pointer hover:animate-spin" />
+                                    </button>
+                                )}
+                            </span>
                         </span>
                     }
                 </div>
                 <div className="w-full h-[96%] flex">
                     <div className={`${isGroup ? "grow" : "w-full"}  h-[90%] flex flex-col overflow-y-scroll box-border`} ref={convoRef}>
-                        {!isGroup && <ChatBegin friendData={friend} />}
+                        {!isGroup ? <ChatBegin friendData={friend} /> : <GroupChatBegin group={conversation} ref={dialogRef} />}
                         <div className="w-full h-full">
                             {conversation &&
                                 conversation.messages.map((msg, index) => {
@@ -139,7 +144,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                     image={image}
                     imageHandler={setImage}
                 />
-                {isGroup && <EditGroupChat ref={dialogRef} data={conversation} />}
+                {isGroup && <EditGroupChat ref={dialogRef} data={conversation} compHandler={compHandler} />}
             </div>
         );
     }

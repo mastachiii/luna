@@ -20,7 +20,7 @@ function NavOptions({ condition, active, groupOptionsRef, leaveDialogRef }) {
     );
 }
 
-export default function NavBarButton({ handleClick, condition, groupCondition, children, dialogLabel, conversation }) {
+export default function NavBarButton({ handleClick, condition, groupCondition, children, dialogLabel, conversation, compHandler }) {
     const [hovered, setHovered] = useState(false);
     const [active, setActive] = useState(false);
     const dialogRef = useRef();
@@ -57,7 +57,7 @@ export default function NavBarButton({ handleClick, condition, groupCondition, c
             </div>
             {conversation && (
                 <>
-                    <EditGroupChat data={conversation} ref={dialogRef} />
+                    <EditGroupChat data={conversation} ref={dialogRef} compHander={compHandler} />
                     <AlertDialog
                         handler={async () => {
                             await conversationApi.leaveConversation({ id: conversation.id });

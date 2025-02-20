@@ -9,6 +9,7 @@ import MessageMisc from "./messageMisc";
 export default function MessageInput({ textSubmit, imageSubmit, text, textHandler, image, imageHandler, gifHandler }) {
     const textNewLines = text.match(/\n/g);
     const [showMessageMisc, setShowMessageMisc] = useState(false);
+    const [shiftActive, setShiftActive] = useState(false);
 
     function handleShowMsgMisc(value) {
         switch (showMessageMisc) {
@@ -21,7 +22,7 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                 setShowMessageMisc(value);
         }
     }
-    
+
     return (
         <>
             <div className="w-[77%] h-fit flex align-middle p-3 ml-5 mr-5 mt-10 absolute bottom-7 rounded-md bg-neutral-200">
@@ -52,6 +53,14 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                         <textarea
                             placeholder="Message..."
                             value={text}
+                            onKeyDown={e => {
+                                if (e.key === "Shift") setShiftActive(true);
+                                if (e.key === "Enter" && !shiftActive) textSubmit(e);
+                                console.log(e.key, shiftActive)
+                            }}
+                            onKeyUp={e => {
+                                if (e.key === "Shift") setShiftActive(false);
+                            }}
                             onChange={e => {
                                 textHandler(e.target.value);
                             }}

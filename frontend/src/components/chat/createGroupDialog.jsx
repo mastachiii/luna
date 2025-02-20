@@ -5,10 +5,13 @@ export default function CreateGroup({ ref }) {
     const [image, setImage] = useState(null);
     const [groupName, setGroupName] = useState("");
 
-    function handleCreate() {
-        if (groupName) conversationApi.createGroupConversation({ image, name: groupName });
+    async function handleCreate() {
+        if (!groupName) return;
+
+        await conversationApi.createGroupConversation({ image, name: groupName });
+        ref.current.close();
     }
-    console.log(image);
+    
     return (
         <dialog ref={ref} className="w-lg h-120 m-auto ">
             <p className="mt-5 text-2xl font-semibold text-center text-zinc-800">Create Your Group</p>
@@ -32,8 +35,15 @@ export default function CreateGroup({ ref }) {
                 />
             </div>
             <div className="h-[16%] flex justify-between items-center mt-auto bg-zinc-100 ">
-                <button onClick={() => ref.current.close()} className="ml-5 text-sm text-zinc-700 cursor-pointer hover:underline">Cancel</button>
-                <button onClick={handleCreate} className="w-25 h-10 mr-5 text-white font-semibold bg-pink-300 rounded-sm cursor-pointer hover:bg-pink-500">Create</button>
+                <button onClick={() => ref.current.close()} className="ml-5 text-sm text-zinc-700 cursor-pointer hover:underline">
+                    Cancel
+                </button>
+                <button
+                    onClick={handleCreate}
+                    className="w-25 h-10 mr-5 text-white font-semibold bg-pink-300 rounded-sm cursor-pointer hover:bg-pink-500"
+                >
+                    Create
+                </button>
             </div>
         </dialog>
     );

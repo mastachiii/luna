@@ -39,6 +39,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData, di
                         }}
                         key={c.id}
                         conversation={c}
+                        compHandler={componentHandler}
                     >
                         <img
                             src={c.picture}
