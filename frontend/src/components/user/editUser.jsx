@@ -20,7 +20,7 @@ export default function EditUser() {
     function handleUpdate() {
         userApi.updateProfile({ displayName, profilePicture, backdrop, profilePicGif, backdropGif, bio });
     }
-
+    console.log(userData)
     // Change for localStorage
     function handleChangeLocal(url) {
         localType === "profilePicture" ? setProfilePicGif(url) : setBackdropGif(url);

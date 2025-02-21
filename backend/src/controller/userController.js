@@ -152,11 +152,14 @@ class User {
 
     async updateUser(req, res, next) {
         try {
+            const body = JSON.parse(req.body);
+
+            console.log(body);
             await db.updateUser({
                 id: req.user.id,
                 displayName: req.body.displayName,
-                profilePicture: req.profilePicture || req.body.profilePicGif,
-                backdrop: req.backdrop || req.body.backdropGif,
+                profilePicture: req.profilePicture || req.body.profilePicGif || req.user.profilePicture,
+                backdrop: req.backdrop || req.body.backdropGif || req.user.backdrop,
                 bio: req.body.bio,
             });
 
