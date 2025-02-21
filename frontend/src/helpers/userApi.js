@@ -111,11 +111,13 @@ class User {
         return users;
     }
 
-    updateProfile({ displayName, profilePicture }) {
+    updateProfile({ displayName, profilePicture, backdrop, bio }) {
         const formData = new FormData();
 
-        formData.append("file", profilePicture);
         formData.append("displayName", displayName);
+        formData.append("profilePicture", profilePicture);
+        formData.append("backdrop", backdrop);
+        formData.append("bio", bio);
 
         fetch(`${this.userUrl}/profile`, {
             method: "POST",

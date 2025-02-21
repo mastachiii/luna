@@ -48,7 +48,6 @@ class Conversation {
     }
 
     async createGroupConversation({ image, name }) {
-
         const formData = new FormData();
         formData.append("file", image);
         formData.append("name", name);

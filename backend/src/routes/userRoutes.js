@@ -1,7 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
-const uploadToSupabase = require("../helpers/uploadSupabase");
+const { uploadFiles: uploadToSupabase } = require("../helpers/uploadSupabase");
 const controller = require("../controller/userController");
 const passport = require("passport");
 const { isAuthenticated } = require("../helpers/authMiddleware");
@@ -28,7 +28,7 @@ route.post("/log-out", isAuthenticated, (req, res, next) => {
         });
     });
 });
-route.post("/profile", isAuthenticated, upload.fields([{ name: "profile" }, { name: "backdrop" }]), controller.updateUser);
+route.post("/profile", isAuthenticated, upload.fields([{ name: "profilePicture" }, { name: "backdrop" }]), uploadToSupabase, controller.updateUser);
 route.post("/add/:id", isAuthenticated, controller.addUser);
 route.post("/accept/:id", isAuthenticated, controller.acceptUser);
 route.post("/reject/:id", isAuthenticated, controller.rejectUser);

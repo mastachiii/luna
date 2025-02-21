@@ -152,7 +152,7 @@ class User {
 
     async updateUser(req, res, next) {
         try {
-            console.log(req.file);
+            console.log(req.profilePicture, req.backdrop);
             // await db.updateUser({ id: req.user.id, displayName: req.body.displayName, profilePicture: req.publicUrl });
 
             return res.sendStatus(200);

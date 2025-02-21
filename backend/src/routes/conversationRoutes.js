@@ -2,8 +2,8 @@ const express = require("express");
 const controller = require("../controller/conversationController");
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
-const uploadToSupabase = require("../helpers/uploadSupabase");
 const { isAuthenticated } = require("../helpers/authMiddleware");
+const { uploadFile: uploadToSupabase } = require("../helpers/uploadSupabase");
 
 const route = express.Router();
 
