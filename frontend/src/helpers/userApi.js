@@ -1,5 +1,3 @@
-import { da } from "date-fns/locale";
-
 class User {
     constructor() {
         this.userUrl = "http://localhost:8080/user";
@@ -111,13 +109,15 @@ class User {
         return users;
     }
 
-    updateProfile({ displayName, profilePicture, backdrop, bio }) {
+    updateProfile({ displayName, profilePicture, backdrop, profilePicLocal, backdropLocal, bio }) {
         const formData = new FormData();
 
         formData.append("displayName", displayName);
         formData.append("profilePicture", profilePicture);
         formData.append("backdrop", backdrop);
         formData.append("bio", bio);
+        formData.append("profilePicLocal", profilePicLocal);
+        formData.append("backdropLocal", backdropLocal);
 
         fetch(`${this.userUrl}/profile`, {
             method: "POST",
