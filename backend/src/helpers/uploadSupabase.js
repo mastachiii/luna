@@ -6,6 +6,8 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API
 
 async function uploadFile(req, res, next) {
     try {
+        if (!req.file) return next();
+
         const file = decode(req.file.buffer.toString("base64"));
         const path = `${req.user.username}/${req.file.originalname.toLowerCase()}`;
 

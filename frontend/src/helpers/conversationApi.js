@@ -48,7 +48,6 @@ class Conversation {
     }
 
     async createGroupConversation({ image, name }) {
-        if (image.type.split("/")[0] !== "image") return;
 
         const formData = new FormData();
         formData.append("file", image);
