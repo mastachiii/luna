@@ -152,8 +152,13 @@ class User {
 
     async updateUser(req, res, next) {
         try {
-            console.log(req.profilePicture, req.backdrop);
-            // await db.updateUser({ id: req.user.id, displayName: req.body.displayName, profilePicture: req.publicUrl });
+            await db.updateUser({
+                id: req.user.id,
+                displayName: req.body.displayName,
+                profilePicture: req.profilePicture,
+                backdrop: req.backdrop,
+                bio: req.body.bio,
+            });
 
             return res.sendStatus(200);
         } catch (err) {

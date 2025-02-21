@@ -198,7 +198,10 @@ class User {
                 id: true,
                 username: true,
                 displayName: true,
+                backdrop: true,
+                bio: true,
                 online: true,
+                profilePicture: true,
                 friends: {
                     select: {
                         username: true,
@@ -226,7 +229,6 @@ class User {
                         id: true,
                     },
                 },
-                profilePicture: true,
                 conversations: {
                     include: {
                         messages: {
@@ -260,12 +262,14 @@ class User {
         return user.id;
     }
 
-    async updateUser({ id, displayName, profilePicture }) {
+    async updateUser({ id, displayName, profilePicture, backdrop, bio }) {
         await prisma.user.update({
             where: { id },
             data: {
                 displayName,
                 profilePicture,
+                bio,
+                backdrop,
             },
         });
     }
