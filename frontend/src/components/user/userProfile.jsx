@@ -19,6 +19,9 @@ export default function UserProfile({ displayName, profilePicture, backdrop, bio
             <div className="w-full text-wrap">
                 <p className="w-full mt-2 pl-3 pr-3 text-xs break-words ">{bio || user.bio}</p>
             </div>
+            <div className="flex justify-center mt-8">
+                <button className="w-[80%] p-2 text-xs rounded-md text-white font-semibold  bg-pink-300">Add Friend</button>
+            </div>
         </div>
     );
 }
