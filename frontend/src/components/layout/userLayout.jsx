@@ -1,18 +1,25 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ChatNavBar from "../chat/chatNavBar";
 import Chat from "../chat/chat";
 import FriendsDashboard from "../friendsDashboard/friendsDashboard";
+import { UserContext } from "../userContext";
+import EditUser from "../user/editUser";
 
-export default function UserLayout({ userData }) {
-    const [compToRender, setCompToRender] = useState(null);
+export default function UserLayout() {
+    const [compToRender, setCompToRender] = useState("friend list");
     const [friendData, setFriendData] = useState(null);
-    const [navSelected, setNavSelected] = useState(null);
+    const [navSelected, setNavSelected] = useState("friend");
+    const userData = useContext(UserContext);
 
     let comp;
-
     switch (compToRender) {
         case "chat friend": {
             comp = <Chat friend={friendData} />;
+            break;
+        }
+
+        case "edit profile": {
+            comp = <EditUser />;
             break;
         }
 

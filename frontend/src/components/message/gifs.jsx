@@ -26,7 +26,7 @@ export default function Gifs({ handler }) {
     useEffect(() => {
         (async () => {
             const data = await getTrendingGifs();
-
+            
             trendingGifs.current = data;
             setGifsToShow(data);
         })();

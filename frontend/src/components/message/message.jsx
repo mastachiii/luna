@@ -12,8 +12,6 @@ export default function Message({ message, previousMessage }) {
         skipProfileRender = dateUtils.compareMsgDate(message, previousMessage);
     }
 
-    if (!previousMessage) console.log(message);
-
     return (
         <div className={`w-full flex flex-col ${skipProfileRender ? "" : "mt-6"}`}>
             {!previousMessage || dateUtils.checkIfMsgFirstInDay(message.dateSent, previousMessage.dateSent) ? (

@@ -16,8 +16,6 @@ export default function SignUp() {
     const [status, setStatus] = useState("");
     const [errors, setErrors] = useState(null);
 
-    // if (errors) console.log(errors);
-
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -25,8 +23,6 @@ export default function SignUp() {
 
         userApi.signUp({ username, email, password, passwordConfirm, displayName, errMessageHandler: setErrors, statusHandler: setStatus });
     }
-
-    // console.log({ errors });
 
     return (
         <Background>

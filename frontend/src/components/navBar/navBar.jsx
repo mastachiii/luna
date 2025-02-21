@@ -2,11 +2,13 @@ import { useContext, useState } from "react";
 import logo from "../../assets/logo.svg";
 import logoUnfocused from "../../assets/logo-unfocused.svg";
 import NavBarButton from "./navBarButton";
+import { UserContext } from "../userContext";
 
 // Separated the button styling to avoid duplication
-export default function NavBar({ componentHandler, groupIdHandler, groupData }) {
+export default function NavBar({ componentHandler, groupIdHandler, groupData, dialogRef }) {
     const [userBtnHover, setUserBtnHover] = useState(false);
     const [selected, setSelected] = useState(true);
+    const userData = useContext(UserContext);
 
     return (
         <div className="h-screen flex flex-col items-center pl-3 pr-3 bg-neutral-200">
@@ -28,6 +30,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData }) 
                 return (
                     <NavBarButton
                         condition={selected === c.id}
+                        groupCondition={c.ownerId === userData.id}
                         dialogLabel={c.name}
                         handleClick={() => {
                             componentHandler("group");
@@ -35,8 +38,14 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData }) 
                             groupIdHandler(c.id);
                         }}
                         key={c.id}
+                        conversation={c}
+                        compHandler={componentHandler}
                     >
-                        <img src={c.picture} alt="group profile" className={`w-fit rounded-full`} />
+                        <img
+                            src={c.picture}
+                            alt="group profile"
+                            className={`rounded-full pointer-events-none ${selected === c.id ? "size-9 m-auto" : "size-12"}`}
+                        />
                     </NavBarButton>
                 );
             })}
@@ -44,8 +53,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData }) 
                 condition={selected === "create group"}
                 dialogLabel={"Create a group chat"}
                 handleClick={() => {
-                    componentHandler("create group");
-                    setSelected("create group");
+                    dialogRef.current.showModal();
                 }}
             >
                 <p className="text-2xl font-bold group-hover: ">+</p>

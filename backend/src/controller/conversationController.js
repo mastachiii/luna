@@ -45,9 +45,47 @@ class Conversation {
 
     async createGroupConversation(req, res, next) {
         try {
-            const ids = JSON.parse(req.body.userIds);
+            await db.createGroupConversation({ picture: req.publicUrl, name: req.body.name, ownerId: req.user.id });
 
-            await db.createGroupConversation({ userIds: [...ids, req.user.id], picture: req.publicUrl, name: req.body.name, ownerId: req.user.id });
+            return res.sendStatus(200);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async updateGroupConversation(req, res, next) {
+        try {
+            await db.editGroupConversation({ id: +req.params.id, picture: req.publicUrl, name: req.body.name });
+
+            return res.sendStatus(200);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async addUser(req, res, next) {
+        try {
+            await db.addUserToConversation({ id: +req.params.id, userId: req.body.userId });
+
+            return res.sendStatus(200);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async kickUser(req, res, next) {
+        try {
+            await db.kickUserFromConversation({ id: +req.params.id, userId: req.body.userId });
+
+            return res.sendStatus(200);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async leaveConversation(req, res, next) {
+        try {
+            await db.leaveConversation({ id: +req.params.id, userId: req.user.id });
 
             return res.sendStatus(200);
         } catch (err) {

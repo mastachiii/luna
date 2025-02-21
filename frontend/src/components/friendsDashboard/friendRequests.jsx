@@ -1,6 +1,10 @@
 import { useState } from "react";
+import Empty from "./empty";
+import InteractButton from "./userInteractButton";
 import unknown from "../../assets/userUnknown.svg";
 import userApi from "../../helpers/userApi";
+import cancel from "../../assets/cancel.svg";
+import accept from "../../assets/accept.svg";
 
 function User({ userData, type, previousState, handler }) {
     function handleClick(type) {
@@ -25,22 +29,36 @@ function User({ userData, type, previousState, handler }) {
             <img src={userData.profilePicture || unknown} className="size-9 rounded-full" />
             <span className="ml-3">
                 <p className="text-sm font-semibold">{userData.displayName}</p>
-                <p className="text-xs">{userData.username}</p>
+                <p className="text-xs text-zinc-600">{userData.username}</p>
             </span>
-            {type === "received" ? (
-                <div>
-                    <button onClick={() => handleClick("accept")}>ADD</button>
-                    <button onClick={() => handleClick("reject")}>REMOVE</button>
-                </div>
-            ) : (
-                <button
-                    onClick={() => {
-                        handleClick("cancel");
-                    }}
-                >
-                    CANCEL
-                </button>
-            )}
+            <div className="flex gap-3 ml-auto self-center">
+                {type === "received" ? (
+                    <>
+                        {" "}
+                        <InteractButton
+                            handler={() => handleClick("accept")}
+                            image={accept}
+                            label={"Accept"}
+                            labelPosition={"bottom-10 left-[-12px]"}
+                        />
+                        <InteractButton
+                            handler={() => handleClick("reject")}
+                            image={cancel}
+                            imageSize={4}
+                            label={"Ignore"}
+                            labelPosition={"bottom-10 left-[-12px]"}
+                        />
+                    </>
+                ) : (
+                    <InteractButton
+                        handler={() => handleClick("cancel")}
+                        image={cancel}
+                        imageSize={4}
+                        label={"Cancel"}
+                        labelPosition={"bottom-10 left-[-12px]"}
+                    />
+                )}
+            </div>
         </div>
     );
 }
@@ -50,12 +68,17 @@ export default function FriendRequests({ sentRequests, pendingRequests }) {
     const [pendingRequestsToShow, setPendingRequestsToShow] = useState(pendingRequests);
 
     return (
-        <div className="w-[70%] h-[95%] p-10">
+        <div className="w-[70%] p-10">
+            {pendingRequestsToShow.length === 0 && sentRequestsToShow.length === 0 ? (
+                <div className="translate-y-[50%]">
+                    <Empty text={"There are currently no pending friend requests."} />
+                </div>
+            ) : null}
             {pendingRequestsToShow.length >= 1 && (
                 <>
-                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">Received - {pendingRequestsToShow.length}</p>
+                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">RECEIVED - {pendingRequestsToShow.length}</p>
                     <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200"></div>
-                    <div className="mb-10">
+                    <div>
                         {pendingRequests &&
                             pendingRequestsToShow.map(p => (
                                 <User
@@ -71,9 +94,9 @@ export default function FriendRequests({ sentRequests, pendingRequests }) {
             )}
             {sentRequestsToShow.length >= 1 && (
                 <>
-                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">Sent - {sentRequestsToShow.length}</p>
+                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">SENT - {sentRequestsToShow.length}</p>
                     <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200"></div>
-                    <div>
+                    <div className="flex flex-col gap-4">
                         {sentRequests &&
                             sentRequestsToShow.map(p => (
                                 <User userData={p} key={p.id} previousState={sentRequestsToShow} handler={setSentRequestsToShow} />

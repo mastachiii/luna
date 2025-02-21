@@ -1,41 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import userApi from "../../helpers/userApi";
 import User from "./user";
-
-function RemoveFriendDialog({ friends, friendsHandler, id, ref }) {
-    const friend = friends.find(f => f.id === id) || {};
-
-    function handleRemoveFriend() {
-        userApi.removeFriend({ id: friend.id });
-        friendsHandler(friends.filter(f => f.id !== friend.id));
-        ref.current.close();
-    }
-
-    return (
-        <dialog ref={ref} className={`m-auto  rounded-md`}>
-            <h4 className="text-lg font-semibold mb-0 p-3 pl-4">Remove '{friend.displayName}'</h4>
-            <p className="text-sm p-3 pl-4">
-                Are you sure you want to remove <b className="font-semibold">{friend.displayName}</b> from your friends?
-            </p>
-            <div className="h-15 flex justify-end items-center gap-5 mt-5 pr-4 bg-zinc-100">
-                <button onClick={() => ref.current.close()} className="text-sm cursor-pointer hover:underline">
-                    Cancel
-                </button>
-                <button
-                    onClick={handleRemoveFriend}
-                    className="p-2 pl-3 pr-3 text-sm text-white rounded-sm  bg-red-500 cursor-pointer hover:bg-red-700"
-                >
-                    Remove Friend
-                </button>
-            </div>
-        </dialog>
-    );
-}
+import Empty from "./empty";
+import AlertDialog from "../alertDialog";
 
 export default function FriendList({ friends, compHandler, friendHandler, selHandler, label, online }) {
     const [activeId, setActiveId] = useState(false);
     const [friendsToShow, setFriendsToShow] = useState(null); // If user removes a friend, update state. Forcing the page to reload would be messier..
     const [search, setSearch] = useState("");
+    const friend = (friendsToShow && friendsToShow.find(f => f.id === activeId)) || {};
     const dialogRef = useRef();
 
     function handleOptionsClick(id) {
@@ -48,6 +21,13 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
         setSearch(e.target.value);
 
         setFriendsToShow(friends.filter(f => f.displayName.includes(e.target.value) || f.username.includes(e.target.value)));
+    }
+
+    function handleRemoveFriend() {
+        userApi.removeFriend({ id: friend.id });
+        setFriendsToShow(friendsToShow.filter(f => f.id !== friend.id));
+
+        dialogRef.current.close();
     }
 
     useEffect(() => {
@@ -70,6 +50,15 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
                     </p>
                     <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200"></div>
                 </div>
+                {friendsToShow.length === 0 && (
+                    <Empty
+                        text={
+                            online
+                                ? "There's no one online right now... Come back later!"
+                                : "You currently don't have any friends but don't worry, Luna's here to keep you company!"
+                        }
+                    />
+                )}
                 {friendsToShow.map(f => {
                     return (
                         <User
@@ -84,7 +73,13 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
                         />
                     );
                 })}
-                {activeId && <RemoveFriendDialog friends={friendsToShow} friendsHandler={setFriendsToShow} ref={dialogRef} id={activeId} />}
+                {activeId && (
+                    <AlertDialog label={`Remove '${friend.displayName}'`} ref={dialogRef} handler={handleRemoveFriend} btnLabel={"Remove Friend"}>
+                        <p className="text-sm p-3 pl-4">
+                            Are you sure you want to remove <b className="font-semibold">{friend.displayName}</b> from your friends?
+                        </p>
+                    </AlertDialog>
+                )}
             </div>
         );
     }

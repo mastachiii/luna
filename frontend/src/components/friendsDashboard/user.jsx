@@ -1,6 +1,7 @@
 import unknown from "../../assets/userUnknown.svg";
 import chat from "../../assets/chat.svg";
 import options from "../../assets/options.svg";
+import InteractButton from "./userInteractButton";
 
 export default function User({ user, friendHandler, compHandler, selHandler, optionsHandler, condition, ref }) {
     return (
@@ -16,34 +17,24 @@ export default function User({ user, friendHandler, compHandler, selHandler, opt
                     {user.online && <div className="size-[6px] ml-2 mt-0.5 self-center bg-green-400 rounded-full animate-pulse"></div>}
                 </span>
             </div>
-            <div className="flex items-center gap-3 ml-auto relative">
-                <button
-                    onClick={() => {
+            <div className="flex items-center gap-3 ml-auto">
+                <InteractButton
+                    handler={() => {
                         friendHandler(user);
                         compHandler("chat friend");
                         selHandler(user.id);
                     }}
-                    className="p-2 bg-neutral-200 rounded-full group cursor-pointer hover:*:opacity-100"
-                >
-                    <img src={chat} alt="" className="size-4" />
-                    <p className="opacity-0 absolute bottom-9 right-6 p-2 text-xs bg-white shadow-md shadow-stone-500 rounded-lg transition duration-100 ease-in">
-                        Message
-                    </p>
-                </button>
-                <div>
-                    <button
-                        onClick={() => optionsHandler(user.id)}
-                        className="p-2 bg-neutral-200 rounded-full relative cursor-pointer hover:*:opacity-100"
+                    image={chat}
+                    label={"Message"}
+                    labelPosition={"bottom-9 left-[-15px]"}
+                />
+                <InteractButton handler={() => optionsHandler(user.id)} image={options} label={"More"} labelPosition={"bottom-9 left-[-7px]"} />
+                <div className="relative">
+                    <div
+                        className={`${condition ? "block" : "hidden"} w-35 absolute top-2 left-[-20px] z-10 p-2 bg-white rounded-sm shadow-md shadow-zinc-600`}
                     >
-                        <img src={options} className="size-4" />
-                        <p className="opacity-0 absolute bottom-9 left-[-9px] p-2 text-xs bg-white shadow-md shadow-stone-500 rounded-lg  transition duration-100 ease-in">
-                            More
-                        </p>
-                    </button>
-                    <div className={`${condition ? "block" : "hidden"} w-35 absolute left-15 p-2 bg-white rounded-sm shadow-md shadow-zinc-600`}>
                         <button
                             onClick={() => {
-                                console.log("yes");
                                 ref.current.showModal();
                             }}
                             className="w-full p-2 text-xs text-start rounded-sm text-red-500 cursor-pointer hover:bg-red-500 hover:text-white"

@@ -18,18 +18,67 @@ class Conversation {
         });
     }
 
-    async createGroupConversation({ userIds, picture, name, ownerId }) {
-        const ids = userIds.map(id => ({ id }));
-
+    async createGroupConversation({ picture, name, ownerId }) {
         await prisma.conversation.create({
             data: {
                 users: {
-                    connect: ids,
+                    connect: {
+                        id: ownerId,
+                    },
                 },
                 isGroup: true,
                 picture,
                 name,
                 ownerId,
+            },
+        });
+    }
+
+    async editGroupConversation({ id, name, picture }) {
+        await prisma.conversation.update({
+            where: { id },
+            data: {
+                picture,
+                name,
+            },
+        });
+    }
+
+    async addUserToConversation({ id, userId }) {
+        await prisma.conversation.update({
+            where: { id },
+            data: {
+                users: {
+                    connect: {
+                        id: userId,
+                    },
+                },
+            },
+        });
+    }
+
+    async kickUserFromConversation({ id, userId }) {
+        await prisma.conversation.update({
+            where: { id },
+            data: {
+                users: {
+                    disconnect: {
+                        id: userId,
+                    },
+                },
+            },
+        });
+    }
+
+    async leaveConversation({ id, userId }) {
+        await prisma.conversation.update({
+            where: { id },
+            data: {
+                users: {
+                    disconnect: {
+                        id: userId,
+                    },
+                },
             },
         });
     }
@@ -119,14 +168,10 @@ class Conversation {
     }
 
     async deleteConversation({ id, userId }) {
-        await prisma.conversation.update({
-            where: { id },
-            data: {
-                users: {
-                    disconnect: {
-                        id: userId,
-                    },
-                },
+        await prisma.conversation.delete({
+            where: {
+                id,
+                ownerId: userId,
             },
         });
     }

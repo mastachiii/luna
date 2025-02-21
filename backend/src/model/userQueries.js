@@ -288,7 +288,7 @@ class User {
 
     async getAvailableUsers({ id }) {
         const users = await prisma.user.findMany({
-            take: 20,
+            take: 50,
             where: {
                 AND: [
                     {
@@ -297,12 +297,16 @@ class User {
                         },
                     },
                     {
-                        online: {
-                            equals: true,
+                        friends: {
+                            every: {
+                                id: {
+                                    not: id,
+                                },
+                            },
                         },
                     },
                     {
-                        friends: {
+                        requestsReceived: {
                             every: {
                                 id: {
                                     not: id,
