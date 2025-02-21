@@ -7,18 +7,17 @@ export default function UserProfile({ displayName, profilePicture, backdrop, bio
     const user = useContext(UserContext);
 
     return (
-        <div className="w-65 h-70 bg-amber-300">
-            <div className="h-[40%] overflow-clip">
-                <img src={backdrop || user.backdrop} className="w-full bg-pink-300 " />
+        <div className="w-72 min-h-70 pb-4 font-noto rounded-md shadow-xl relative">
+            <div className="max-h-27 overflow-hidden">
+                <img src={backdrop || user.backdrop} className="w-full rounded-md bg-pink-300 " />
             </div>
-            <div className="relative pl-3">
-                <img src={profilePicture || user.profilePicture} className="size-17 absolute bottom-6 rounded-full border-4 border-amber-300" />
-                <span className="">
-                    <p>{displayName || user.displayName}</p>
-                    <p>{user.username}</p>
-                </span>
-
-                <p>{bio || user.bio}</p>
+            <img src={profilePicture || user.profilePicture} className="size-20 absolute top-15 left-3 rounded-full border-4 border-white" />
+            <span className="">
+                <p className="pl-3 pr-3 mt-7 text-lg font-semibold break-words">{displayName || user.displayName}</p>
+                <p className="pl-3 pr-3 text-xs">{user.username}</p>
+            </span>
+            <div className="w-full text-wrap">
+                <p className="w-full mt-2 pl-3 pr-3 text-xs break-words ">{bio || user.bio}</p>
             </div>
         </div>
     );

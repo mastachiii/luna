@@ -55,8 +55,8 @@ export default function EditUser() {
     return (
         <div>
             <p>Profile</p>
-            <input type="text" value={displayName} onChange={e => setDisplayName(e.target.value)} />
-            <input type="text" value={bio} onChange={e => setBio(e.target.value)} />
+            <input type="text" value={displayName} onChange={e => setDisplayName(e.target.value)} maxLength={30}/>
+            <input type="text" value={bio} onChange={e => setBio(e.target.value)} maxLength={150}/>
             <input type="file" onChange={e => handleChange(e, "profilePicture")} />
             <input type="file" onChange={e => handleChange(e, "backdrop")} />
             <button onClick={handleUpdate}>SEND</button>
