@@ -152,15 +152,16 @@ class User {
 
     async updateUser(req, res, next) {
         try {
-            const body = JSON.parse(req.body);
+            // Can't parse it properly
+            const profilePicGif = req.body.profilePicGif !== "null" && req.body.profilePicGif;
+            const backdropGif = req.body.backdropGif !== "null" && req.body.backdropGif;
 
-            console.log(body);
             await db.updateUser({
                 id: req.user.id,
-                displayName: req.body.displayName,
-                profilePicture: req.profilePicture || req.body.profilePicGif || req.user.profilePicture,
-                backdrop: req.backdrop || req.body.backdropGif || req.user.backdrop,
-                bio: req.body.bio,
+                displayName: req.body.displayName || req.user.displayName,
+                profilePicture: req.profilePicture || profilePicGif || req.user.profilePicture,
+                backdrop: req.backdrop || backdropGif || req.user.backdrop,
+                bio: req.body.bio || req.user.bio,
             });
 
             return res.sendStatus(200);

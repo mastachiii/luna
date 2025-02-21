@@ -5,14 +5,13 @@ import UserProfile from "./userProfile";
 import Gifs from "../message/gifs";
 
 export default function EditUser() {
-    const userData = useContext(UserContext);
-    const [displayName, setDisplayName] = useState(userData.displayName);
+    const [displayName, setDisplayName] = useState("");
     const [profilePicture, setProfilePicture] = useState(null);
     const [backdrop, setBackdrop] = useState(null);
     const [profilePicGif, setProfilePicGif] = useState(null);
     const [backdropGif, setBackdropGif] = useState(null);
     const [bio, setBio] = useState("");
-    const [localType, setLocalType] = useState(null); // Determine which local storage to populate.
+    const [gifType, setGifType] = useState(null);
     const gifRef = useRef();
     const profilePicToShow = profilePicGif ? profilePicGif : profilePicture && URL.createObjectURL(profilePicture);
     const backdropToShow = backdropGif ? backdropGif : backdrop && URL.createObjectURL(backdrop);
@@ -20,10 +19,15 @@ export default function EditUser() {
     function handleUpdate() {
         userApi.updateProfile({ displayName, profilePicture, backdrop, profilePicGif, backdropGif, bio });
     }
-    console.log(userData)
-    // Change for localStorage
-    function handleChangeLocal(url) {
-        localType === "profilePicture" ? setProfilePicGif(url) : setBackdropGif(url);
+
+    function handleChangeGif(url) {
+        if (gifType === "profilePicture") {
+            setProfilePicGif(url);
+            setProfilePicture(null);
+        } else {
+            setBackdropGif(url);
+            setBackdrop(null);
+        }
 
         gifRef.current.close();
     }
@@ -32,14 +36,20 @@ export default function EditUser() {
         const file = event.target.files[0];
 
         if (type === "profilePicture") {
-            localStorage.removeItem("profilePicture");
-
+            setProfilePicGif(null);
             setProfilePicture(file);
         } else {
-            localStorage.removeItem("backdrop");
-
+            setBackdropGif(null);
             setBackdrop(file);
         }
+    }
+
+    function handleReset() {
+        setDisplayName("");
+        setProfilePicture(null);
+        setBackdrop(null);
+        setProfilePicGif(null);
+        setBackdropGif(null);
     }
 
     return (
@@ -52,7 +62,7 @@ export default function EditUser() {
             <button onClick={handleUpdate}>SEND</button>
             <button
                 onClick={() => {
-                    setLocalType("profilePicture");
+                    setGifType("profilePicture");
                     gifRef.current.showModal();
                 }}
             >
@@ -60,15 +70,16 @@ export default function EditUser() {
             </button>
             <button
                 onClick={() => {
-                    setLocalType("backdrop");
+                    setGifType("backdrop");
                     gifRef.current.showModal();
                 }}
             >
                 CHANGE BACKDROP GIF
             </button>
+            <button onClick={handleReset}>REVERT CHANGES</button>
             <UserProfile displayName={displayName} profilePicture={profilePicToShow} backdrop={backdropToShow} bio={bio} />
             <dialog ref={gifRef} className="w-xl m-auto">
-                <Gifs handler={handleChangeLocal} />
+                <Gifs handler={handleChangeGif} />
             </dialog>
         </div>
     );

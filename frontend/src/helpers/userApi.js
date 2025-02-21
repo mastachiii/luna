@@ -109,7 +109,7 @@ class User {
         return users;
     }
 
-    updateProfile({ displayName, profilePicture, backdrop, profilePicGif, backdropGif, bio }) {
+    updateProfile({ displayName, profilePicture, backdrop, profilePicGif = "", backdropGif = "", bio }) {
         const formData = new FormData();
 
         formData.append("displayName", displayName);
