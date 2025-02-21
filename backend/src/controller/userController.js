@@ -155,8 +155,8 @@ class User {
             await db.updateUser({
                 id: req.user.id,
                 displayName: req.body.displayName,
-                profilePicture: req.profilePicture,
-                backdrop: req.backdrop,
+                profilePicture: req.profilePicture || req.body.profilePicGif,
+                backdrop: req.backdrop || req.body.backdropGif,
                 bio: req.body.bio,
             });
 

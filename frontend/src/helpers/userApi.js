@@ -109,15 +109,15 @@ class User {
         return users;
     }
 
-    updateProfile({ displayName, profilePicture, backdrop, profilePicLocal, backdropLocal, bio }) {
+    updateProfile({ displayName, profilePicture, backdrop, profilePicGif, backdropGif, bio }) {
         const formData = new FormData();
 
         formData.append("displayName", displayName);
         formData.append("profilePicture", profilePicture);
         formData.append("backdrop", backdrop);
         formData.append("bio", bio);
-        formData.append("profilePicLocal", profilePicLocal);
-        formData.append("backdropLocal", backdropLocal);
+        formData.append("profilePicGif", profilePicGif);
+        formData.append("backdropGif", backdropGif);
 
         fetch(`${this.userUrl}/profile`, {
             method: "POST",
