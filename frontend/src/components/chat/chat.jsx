@@ -117,7 +117,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
 
     if (conversation && status === "done") {
         return (
-            <div className="w-full max-h-[90%] flex flex-col grow font-noto overflow-visible">
+            <div className="w-full max-h-[92%] flex flex-col grow font-noto overflow-visible">
                 <div className="h-13 flex shrink-0 align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
                     {
                         <span className="flex ml-5 items-center gap-3">

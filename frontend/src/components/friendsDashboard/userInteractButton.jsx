@@ -15,7 +15,7 @@ export default function InteractButton({ handler, image, label, labelPosition, i
                 <img src={image} alt="" className={`size-${imageSize}`} />
             </button>
             <p
-                className={`absolute p-3 text-xs bg-white shadow-md shadow-stone-500 rounded-lg transition duration-100 ease-in ${labelPosition} ${
+                className={` absolute p-3 text-xs text-center bg-white shadow-md shadow-stone-500 rounded-lg whitespace-nowrap transition duration-100 ease-in ${labelPosition} ${
                     hovered ? "block" : "hidden"
                 }`}
             >

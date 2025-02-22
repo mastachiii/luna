@@ -38,7 +38,7 @@ class User {
         })
             .then(response => response.json())
             .then(data => {
-                localStorage.setItem("user", JSON.stringify(data.user));
+                window.location.href = "/";
             })
             .catch(err => {
                 errorHandler(true);
@@ -46,6 +46,15 @@ class User {
 
                 console.log(err);
             });
+    }
+
+    logOut() {
+        fetch(`${this.userUrl}/log-out`, {
+            method: "POST",
+            credentials: "include",
+        }).then(() => {
+            window.location.href = "/log-in";
+        });
     }
 
     async addFriend({ username, statusHandler }) {
@@ -125,7 +134,7 @@ class User {
             body: formData,
         });
 
-        saveHandler(true)
+        saveHandler(true);
     }
 
     goOnline() {

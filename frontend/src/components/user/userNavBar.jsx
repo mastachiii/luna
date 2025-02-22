@@ -1,7 +1,9 @@
 import { useContext } from "react";
 import { UserContext } from "../userContext";
 import InteractButton from "../friendsDashboard/userInteractButton";
-import options from "../../assets/settings.svg"
+import options from "../../assets/settings.svg";
+import userApi from "../../helpers/userApi";
+import logout from "../../assets/logout.svg";
 
 export default function UserNavBar({ compHandler }) {
     const user = useContext(UserContext);
@@ -15,7 +17,22 @@ export default function UserNavBar({ compHandler }) {
                     <p className="text-[10px]">{user.username}</p>
                 </span>
             </div>
-            <InteractButton handler={() => compHandler("edit profile")} label={'Settings'} labelPosition={'bottom-6 right-[-20px]'} image={options} imageSize={3}/>
+            <div className="flex">
+                <InteractButton
+                    handler={() => compHandler("edit profile")}
+                    label={"Settings"}
+                    labelPosition={"bottom-9 right-[-20px]"}
+                    image={options}
+                    imageSize={4}
+                />
+                <InteractButton
+                    handler={() => userApi.logOut()}
+                    label={"Log out"}
+                    labelPosition={"bottom-9 right-[-20px]"}
+                    image={logout}
+                    imageSize={4}
+                />
+            </div>
         </div>
     );
 }
