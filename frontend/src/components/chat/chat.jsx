@@ -124,9 +124,9 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                     }
                 </div>
                 <div className="w-full h-[100%] flex relative">
-                    <div className={`${"w-full"}  h-[90%] flex flex-col overflow-y-scroll box-border relative z-0`} ref={convoRef}>
+                    <div className={`${"w-full"}  h-[90%] flex flex-col overflow-y-scroll box-border z-0`} ref={convoRef}>
                         {!isGroup ? <ChatBegin friendData={friend} /> : <GroupChatBegin group={conversation} ref={dialogRef} />}
-                        <div className="w-full h-full">
+                        <div className="w-full h-full z-20">
                             {conversation &&
                                 conversation.messages.map((msg, index) => {
                                     return <Message message={msg} previousMessage={conversation.messages[index - 1]} key={msg.id} />;

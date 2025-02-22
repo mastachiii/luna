@@ -1,3 +1,4 @@
+import { useState } from "react";
 import owner from "../assets/owner.svg";
 import unknown from "../assets/userUnknown.svg";
 import UserProfileFull from "./user/userProfile";
@@ -6,7 +7,7 @@ function UserProfile({ profilePicture, displayName, isOwner }) {
     return (
         <span className="flex gap-2 mt-2">
             <img src={profilePicture} className="size-8 rounded-full" />
-            <p className="self-center text-sm ml-1">{displayName}</p>
+            <p className="self-center text-sm ml-1 select-none">{displayName}</p>
             {isOwner && <img src={owner} className="size-4 self-center" />}
         </span>
     );
@@ -15,16 +16,25 @@ function UserProfile({ profilePicture, displayName, isOwner }) {
 export default function GroupMemberList({ members, ownerId }) {
     const onlineMembers = members.filter(m => m.online);
     const offlineMembers = members.filter(m => !m.online);
+    const [selected, setSelected] = useState(null);
 
     return (
         <div className="w-[15%] h-screen p-5 overflow-y-scroll bg-zinc-100 custom-scrollbar">
-            <p className="text-xs text-pink-400 font-semibold">ONLINE - {onlineMembers.length}</p>
+            <p className="mb-2 text-xs text-pink-400 font-semibold">ONLINE - {onlineMembers.length}</p>
             <div>
                 {onlineMembers.map(m => {
                     return (
-                        <div key={m.id}>
+                        <div
+                            key={m.id}
+                            onClick={() => {
+                                selected !== m.id ? setSelected(m.id) : setSelected(null);
+                            }}
+                            className={`flex pb-2 pl-2 pr-1 rounded-md cursor-pointer hover:bg-zinc-200 ${selected === m.id && "bg-zinc-200"}`}
+                        >
                             <UserProfile profilePicture={m.profilePicture || unknown} displayName={m.displayName} isOwner={m.id === ownerId} />
-                            <UserProfileFull data={m} />
+                            <div className={`absolute right-60 z-20 ${selected === m.id ? "block" : "hidden"} bg-white`}>
+                                <UserProfileFull data={m} />
+                            </div>
                         </div>
                     );
                 })}
