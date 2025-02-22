@@ -33,7 +33,6 @@ function reducer(state, action) {
             scrollToBottom();
 
             return {
-
                 ...state,
                 messages: [...state.messages, newMessage],
             };
@@ -53,6 +52,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
     const [trigger, setTrigger] = useState(0);
     const [selected, setSelected] = useState(null);
     const [image, setImage] = useState(null);
+    const [status, setStatus] = useState(null);
     const userData = useContext(UserContext);
     const timeout = useRef();
     const convoRef = useRef();
@@ -78,10 +78,16 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
 
             return () => {
                 clearTimeout(timeout.current);
-                setSelected(null)
+                setSelected(null);
             };
         })();
     }, [trigger, isGroup, id, friend]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setStatus("done");
+        }, 1000);
+    }, []);
 
     function handleMessageSend(e) {
         e.preventDefault();
@@ -109,9 +115,9 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
         dispatch({ type: "send image", message: gifUrl, convoRef, user: userData });
     }
 
-    if (conversation) {
+    if (conversation && status === "done") {
         return (
-            <div className="w-full h-[92%] flex flex-col grow font-noto">
+            <div className="w-full max-h-[90%] flex flex-col grow font-noto overflow-visible">
                 <div className="h-13 flex shrink-0 align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
                     {
                         <span className="flex ml-5 items-center gap-3">
@@ -131,7 +137,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                     }
                 </div>
                 <div className="w-full h-[100%] flex relative">
-                    <div className={`${"w-full"}  h-[90%] flex flex-col overflow-y-scroll box-border z-0`} ref={convoRef}>
+                    <div className={`${"w-full"}  h-[91%] flex flex-col overflow-y-scroll box-border z-0`} ref={convoRef}>
                         {!isGroup ? <ChatBegin friendData={friend} /> : <GroupChatBegin group={conversation} ref={dialogRef} />}
                         <div className="w-full h-full z-20">
                             {conversation &&
@@ -143,6 +149,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                                             key={msg.id}
                                             selected={selected}
                                             selHandler={setSelected}
+                                            containerRef={convoRef}
                                         />
                                     );
                                 })}

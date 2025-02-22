@@ -1,11 +1,14 @@
 import { format } from "date-fns";
 import dateUtils from "../../helpers/compareMsgDate";
 import UserProfileFull from "../user/userProfile";
+import { useState } from "react";
 
-export default function Message({ message, previousMessage, selected, selHandler }) {
+export default function Message({ message, previousMessage, selected, selHandler, containerRef }) {
     const user = message.user;
-    // Only compare if current message and prev message is by the same user... Render a new msg div if diff
+    const [liftProfileUp, setLiftProfileUp] = useState(false);
+    console.log(containerRef.current && containerRef.current.scrollTopMax);
 
+    // Only compare if current message and prev message is by the same user... Render a new msg div if diff
     let skipProfileRender;
     const sameUser = previousMessage && message.userId === previousMessage.userId;
 
@@ -13,12 +16,16 @@ export default function Message({ message, previousMessage, selected, selHandler
         skipProfileRender = dateUtils.compareMsgDate(message, previousMessage);
     }
 
-    function handleSelect(id) {
-        return () => (selected === id ? selHandler(null) : selHandler(id));
+    function handleSelect(event, id) {
+        containerRef.current.scrollTopMax !== 0 && containerRef.current.scrollTop === containerRef.current.scrollTopMax
+            ? setLiftProfileUp(true)
+            : setLiftProfileUp(false);
+
+        selected === id ? selHandler(null) : selHandler(id);
     }
 
     return (
-        <div className={`w-full flex flex-col ${skipProfileRender ? "" : "mt-6"}`}>
+        <div className={`w-full flex flex-col ${skipProfileRender ? "" : "mt-6"} overflow-visible`}>
             {!previousMessage || dateUtils.checkIfMsgFirstInDay(message.dateSent, previousMessage.dateSent) ? (
                 <div className="flex grow items-center justify-center ml-10 mt-2 mb-5">
                     <span className="w-[40%] h-[1px]  bg-neutral-300"></span>
@@ -31,10 +38,10 @@ export default function Message({ message, previousMessage, selected, selHandler
             <div className={`flex pt-0.5 relative group hover:bg-neutral-100 transition duration-100 ease-in`}>
                 {!skipProfileRender ? (
                     <div className="w-12 ml-5 relative">
-                        <img src={user.profilePicture} onClick={handleSelect(message.id)} className="size-10 rounded-full cursor-pointer" />
+                        <img src={user.profilePicture} onClick={e => handleSelect(e, message.id)} className="size-10 rounded-full cursor-pointer" />
                         <div
-                            className={`absolute top-6 left-11 z-10  bg-white shadow-xs shadow-black rounded-md ${
-                                selected === message.id ? "block" : "hidden"
+                            className={`absolute z-10  bg-white shadow-xs shadow-black rounded-md ${selected === message.id ? "block" : "hidden"} ${
+                                liftProfileUp ? "bottom-11 left-11" : "top-6 left-11 "
                             }`}
                         >
                             <UserProfileFull data={user} />
@@ -48,7 +55,10 @@ export default function Message({ message, previousMessage, selected, selHandler
                 <span className="w-fit">
                     {!skipProfileRender && (
                         <span className=" flex items-end gap-2 ">
-                            <p onClick={handleSelect(message.id)} className="text-sm font-semibold cursor-pointer select-none hover:underline">
+                            <p
+                                onClick={e => handleSelect(e, message.id)}
+                                className="text-sm font-semibold cursor-pointer select-none hover:underline"
+                            >
                                 {user.displayName}
                             </p>
                             <p className="text-[11px] text-zinc-700 ">{dateUtils.formatMsgDate(message.dateSent)}</p>
