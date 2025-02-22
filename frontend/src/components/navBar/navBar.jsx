@@ -4,15 +4,17 @@ import logoUnfocused from "../../assets/logo-unfocused.svg";
 import NavBarButton from "./navBarButton";
 import { UserContext } from "../userContext";
 import group from "../../assets/group.svg";
+import groupDark from "../../assets/dark/group.svg";
 
 // Separated the button styling to avoid duplication
 export default function NavBar({ componentHandler, groupIdHandler, groupData, dialogRef }) {
     const [userBtnHover, setUserBtnHover] = useState(false);
     const [selected, setSelected] = useState(true);
     const userData = useContext(UserContext);
+    const themeIsDark = localStorage.getItem("theme") === "dark";
 
     return (
-        <div className="h-screen flex flex-col items-center pl-3 pr-3 bg-neutral-200">
+        <div className="h-screen flex flex-col items-center pl-3 pr-3 bg-neutral-200 dark:bg-neutral-900">
             <button
                 onMouseEnter={() => setUserBtnHover(true)}
                 onMouseLeave={() => setUserBtnHover(false)}
@@ -22,7 +24,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData, di
                 }}
                 className={`w-13 h-13 mt-3 p-2  rounded-full cursor-pointer transition duration-200 ease-in group hover:rounded-xl hover:bg-pink-300 ${
                     selected ? "hover:translate-x-1" : "translate-x-1"
-                } ${!selected ? "rounded-xl bg-pink-300" : "bg-zinc-50"}`}
+                } ${!selected ? "rounded-xl bg-pink-300" : "bg-zinc-50 dark:bg-neutral-700"}`}
             >
                 <img src={userBtnHover || !selected ? logo : logoUnfocused} alt="logo" className={``} />
             </button>
@@ -43,7 +45,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData, di
                         compHandler={componentHandler}
                     >
                         <img
-                            src={c.picture || group}
+                            src={c.picture || (themeIsDark ? groupDark : group)}
                             alt="group profile"
                             className={`rounded-full pointer-events-none ${selected === c.id ? "size-9 m-auto" : "size-12"}`}
                         />
@@ -57,7 +59,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData, di
                     dialogRef.current.showModal();
                 }}
             >
-                <p className="text-2xl font-bold group-hover: ">+</p>
+                <p className="text-2xl font-bold dark:text-white ">+</p>
             </NavBarButton>
         </div>
     );
