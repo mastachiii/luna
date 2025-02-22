@@ -1,11 +1,17 @@
 import { useContext } from "react";
 import { UserContext } from "../userContext";
+import userApi from "../../helpers/userApi";
 
 // Props will be passed to this component if the user is in the middle of customizing their profile, (CHECK EDIT USER COMP)
 // The user data will be used when other its viewed through chats.
 export default function UserProfileFull({ displayName, profilePicture, backdrop, bio, data }) {
     const userData = useContext(UserContext);
     const userToShow = data || userData; //
+    const userIsFriend = userData.friends.find(f => f.id === userToShow.id);
+
+    function addFriend() {
+        userApi.addFriend({ username: userToShow.username });
+    }
 
     return (
         <div className="w-72 min-h-70 pb-4 font-noto rounded-md shadow-xl relative">
@@ -20,9 +26,16 @@ export default function UserProfileFull({ displayName, profilePicture, backdrop,
             <div className="w-full text-wrap">
                 <p className="w-full mt-2 pl-3 pr-3 text-xs break-words ">{bio || userToShow.bio}</p>
             </div>
-            <div className="flex justify-center mt-8">
-                <button className="w-[80%] p-2 text-xs rounded-md text-white font-semibold  bg-pink-300">Add Friend</button>
-            </div>
+            {userToShow.id !== userData.id && !userIsFriend && (
+                <div className="flex justify-center mt-8">
+                    <button
+                        onClick={addFriend}
+                        className="w-[80%] p-2 text-xs rounded-md text-white font-semibold bg-pink-300 cursor-pointer hover:bg-pink-500"
+                    >
+                        Add Friend
+                    </button>
+                </div>
+            )}
         </div>
     );
 }
