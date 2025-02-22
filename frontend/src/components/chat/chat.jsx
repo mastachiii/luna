@@ -124,7 +124,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                     }
                 </div>
                 <div className="w-full h-[96%] flex">
-                    <div className={`${isGroup ? "grow" : "w-full"}  h-[90%] flex flex-col overflow-y-scroll box-border`} ref={convoRef}>
+                    <div className={`${"w-full"}  h-[90%] flex flex-col overflow-y-scroll box-border`} ref={convoRef}>
                         {!isGroup ? <ChatBegin friendData={friend} /> : <GroupChatBegin group={conversation} ref={dialogRef} />}
                         <div className="w-full h-full">
                             {conversation &&

@@ -109,7 +109,7 @@ class User {
         return users;
     }
 
-    updateProfile({ displayName, profilePicture, backdrop, profilePicGif = "", backdropGif = "", bio }) {
+    async updateProfile({ displayName, profilePicture, backdrop, profilePicGif = "", backdropGif = "", bio, saveHandler }) {
         const formData = new FormData();
 
         formData.append("displayName", displayName);
@@ -119,11 +119,13 @@ class User {
         formData.append("profilePicGif", profilePicGif);
         formData.append("backdropGif", backdropGif);
 
-        fetch(`${this.userUrl}/profile`, {
+        await fetch(`${this.userUrl}/profile`, {
             method: "POST",
             credentials: "include",
             body: formData,
         });
+
+        saveHandler(true)
     }
 
     goOnline() {

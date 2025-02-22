@@ -28,7 +28,7 @@ export default function NavBarButton({ handleClick, condition, groupCondition, c
 
     return (
         <>
-            <div className="relative mb-2 group">
+            <div className="relative flex gap-2 mb-2 group">
                 <button
                     onClick={handleClick}
                     onMouseEnter={() => setHovered(true)}
@@ -45,8 +45,8 @@ export default function NavBarButton({ handleClick, condition, groupCondition, c
                     {children}
                 </button>
                 <span
-                    className={`opacity-0 absolute z-10 mt-2 ml-5 w-40 p-3 rounded-r-lg bg-zinc-100 shadow-md shadow-stone-400 select-none transition duration-100 ease-in ${
-                        hovered && "opacity-100"
+                    className={`absolute left-10 z-10 mt-2 ml-5 w-40 p-3 rounded-r-lg bg-zinc-100 shadow-md shadow-stone-400 select-none transition duration-100 ease-in ${
+                        hovered ? "block" : 'hidden'
                     }`}
                 >
                     <p className="text-sm font-noto font-semibold">{dialogLabel}</p>

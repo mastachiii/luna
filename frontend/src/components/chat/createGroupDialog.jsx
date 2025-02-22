@@ -13,7 +13,7 @@ export default function CreateGroup({ ref }) {
     }
     
     return (
-        <dialog ref={ref} className="w-lg h-120 m-auto ">
+        <dialog ref={ref} className="w-lg h-120 m-auto animate-appear rounded-md">
             <p className="mt-5 text-2xl font-semibold text-center text-zinc-800">Create Your Group</p>
             <div className="h-[40%] flex flex-col items-center mt-8">
                 <img src={image && URL.createObjectURL(image)} className="size-30 rounded-full border-1 border-dashed bg-pink-300" />

@@ -29,7 +29,7 @@ export default function CreateGroup() {
     }
 
     return (
-        <div>
+        <div className="animate-appear">
             <h3>Create a group</h3>
             <form onSubmit={handleSubmit}>
                 <input type="text" value={groupName} onChange={e => setGroupName(e.target.value)} />

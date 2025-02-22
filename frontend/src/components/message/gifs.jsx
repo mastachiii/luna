@@ -18,7 +18,7 @@ async function getSearchGifs(search) {
     return gifs;
 }
 
-export default function Gifs({ handler }) {
+export default function Gifs({ handler, isEditor }) {
     const [gifsToShow, setGifsToShow] = useState(null);
     const [gifSearch, setGifSearch] = useState("");
     const trendingGifs = useRef();
@@ -26,7 +26,7 @@ export default function Gifs({ handler }) {
     useEffect(() => {
         (async () => {
             const data = await getTrendingGifs();
-            
+
             trendingGifs.current = data;
             setGifsToShow(data);
         })();
@@ -46,13 +46,19 @@ export default function Gifs({ handler }) {
         setGifSearch(e.target.value);
     }
     return (
-        <div className="h-115">
+        <div className={`h-115 overflow-hidden ${isEditor && 'h-full p-2 rounded-md'}`}>
             <form onSubmit={handleSearchSubmit} className="mb-2">
-                <input type="text" value={gifSearch} onChange={handleChange} placeholder={'Search Tenor'} className="w-[90%] p-2 mt-2 ml-3 mr-auto text-sm bg-neutral-200" />
+                <input
+                    type="text"
+                    value={gifSearch}
+                    onChange={handleChange}
+                    placeholder={"Search Tenor"}
+                    className="w-[90%] p-2 mt-2 ml-3 mr-auto text-sm bg-neutral-200"
+                />
             </form>
             {gifsToShow && (
-                <div className="h-110 flex flex-wrap gap-1 p-1 overflow-y-scroll">
-                    {gifsToShow.map(g => {  
+                <div className={`h-110 flex flex-wrap gap-1 p-1 overflow-y-scroll ${isEditor && 'h-[90%]'}`}> 
+                    {gifsToShow.map(g => {
                         return (
                             <img
                                 src={g.images.downsized.url}
