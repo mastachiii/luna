@@ -107,7 +107,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
 
     if (conversation) {
         return (
-            <div className="w-full h-[92%] flex flex-col grow font-noto bg-zinc-50">
+            <div className="w-full h-[92%] flex flex-col grow font-noto">
                 <div className="h-13 flex shrink-0 align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
                     {
                         <span className="flex ml-5 items-center gap-3">
@@ -123,8 +123,8 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                         </span>
                     }
                 </div>
-                <div className="w-full h-[96%] flex">
-                    <div className={`${"w-full"}  h-[90%] flex flex-col overflow-y-scroll box-border`} ref={convoRef}>
+                <div className="w-full h-[100%] flex relative">
+                    <div className={`${"w-full"}  h-[90%] flex flex-col overflow-y-scroll box-border relative z-0`} ref={convoRef}>
                         {!isGroup ? <ChatBegin friendData={friend} /> : <GroupChatBegin group={conversation} ref={dialogRef} />}
                         <div className="w-full h-full">
                             {conversation &&

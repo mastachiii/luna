@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import userApi from "../../helpers/userApi";
-import UserProfile from "./userProfile";
+import UserProfileFull from "./userProfile";
 import Gifs from "../message/gifs";
 import check from "../../assets/accept.svg";
 import cancel from "../../assets/cancel.svg";
@@ -53,6 +53,8 @@ export default function EditUser() {
             setBackdropGif(null);
             setBackdrop(file);
         }
+
+        setSaved(null);
     }
 
     function handleReset() {
@@ -62,6 +64,7 @@ export default function EditUser() {
         setProfilePicGif(null);
         setBackdropGif(null);
         setBio("");
+        setSaved(null);
     }
 
     const btnLabelClass =
@@ -78,7 +81,10 @@ export default function EditUser() {
                             <input
                                 type="text"
                                 value={displayName}
-                                onChange={e => setDisplayName(e.target.value)}
+                                onChange={e => {
+                                    setSaved(null);
+                                    setDisplayName(e.target.value);
+                                }}
                                 maxLength={30}
                                 className="w-50 p-2 pl-2 text-xs  bg-neutral-200 rounded-xs outline-0 font-noto break-words"
                             />
@@ -91,7 +97,10 @@ export default function EditUser() {
                                 maxLength={150}
                                 className="w-fit p-2 pl-2 text-xs bg-neutral-200 rounded-sm resize-none outline-0"
                                 value={bio}
-                                onChange={e => setBio(e.target.value)}
+                                onChange={e => {
+                                    setSaved(null);
+                                    setBio(e.target.value);
+                                }}
                             ></textarea>
                         </EditField>
                         <EditField label={"PROFILE PICTURE"}>
@@ -131,7 +140,7 @@ export default function EditUser() {
                     </div>
                     <div className="h-70">
                         <p className="text-sm text-zinc-600 font-semibold mb-1">PREVIEW</p>
-                        <UserProfile displayName={displayName} profilePicture={profilePicToShow} backdrop={backdropToShow} bio={bio} />
+                        <UserProfileFull displayName={displayName} profilePicture={profilePicToShow} backdrop={backdropToShow} bio={bio} />
                     </div>
                 </div>
                 <div className="w-fit flex mt-20 ml-auto">
