@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import logo from "../../assets/logo.svg";
 import logoUnfocused from "../../assets/logo-unfocused.svg";
+import logoUnfocusedDark from "../../assets/dark/cat.svg";
 import NavBarButton from "./navBarButton";
 import { UserContext } from "../userContext";
 import group from "../../assets/group.svg";
@@ -26,7 +27,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData, di
                     selected ? "hover:translate-x-1" : "translate-x-1"
                 } ${!selected ? "rounded-xl bg-pink-300" : "bg-zinc-50 dark:bg-neutral-700"}`}
             >
-                <img src={userBtnHover || !selected ? logo : logoUnfocused} alt="logo" className={``} />
+                <img src={userBtnHover || !selected ? logo : themeIsDark ? logoUnfocusedDark : logoUnfocused} alt="logo" className={``} />
             </button>
             <div className="w-8 h-[0.5px] mt-2  bg-zinc-400"></div>
             {groupData.map(c => {

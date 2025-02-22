@@ -20,6 +20,8 @@ class User {
                     data.errors.map(err => (errors[err.path] = err.msg));
 
                     return errMessageHandler(errors);
+                } else {
+                    window.location.href = "/log-in";
                 }
             })
             .catch(err => {

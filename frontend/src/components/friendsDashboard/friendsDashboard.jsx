@@ -30,7 +30,6 @@ export default function FriendsDashboard({ compHandler, friendHandler, selHandle
     const [compToRender, setCompToRender] = useState("online");
     const userData = useContext(UserContext);
 
-    
     let comp;
     switch (compToRender) {
         case "online": {
@@ -72,7 +71,7 @@ export default function FriendsDashboard({ compHandler, friendHandler, selHandle
 
     if (userData) {
         return (
-            <div className="w-full font-noto bg-zinc-50">
+            <div className="w-full font-noto bg-zinc-50 dark:bg-neutral-800">
                 <div className="w-full h-12.5 flex items-center shadow-md shadow-zinc-200 text-sm">
                     <span className="flex items-center ml-5 gap-2">
                         <img src={friends} alt="" className="size-7" />
