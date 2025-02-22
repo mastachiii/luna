@@ -3,6 +3,7 @@ import logo from "../../assets/logo.svg";
 import logoUnfocused from "../../assets/logo-unfocused.svg";
 import NavBarButton from "./navBarButton";
 import { UserContext } from "../userContext";
+import group from "../../assets/group.svg";
 
 // Separated the button styling to avoid duplication
 export default function NavBar({ componentHandler, groupIdHandler, groupData, dialogRef }) {
@@ -42,7 +43,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData, di
                         compHandler={componentHandler}
                     >
                         <img
-                            src={c.picture}
+                            src={c.picture || group}
                             alt="group profile"
                             className={`rounded-full pointer-events-none ${selected === c.id ? "size-9 m-auto" : "size-12"}`}
                         />

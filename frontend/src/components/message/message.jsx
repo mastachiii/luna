@@ -1,7 +1,8 @@
-import dateUtils from "../../helpers/compareMsgDate";
 import { format } from "date-fns";
+import dateUtils from "../../helpers/compareMsgDate";
+import UserProfileFull from "../user/userProfile";
 
-export default function Message({ message, previousMessage }) {
+export default function Message({ message, previousMessage, selected, selHandler }) {
     const user = message.user;
     // Only compare if current message and prev message is by the same user... Render a new msg div if diff
 
@@ -10,6 +11,10 @@ export default function Message({ message, previousMessage }) {
 
     if (previousMessage && sameUser) {
         skipProfileRender = dateUtils.compareMsgDate(message, previousMessage);
+    }
+
+    function handleSelect(id) {
+        return () => (selected === id ? selHandler(null) : selHandler(id));
     }
 
     return (
@@ -25,18 +30,27 @@ export default function Message({ message, previousMessage }) {
             )}
             <div className={`flex pt-0.5 relative group hover:bg-neutral-100 transition duration-100 ease-in`}>
                 {!skipProfileRender ? (
-                    <div className="w-12 ml-5">
-                        <img src={user.profilePicture} className="size-10  rounded-full" />
+                    <div className="w-12 ml-5 relative">
+                        <img src={user.profilePicture} onClick={handleSelect(message.id)} className="size-10 rounded-full cursor-pointer" />
+                        <div
+                            className={`absolute top-6 left-11 z-10  bg-white shadow-xs shadow-black rounded-md ${
+                                selected === message.id ? "block" : "hidden"
+                            }`}
+                        >
+                            <UserProfileFull data={user} />
+                        </div>
                     </div>
                 ) : (
-                    <p className="w-15 ml-2 opacity-0 self-center text-[10px] text-start text-zinc-700 group-hover:opacity-100">
+                    <p className="w-15 ml-2 opacity-0 self-center text-[10px] text-start text-zinc-700  group-hover:opacity-100">
                         {format(message.dateSent, "p")}
                     </p>
                 )}
                 <span className="w-fit">
                     {!skipProfileRender && (
-                        <span className="flex items-end gap-2">
-                            <p className="text-sm font-semibold">{user.displayName}</p>
+                        <span className=" flex items-end gap-2 ">
+                            <p onClick={handleSelect(message.id)} className="text-sm font-semibold cursor-pointer select-none hover:underline">
+                                {user.displayName}
+                            </p>
                             <p className="text-[11px] text-zinc-700 ">{dateUtils.formatMsgDate(message.dateSent)}</p>
                         </span>
                     )}

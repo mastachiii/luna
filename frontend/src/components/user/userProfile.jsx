@@ -14,7 +14,7 @@ export default function UserProfileFull({ displayName, profilePicture, backdrop,
     }
 
     return (
-        <div className="w-72 min-h-70 pb-4 font-noto rounded-md shadow-xl relative">
+        <div className="w-72 min-h-60 pb-4 font-noto rounded-md shadow-xl relative">
             <div className="min-h-27 max-h-27 w-full overflow-hidden bg-pink-200 rounded-t-md">
                 <img src={backdrop || userToShow.backdrop} className="w-full rounded-md" />
             </div>

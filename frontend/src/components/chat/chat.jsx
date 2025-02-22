@@ -9,6 +9,7 @@ import conversationApi from "../../helpers/conversationApi";
 import noPfp from "../../assets/userUnknown.svg";
 import EditGroupChat from "./editGroupChat";
 import settings from "../../assets/settings.svg";
+import groupDefaultPfp from "../../assets/group.svg";
 
 function reducer(state, action) {
     const newMessage = action.user && {
@@ -32,6 +33,7 @@ function reducer(state, action) {
             scrollToBottom();
 
             return {
+
                 ...state,
                 messages: [...state.messages, newMessage],
             };
@@ -49,6 +51,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
     const [conversation, dispatch] = useReducer(reducer, null);
     const [text, setText] = useState("");
     const [trigger, setTrigger] = useState(0);
+    const [selected, setSelected] = useState(null);
     const [image, setImage] = useState(null);
     const userData = useContext(UserContext);
     const timeout = useRef();
@@ -75,6 +78,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
 
             return () => {
                 clearTimeout(timeout.current);
+                setSelected(null)
             };
         })();
     }, [trigger, isGroup, id, friend]);
@@ -111,7 +115,10 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                 <div className="h-13 flex shrink-0 align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
                     {
                         <span className="flex ml-5 items-center gap-3">
-                            <img src={isGroup ? conversation.picture : friend.profilePicture || noPfp} className="size-7 rounded-full" />
+                            <img
+                                src={isGroup ? conversation.picture || groupDefaultPfp : friend.profilePicture || noPfp}
+                                className="size-7 rounded-full"
+                            />
                             <span className="flex gap-1">
                                 <p className="text-sm font-semibold">{isGroup ? conversation.name : friend.displayName}</p>
                                 {isGroup && conversation.ownerId === userData.id && (
@@ -129,7 +136,15 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                         <div className="w-full h-full z-20">
                             {conversation &&
                                 conversation.messages.map((msg, index) => {
-                                    return <Message message={msg} previousMessage={conversation.messages[index - 1]} key={msg.id} />;
+                                    return (
+                                        <Message
+                                            message={msg}
+                                            previousMessage={conversation.messages[index - 1]}
+                                            key={msg.id}
+                                            selected={selected}
+                                            selHandler={setSelected}
+                                        />
+                                    );
                                 })}
                         </div>
                     </div>

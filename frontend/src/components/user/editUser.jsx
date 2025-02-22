@@ -8,7 +8,7 @@ import cancel from "../../assets/cancel.svg";
 function EditField({ children, label }) {
     return (
         <span className="flex flex-col gap-1">
-            <p className="text-xs text-zinc-600 font-semibold">{label}</p>
+            <p className="text-[10px] text-zinc-600 font-semibold">{label}</p>
             {children}
         </span>
     );
@@ -139,7 +139,7 @@ export default function EditUser() {
                         </EditField>
                     </div>
                     <div className="h-70">
-                        <p className="text-sm text-zinc-600 font-semibold mb-1">PREVIEW</p>
+                        <p className="text-[10px] text-zinc-600 font-semibold mb-1">PREVIEW</p>
                         <UserProfileFull displayName={displayName} profilePicture={profilePicToShow} backdrop={backdropToShow} bio={bio} />
                     </div>
                 </div>
