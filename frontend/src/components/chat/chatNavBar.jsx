@@ -1,11 +1,15 @@
 import ChatNavBarButton from "./chatNavBarButton";
 import UserNavBar from "../user/userNavBar";
 import friendsLogo from "../../assets/friends.svg";
+import friendsDark from "../../assets/dark/friends.svg";
 import shop from "../../assets/shop.svg";
 import nitro from "../../assets/nitro.svg";
+import nitroDark from "../../assets/dark/nitro.svg";
 import noPfp from "../../assets/userUnknown.svg";
 
 export default function ChatNavBar({ friends, compHandler, friendHandler, selected, selHandler }) {
+    const themeIsDark = localStorage.getItem("theme") === "dark";
+
     return (
         <div className="w-[17%] flex flex-col font-noto bg-neutral-100">
             <div className="w-full h-13 pt-5 pb-5 mb-2 border-b-2 border-zinc-200 shadow-md shadow-zinc-200 "></div>
@@ -15,11 +19,11 @@ export default function ChatNavBar({ friends, compHandler, friendHandler, select
                         compHandler("friend list");
                         selHandler("friend");
                     }}
-                    image={friendsLogo}
+                    image={themeIsDark ? friendsDark : friendsLogo}
                     label={"Friends"}
                     condition={selected === "friend"}
                 />
-                <ChatNavBarButton image={nitro} label={"Nitro"} />
+                <ChatNavBarButton image={themeIsDark ? nitroDark : nitro} label={"Nitro"} />
                 <ChatNavBarButton image={shop} label={"Shop"} />
             </div>
             <p className="mt-4 mb-2 ml-6 text-[11px] text-zinc-700 font-semibold">DIRECT MESSAGES</p>
@@ -40,7 +44,7 @@ export default function ChatNavBar({ friends, compHandler, friendHandler, select
                     />
                 );
             })}
-            <UserNavBar compHandler={compHandler}/>
+            <UserNavBar compHandler={compHandler} />
         </div>
     );
 }
