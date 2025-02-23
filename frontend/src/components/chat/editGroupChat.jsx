@@ -3,6 +3,8 @@ import { checkIfUserIsInConversation } from "../../helpers/conversationHelpers";
 import conversationApi from "../../helpers/conversationApi";
 import { UserContext } from "../userContext";
 import unknown from "../../assets/userUnknown.svg";
+import defaultGroupProfile from "../../assets/group.svg";
+import defaultGroupProfileDark from "../../assets/dark/group.svg";
 import EditorUserList from "../editorUserList";
 import AlertDialog from "../alertDialog";
 
@@ -40,6 +42,7 @@ export default function EditGroupChat({ data, ref, compHandler }) {
     const [showFriends, setShowFriends] = useState(false);
     const kickDialog = useRef();
     const deleteDialog = useRef();
+    const themeIsDark = localStorage.getItem("theme") === "dark";
 
     function handleImageChange(e) {
         setFile(e.target.files[0]);
@@ -75,27 +78,30 @@ export default function EditGroupChat({ data, ref, compHandler }) {
     }
 
     return (
-        <dialog ref={ref} className="z-10 m-auto mt p-7 rounded-md animate-appear">
-            <h4 className="text-xl font-semibold">Group Settings</h4>
+        <dialog ref={ref} className="z-10 m-auto mt p-7 rounded-md animate-appear dark:bg-discord-600">
+            <h4 className="text-xl font-semibold dark:text-zinc-100">Group Settings</h4>
             <div className="w-3xl h-120 p-5 overflow-y-scroll">
                 <div className="flex">
                     <span className="w-[30%] flex flex-col items-center p-2">
-                        <img src={image} className="size-30 mb-3 rounded-full shadow-sm shadow-black" />
+                        <img
+                            src={image || themeIsDark ? defaultGroupProfileDark : defaultGroupProfile}
+                            className="size-30 mb-3 rounded-full shadow-sm shadow-black"
+                        />
                         <label
                             htmlFor="groupImage"
-                            className="w-[55%] pl-3 pr-3 pt-2 pb-2 text-xs font-semibold text-center border-1 rounded-sm cursor-pointer hover:bg-pink-300 hover:text-white transition ease-in duration-100"
+                            className="w-[55%] pl-3 pr-3 pt-2 pb-2 text-xs font-semibold text-center border-1 rounded-sm cursor-pointer hover:bg-pink-300 hover:text-white transition ease-in duration-100 dark:bg-discord-500 dark:border-transparent dark:text-zinc-100"
                         >
                             Upload Image
                         </label>
                         <input type="file" onChange={handleImageChange} id="groupImage" className="hidden" />
                     </span>
                     <span className="w-[70%] flex flex-col mt-5 pl-7">
-                        <p className="text-xs font-semibold text-zinc-700">GROUP NAME</p>
+                        <p className="text-xs font-semibold text-zinc-700 dark:text-zinc-400">GROUP NAME</p>
                         <input
                             type="text"
                             value={groupName}
                             onChange={e => setGroupName(e.target.value)}
-                            className="w-[80%] p-2 mt-2 rounded-sm text-sm  bg-zinc-200 outline-0"
+                            className="w-[80%] p-2 mt-2 rounded-sm text-sm  bg-zinc-200 outline-0 dark:bg-discord-500 dark:text-zinc-100"
                         />
                         <button
                             onClick={() => deleteDialog.current.showModal()}

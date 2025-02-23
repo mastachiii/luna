@@ -11,6 +11,7 @@ import groupDark from "../../assets/dark/group.svg";
 export default function NavBar({ componentHandler, groupIdHandler, groupData, dialogRef }) {
     const [userBtnHover, setUserBtnHover] = useState(false);
     const [selected, setSelected] = useState(true);
+    const [active, setActive] = useState(null);
     const userData = useContext(UserContext);
     const themeIsDark = localStorage.getItem("theme") === "dark";
 
@@ -30,7 +31,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData, di
                 <img src={userBtnHover || !selected ? logo : themeIsDark ? logoUnfocusedDark : logoUnfocused} alt="logo" className={``} />
             </button>
             <div className="w-8 h-[0.5px] mt-2  bg-zinc-400"></div>
-            {groupData.map(c => {
+            {groupData.map((c, index) => {
                 return (
                     <NavBarButton
                         condition={selected === c.id}
@@ -44,11 +45,16 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData, di
                         key={c.id}
                         conversation={c}
                         compHandler={componentHandler}
+                        index={index}
+                        active={active}
+                        activeHandler={setActive}
                     >
                         <img
                             src={c.picture || (themeIsDark ? groupDark : group)}
                             alt="group profile"
-                            className={`rounded-full pointer-events-none ${selected === c.id ? "scale-70 m-auto" : "scale-110"} transition duration-150 ease-in`}
+                            className={`rounded-full pointer-events-none ${
+                                selected === c.id ? "scale-70 m-auto" : "scale-110"
+                            } transition duration-150 ease-in`}
                         />
                     </NavBarButton>
                 );

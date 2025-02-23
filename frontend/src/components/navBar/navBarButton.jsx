@@ -20,9 +20,19 @@ function NavOptions({ condition, active, groupOptionsRef, leaveDialogRef }) {
     );
 }
 
-export default function NavBarButton({ handleClick, condition, groupCondition, children, dialogLabel, conversation, compHandler }) {
+export default function NavBarButton({
+    handleClick,
+    condition,
+    groupCondition,
+    children,
+    dialogLabel,
+    conversation,
+    compHandler,
+    active,
+    activeHandler,
+    index,
+}) {
     const [hovered, setHovered] = useState(false);
-    const [active, setActive] = useState(false);
     const dialogRef = useRef();
     const leaveDialogRef = useRef();
 
@@ -34,7 +44,9 @@ export default function NavBarButton({ handleClick, condition, groupCondition, c
                     onMouseEnter={() => setHovered(true)}
                     onMouseLeave={() => setHovered(false)}
                     onMouseDown={e => {
-                        if (e.button === 2) setActive(!active);
+                        if (e.button !== 2) return;
+
+                        active === index ? activeHandler(null) : activeHandler(index);
                     }}
                     onContextMenu={e => e.preventDefault()}
                     className={`w-12 h-12 mt-2 rounded-xl transition-all duration-200 cursor-pointer ease-in  
@@ -46,13 +58,13 @@ export default function NavBarButton({ handleClick, condition, groupCondition, c
                 </button>
                 <span
                     className={`absolute left-12 z-10 mt-2 ml-5 w-40 p-3 rounded-r-lg bg-zinc-100 shadow-md shadow-zinc-700 select-none transition duration-100 ease-in ${
-                        hovered ? "block" : 'hidden'
+                        hovered ? "block" : "hidden"
                     } dark:text-white dark:bg-discord-800 dark:shadow-discord-800 dark:shadow-md`}
                 >
                     <p className="text-sm font-noto font-semibold">{dialogLabel}</p>
                 </span>
                 {conversation && conversation.isGroup && (
-                    <NavOptions condition={groupCondition} active={active} groupOptionsRef={dialogRef} leaveDialogRef={leaveDialogRef} />
+                    <NavOptions condition={groupCondition} active={active === index} groupOptionsRef={dialogRef} leaveDialogRef={leaveDialogRef} />
                 )}
             </div>
             {conversation && (
