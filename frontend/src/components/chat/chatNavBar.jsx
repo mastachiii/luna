@@ -7,6 +7,7 @@ import shopDark from "../../assets/dark/shop.svg";
 import nitro from "../../assets/nitro.svg";
 import nitroDark from "../../assets/dark/nitro.svg";
 import noPfp from "../../assets/userUnknown.svg";
+import PropTypes from "prop-types";
 
 export default function ChatNavBar({ friends, compHandler, friendHandler, selected, selHandler }) {
     const themeIsDark = localStorage.getItem("theme") === "dark";
@@ -49,3 +50,11 @@ export default function ChatNavBar({ friends, compHandler, friendHandler, select
         </div>
     );
 }
+
+ChatNavBar.propTypes = {
+    friends: PropTypes.array,
+    compHandler: PropTypes.func,
+    friendHandler: PropTypes.func,
+    selected: PropTypes.string,
+    selHandler: PropTypes.func,
+};

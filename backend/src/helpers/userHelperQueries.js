@@ -43,26 +43,4 @@ async function validateFriendRequest({ id, senderId }) {
     return reqIsValid;
 }
 
-(async () => {
-    const query = await prisma.user.findMany({
-        include: {
-            conversations: {
-                include: {
-                    messages: {
-                        include: {
-                            user: true,
-                        },
-                    },
-                },
-            },
-            friends: true,
-            requestsReceived: true,
-            requestsSent: true,
-        },
-    });
-    // checkIfUserAreFriends({ id: 2, friendId: 2 });
-    // validateFriendRequest({ id: 1, senderId: 2 })
-    // console.dir(query, { depth: null });
-})();
-
 module.exports = { validateAddUser, validateFriendRequest, checkIfUserAreFriends };

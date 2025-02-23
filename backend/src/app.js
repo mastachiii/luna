@@ -47,8 +47,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/user", userRoute);
 app.use("/conversation", conversationRoute);
 
-app.get("/", isAuthenticated, (req, res, next) => console.log(req.user));
-
 // Error handling
 app.use((err, req, res, next) => {
     console.log(err);

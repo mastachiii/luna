@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import online from "../../assets/online.svg";
 
 export default function ChatNavBarButton({ handleClick, image, label, isUser, isOnline, condition }) {
@@ -20,3 +21,12 @@ export default function ChatNavBarButton({ handleClick, image, label, isUser, is
         </button>
     );
 }
+
+ChatNavBarButton.propTypes = {
+    handleClick: PropTypes.func,
+    image: PropTypes.any,
+    label: PropTypes.string,
+    isUser: PropTypes.bool,
+    isOnline: PropTypes.bool,
+    condition: PropTypes.bool,
+};

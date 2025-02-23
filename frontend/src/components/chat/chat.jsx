@@ -12,6 +12,7 @@ import settings from "../../assets/settings.svg";
 import groupDefaultPfp from "../../assets/group.svg";
 import groupDefaultPfpDark from "../../assets/dark/group.svg";
 import luna from "../../assets/logo.svg";
+import PropTypes from "prop-types";
 
 function reducer(state, action) {
     const newMessage = action.user && {
@@ -179,8 +180,15 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
     } else {
         return (
             <div className="m-auto dark:bg-discord-600">
-                <img src={luna} className="w-[90px] p-2 rounded-2xl animate-pulse bg-pink-300"/>
+                <img src={luna} className="w-[90px] p-2 rounded-2xl animate-pulse bg-pink-300" />
             </div>
         );
     }
 }
+
+Chat.propTypes = {
+    isGroup: PropTypes.bool,
+    id: PropTypes.number,
+    friend: PropTypes.object,
+    compHandler: PropTypes.func,
+};

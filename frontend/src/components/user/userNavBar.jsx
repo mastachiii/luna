@@ -25,8 +25,8 @@ export default function UserNavBar({ compHandler }) {
             <div className="w-40 flex gap-2 items-center overflow-hidden overflow-ellipsis">
                 <img src={user.profilePicture} className="size-10 rounded-full" />
                 <span className="w-[50%] dark:text-white">
-                    <p className="text-xs">{user.displayName}</p>
-                    <p className="text-[10px] overflow-hidden dark:text-zinc-500">{user.username}</p>
+                    <p className="text-xs select-none">{user.displayName}</p>
+                    <p className="text-[10px] overflow-hidden dark:text-zinc-500 select-none">{user.username}</p>
                 </span>
             </div>
             <div className="flex gap-2">
