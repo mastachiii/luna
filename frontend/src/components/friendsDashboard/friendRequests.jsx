@@ -4,9 +4,13 @@ import InteractButton from "./userInteractButton";
 import unknown from "../../assets/userUnknown.svg";
 import userApi from "../../helpers/userApi";
 import cancel from "../../assets/cancel.svg";
+import cancelDark from "../../assets/dark/cancel.svg";
 import accept from "../../assets/accept.svg";
+import acceptDark from "../../assets/dark/accept.svg";
 
 function User({ userData, type, previousState, handler }) {
+    const themeIsDark = localStorage.getItem("theme") === "dark";
+
     function handleClick(type) {
         switch (type) {
             case "accept":
@@ -28,8 +32,8 @@ function User({ userData, type, previousState, handler }) {
         <div className="flex">
             <img src={userData.profilePicture || unknown} className="size-9 rounded-full" />
             <span className="ml-3">
-                <p className="text-sm font-semibold">{userData.displayName}</p>
-                <p className="text-xs text-zinc-600">{userData.username}</p>
+                <p className="text-sm font-semibold dark:text-zinc-100">{userData.displayName}</p>
+                <p className="text-xs text-zinc-600 dark:text-zinc-400">{userData.username}</p>
             </span>
             <div className="flex gap-3 ml-auto self-center">
                 {type === "received" ? (
@@ -37,13 +41,13 @@ function User({ userData, type, previousState, handler }) {
                         {" "}
                         <InteractButton
                             handler={() => handleClick("accept")}
-                            image={accept}
+                            image={themeIsDark ? acceptDark : accept}
                             label={"Accept"}
                             labelPosition={"bottom-10 left-[-12px]"}
                         />
                         <InteractButton
                             handler={() => handleClick("reject")}
-                            image={cancel}
+                            image={themeIsDark ? cancelDark : cancel}
                             imageSize={4}
                             label={"Ignore"}
                             labelPosition={"bottom-10 left-[-12px]"}
@@ -76,8 +80,8 @@ export default function FriendRequests({ sentRequests, pendingRequests }) {
             ) : null}
             {pendingRequestsToShow.length >= 1 && (
                 <>
-                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">RECEIVED - {pendingRequestsToShow.length}</p>
-                    <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200"></div>
+                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600 dark:text-zinc-400">RECEIVED - {pendingRequestsToShow.length}</p>
+                    <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200 dark:bg-discord-700"></div>
                     <div>
                         {pendingRequests &&
                             pendingRequestsToShow.map(p => (
@@ -94,8 +98,8 @@ export default function FriendRequests({ sentRequests, pendingRequests }) {
             )}
             {sentRequestsToShow.length >= 1 && (
                 <>
-                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">SENT - {sentRequestsToShow.length}</p>
-                    <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200"></div>
+                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600 dark:text-zinc-400">SENT - {sentRequestsToShow.length}</p>
+                    <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200 dark:bg-discord-700"></div>
                     <div className="flex flex-col gap-4">
                         {sentRequests &&
                             sentRequestsToShow.map(p => (
