@@ -10,16 +10,16 @@ import AlertDialog from "../alertDialog";
 
 function User({ user, handler, label }) {
     return (
-        <div key={user.id} className="w-[50%] p-2 flex rounded-sm group hover:bg-zinc-100">
+        <div key={user.id} className="w-[50%] p-2 flex rounded-md group hover:bg-zinc-100 dark:hover:bg-discord-500">
             <img src={user.profilePicture || unknown} alt="" className="size-11 rounded-full" />
             <span className="ml-2">
-                <p className="text-sm">{user.displayName}</p>
-                <p className="text-xs text-zinc-700">{user.username}</p>
+                <p className="text-sm dark:text-zinc-50">{user.displayName}</p>
+                <p className="text-xs text-zinc-700 dark:text-zinc-400">{user.username}</p>
             </span>
             <button
                 className={`opacity-0 w-13 h-7 p-1 ml-auto mt-auto mb-auto border-1 border-black text-xs font-semibold rounded-sm cursor-pointer group-hover:opacity-100  ${
                     label === "KICK" ? "hover:bg-red-500" : "hover:bg-green-500"
-                } hover:text-white`}
+                } hover:text-white dark:bg-discord-600`}
                 onClick={handler}
             >
                 {label}
