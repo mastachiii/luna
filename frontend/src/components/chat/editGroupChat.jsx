@@ -19,8 +19,8 @@ function User({ user, handler, label }) {
             <button
                 className={`opacity-0 w-13 h-7 p-1 ml-auto mt-auto mb-auto border-1 border-black text-xs font-semibold rounded-sm cursor-pointer group-hover:opacity-100  ${
                     label === "KICK" ? "hover:bg-red-500" : "hover:bg-green-500"
-                } hover:text-white dark:bg-discord-600`}
-                onClick={handler}
+                } hover:text-white dark:bg-discord-600 dark:text-zinc-50 dark:border-transparent`}
+                    onClick={handler}
             >
                 {label}
             </button>
@@ -78,7 +78,7 @@ export default function EditGroupChat({ data, ref, compHandler }) {
     }
 
     return (
-        <dialog ref={ref} className="z-10 m-auto mt p-7 rounded-md animate-appear dark:bg-discord-600">
+        <dialog ref={ref} className="z-10 m-auto mt p-7 rounded-md animate-appear dark:bg-discord-700">
             <h4 className="text-xl font-semibold dark:text-zinc-100">Group Settings</h4>
             <div className="w-3xl h-120 p-5 overflow-y-scroll">
                 <div className="flex">
