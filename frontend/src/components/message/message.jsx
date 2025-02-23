@@ -40,9 +40,9 @@ export default function Message({ message, previousMessage, selected, selHandler
                     <div className="w-12 ml-5 relative">
                         <img src={user.profilePicture} onClick={e => handleSelect(e, message.id)} className="size-10 rounded-full cursor-pointer" />
                         <div
-                            className={`absolute z-10  shadow-xs shadow-black rounded-md ${selected === message.id ? "block" : "hidden"} ${
+                            className={`absolute z-10  shadow-xs shadow-black rounded-md animate-opacity ${selected === message.id ? "block" : "hidden"} ${
                                 liftProfileUp ? "bottom-11 left-11" : "top-6 left-11 "
-                            }`}
+                            } dark:bg-discord-800`}
                         >
                             <UserProfileFull data={user} />
                         </div>

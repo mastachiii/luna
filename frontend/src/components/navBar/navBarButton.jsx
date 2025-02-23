@@ -38,7 +38,7 @@ export default function NavBarButton({ handleClick, condition, groupCondition, c
                     }}
                     onContextMenu={e => e.preventDefault()}
                     className={`w-12 h-12 mt-2 rounded-xl transition-all duration-200 cursor-pointer ease-in  
-                    hover:*:size-8 hover:*:m-auto hover:translate-x-1  hover:bg-pink-300 ${
+                    hover:*:scale-70 hover:*:m-auto hover:translate-x-1  hover:bg-pink-300 ${
                         condition ? "translate-x-1 bg-pink-300" : "hover:translate-x-1"
                     }`}
                 >

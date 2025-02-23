@@ -48,7 +48,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData, di
                         <img
                             src={c.picture || (themeIsDark ? groupDark : group)}
                             alt="group profile"
-                            className={`rounded-full pointer-events-none ${selected === c.id ? "size-9 m-auto" : "size-12"}`}
+                            className={`rounded-full pointer-events-none ${selected === c.id ? "scale-70 m-auto" : "scale-110"} transition duration-150 ease-in`}
                         />
                     </NavBarButton>
                 );
