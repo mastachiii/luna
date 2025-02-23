@@ -32,20 +32,20 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
         <>
             <div className="w-[81%] h-fit flex align-middle p-3 ml-5 mr-5 mt-10 absolute bottom-7 rounded-md bg-neutral-200 dark:bg-discord-500">
                 {image && (
-                    <span className=" w-full h-60 flex absolute bottom-10 left-[-0.1px] right-[1px] p-4 pl-8 bg-neutral-200 border-b-1 border-zinc-300 rounded-t-md">
-                        <div className="h-52 w-50 relative flex flex-col p-2 pl-4 pr-4 bg-neutral-300  rounded-md">
-                            <div className="w-full h-fit p-2 m-auto  bg-neutral-200 rounded-md ">
-                                <img src={URL.createObjectURL(image)} className="w-auto h-auto " />
+                    <span className=" w-full h-60 flex absolute bottom-10 left-[-0.1px] right-[1px] p-4 pl-8 bg-neutral-200 border-b-1 border-zinc-300 rounded-t-md dark:bg-discord-500 dark:border-discord-600">
+                        <div className="h-52 w-35 relative flex flex-col p-2 pl-4 pr-4 bg-neutral-300  rounded-md dark:bg-discord-600">
+                            <div className="w-full h-fit p-2 m-auto  bg-neutral-200 rounded-md dark:bg-discord-700">
+                                <img src={URL.createObjectURL(image)} className="w-25" />
                             </div>
                             <button className="h-10 absolute top-2 right-5">
                                 <img
                                     src={trash}
                                     alt=""
-                                    className="size-7 bg-neutral-200 rounded-md p-1 cursor-pointer hover:scale-110 transition duration-75 ease-in"
+                                    className="size-7 bg-neutral-200 rounded-md p-1 cursor-pointer hover:scale-110 transition duration-75 ease-in dark:bg-discord-700"
                                     onClick={() => imageHandler(null)}
                                 />
                             </button>
-                            <p className="text-xs overflow-hidden overflow-ellipsis">{image.name}</p>
+                            <p className="text-xs overflow-hidden overflow-ellipsis dark:text-white">{image.name}</p>
                         </div>
                     </span>
                 )}

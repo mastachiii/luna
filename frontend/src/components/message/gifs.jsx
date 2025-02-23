@@ -53,7 +53,7 @@ export default function Gifs({ handler, isEditor }) {
                     value={gifSearch}
                     onChange={handleChange}
                     placeholder={"Search Tenor"}
-                    className="w-[90%] p-2 mt-2 ml-3 mr-auto text-sm bg-neutral-200 dark:bg-discord-600 dark:text-zinc-100"
+                    className="w-[90%] p-2 mt-2 ml-3 mr-auto text-sm bg-neutral-200 outline-0 dark:bg-discord-600 dark:text-zinc-100"
                 />
             </form>
             {gifsToShow && (

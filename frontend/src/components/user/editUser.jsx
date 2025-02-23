@@ -4,11 +4,12 @@ import UserProfileFull from "./userProfile";
 import Gifs from "../message/gifs";
 import check from "../../assets/accept.svg";
 import cancel from "../../assets/cancel.svg";
+import cancelDark from "../../assets/dark/cancel.svg";
 
 function EditField({ children, label }) {
     return (
         <span className="flex flex-col gap-1">
-            <p className="text-[10px] text-zinc-600 font-semibold">{label}</p>
+            <p className="text-[10px] text-zinc-600 font-semibold dark:text-zinc-300">{label}</p>
             {children}
         </span>
     );
@@ -26,6 +27,7 @@ export default function EditUser() {
     const gifRef = useRef();
     const profilePicToShow = profilePicGif ? profilePicGif : profilePicture && URL.createObjectURL(profilePicture);
     const backdropToShow = backdropGif ? backdropGif : backdrop && URL.createObjectURL(backdrop);
+    const themeIsDark = localStorage.getItem("theme") === "dark";
 
     async function handleUpdate() {
         await userApi.updateProfile({ displayName, profilePicture, backdrop, profilePicGif, backdropGif, bio, saveHandler: setSaved });
@@ -72,9 +74,9 @@ export default function EditUser() {
 
     return (
         <div className="w-full flex flex-col animate-appear">
-            <div className="w-full h-13 flex shrink-0 align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200"></div>
+            <div className="w-full h-13 flex shrink-0 align-middle mb-0 border-b-1 border-zinc-200 shadow-md shadow-zinc-200 dark:border-discord-800 dark:shadow-transparent"></div>
             <div className="w-[70%] p-10">
-                <p className="text-xl font-semibold text-zinc-700">Edit Profile</p>
+                <p className="text-xl font-semibold text-zinc-700 dark:text-zinc-200">Edit Profile</p>
                 <div className="flex gap-95">
                     <div className="flex flex-col gap-5 mt-5">
                         <EditField label={"DISPLAY NAME"}>
@@ -86,7 +88,7 @@ export default function EditUser() {
                                     setDisplayName(e.target.value);
                                 }}
                                 maxLength={30}
-                                className="w-50 p-2 pl-2 text-xs  bg-neutral-200 rounded-xs outline-0 font-noto break-words"
+                                className="w-50 p-2 pl-2 text-xs bg-neutral-200 rounded-xs outline-0 font-noto break-words dark:bg-discord-500 dark:text-zinc-50"
                             />
                         </EditField>
                         <EditField label={"ABOUT ME"}>
@@ -95,7 +97,7 @@ export default function EditUser() {
                                 cols={35}
                                 rows={5}
                                 maxLength={150}
-                                className="w-fit p-2 pl-2 text-xs bg-neutral-200 rounded-sm resize-none outline-0"
+                                className="w-fit p-2 pl-2 text-xs bg-neutral-200 rounded-sm resize-none outline-0 dark:bg-discord-500 dark:text-zinc-50"
                                 value={bio}
                                 onChange={e => {
                                     setSaved(null);
@@ -139,12 +141,12 @@ export default function EditUser() {
                         </EditField>
                     </div>
                     <div className="h-70">
-                        <p className="text-[10px] text-zinc-600 font-semibold mb-1">PREVIEW</p>
+                        <p className="text-[10px] text-zinc-600 font-semibold mb-1 dark:text-zinc-300">PREVIEW</p>
                         <UserProfileFull displayName={displayName} profilePicture={profilePicToShow} backdrop={backdropToShow} bio={bio} />
                     </div>
                 </div>
                 <div className="w-fit flex mt-20 ml-auto">
-                    <button onClick={handleReset} className="text-sm text-zinc-700 cursor-pointer hover:underline">
+                    <button onClick={handleReset} className="text-sm text-zinc-700 cursor-pointer hover:underline dark:text-zinc-200">
                         Reset
                     </button>
                     <div className="flex">
@@ -159,11 +161,11 @@ export default function EditUser() {
                         </button>
                     </div>
                 </div>
-                <dialog ref={gifRef} className="w-lg h-200  m-auto p-5 rounded-md overflow-hidden relative">
+                <dialog ref={gifRef} className="w-lg h-200  m-auto p-5 rounded-md overflow-hidden relative dark:bg-discord-700">
                     <div className="sticky top-0 flex justify-between p-2 ">
-                        <p className="text-xl font-semibold text-zinc-700">Choose GIF</p>
+                        <p className="text-xl font-semibold text-zinc-700 dark:text-zinc-50">Choose GIF</p>
                         <button className="cursor-pointer" onClick={() => gifRef.current.close()}>
-                            <img src={cancel} className="size-5" />
+                            <img src={themeIsDark ? cancelDark : cancel} className="size-5" />
                         </button>
                     </div>
                     <Gifs handler={handleChangeGif} isEditor={true} />
