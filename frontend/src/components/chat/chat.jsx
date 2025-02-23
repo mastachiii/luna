@@ -117,10 +117,10 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
 
     if (conversation && status === "done") {
         return (
-            <div className="w-full max-h-[92%] flex flex-col grow font-noto overflow-visible">
-                <div className="h-13 flex shrink-0 align-middle mb-0 border-b-2 border-zinc-200 shadow-md shadow-zinc-200">
+            <div className="w-full max-h-[100%] flex flex-col grow font-noto overflow-visible dark:bg-discord-600">
+                <div className="h-13 flex shrink-0 align-middle mb-0 border-b-1 border-zinc-200 shadow-md shadow-zinc-200 dark:shadow-transparent dark:border-discord-700">
                     {
-                        <span className="flex ml-5 items-center gap-3">
+                        <span className="flex ml-5 items-center gap-3 dark:text-zinc-100">
                             <img
                                 src={isGroup ? conversation.picture || groupDefaultPfp : friend.profilePicture || noPfp}
                                 className="size-7 rounded-full"
@@ -136,7 +136,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                         </span>
                     }
                 </div>
-                <div className="w-full h-[100%] flex relative">
+                <div className="w-full h-[93%] flex relative dark:bg-discord-600">
                     <div className={`${"w-full"}  h-[91%] flex flex-col overflow-y-scroll box-border z-0`} ref={convoRef}>
                         {!isGroup ? <ChatBegin friendData={friend} /> : <GroupChatBegin group={conversation} ref={dialogRef} />}
                         <div className="w-full h-full z-20">
