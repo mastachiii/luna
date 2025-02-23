@@ -30,7 +30,7 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
 
     return (
         <>
-            <div className="w-[81%] h-fit flex align-middle p-3 ml-5 mr-5 mt-10 absolute bottom-7 rounded-md bg-neutral-200 dark:bg-discord-500">
+            <div className="w-[80%] h-fit flex align-middle p-3 ml-5 mr-5 mt-10 absolute bottom-7 rounded-md bg-neutral-200 dark:bg-discord-500">
                 {image && (
                     <span className=" w-full h-60 flex absolute bottom-10 left-[-0.1px] right-[1px] p-4 pl-8 bg-neutral-200 border-b-1 border-zinc-300 rounded-t-md dark:bg-discord-500 dark:border-discord-600">
                         <div className="h-52 w-35 relative flex flex-col p-2 pl-4 pr-4 bg-neutral-300  rounded-md dark:bg-discord-600">

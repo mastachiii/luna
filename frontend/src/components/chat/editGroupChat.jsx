@@ -20,7 +20,7 @@ function User({ user, handler, label }) {
                 className={`opacity-0 w-13 h-7 p-1 ml-auto mt-auto mb-auto border-1 border-black text-xs font-semibold rounded-sm cursor-pointer group-hover:opacity-100  ${
                     label === "KICK" ? "hover:bg-red-500" : "hover:bg-green-500"
                 } hover:text-white dark:bg-discord-600 dark:text-zinc-50 dark:border-transparent`}
-                    onClick={handler}
+                onClick={handler}
             >
                 {label}
             </button>
@@ -157,7 +157,7 @@ export default function EditGroupChat({ data, ref, compHandler }) {
                 </EditorUserList>
             </div>
             <div className="sticky bottom-0 flex justify-end items-center gap-3 text-sm">
-                <button onClick={() => ref.current.close()} className="p-2 mt-5 text-zinc-700 cursor-pointer hover:underline">
+                <button onClick={() => ref.current.close()} className="p-2 mt-5 text-zinc-700 cursor-pointer hover:underline dark:text-zinc-50">
                     Cancel
                 </button>
                 <button onClick={handleUpdate} className="p-2 mt-5 border-1  bg-pink-300 text-white rounded-sm cursor-pointer  hover:bg-pink-500">

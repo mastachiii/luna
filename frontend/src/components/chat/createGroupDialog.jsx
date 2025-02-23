@@ -31,7 +31,7 @@ export default function CreateGroup({ ref }) {
                     type="text"
                     value={groupName}
                     onChange={e => setGroupName(e.target.value)}
-                    className="w-[95%] p-2 mt-2 text-sm rounded-sm bg-zinc-200 dark:bg-discord-500 dark:text-zinc-100"
+                    className="w-[95%] p-2 mt-2 text-sm rounded-sm bg-zinc-200 dark:bg-discord-500 outline-0 dark:text-zinc-100"
                 />
             </div>
             <div className="h-[16%] flex justify-between items-center mt-auto bg-zinc-100 dark:bg-discord-700">

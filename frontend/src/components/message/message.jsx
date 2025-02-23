@@ -6,7 +6,6 @@ import { useState } from "react";
 export default function Message({ message, previousMessage, selected, selHandler, containerRef }) {
     const user = message.user;
     const [liftProfileUp, setLiftProfileUp] = useState(false);
-    console.log(containerRef.current && containerRef.current.scrollTopMax);
 
     // Only compare if current message and prev message is by the same user... Render a new msg div if diff
     let skipProfileRender;
@@ -32,17 +31,15 @@ export default function Message({ message, previousMessage, selected, selHandler
                     <p className="ml-2 mr-2 text-[10px] font-semibold text-zinc-500 dark:text-zinc-400">{format(message.dateSent, "PPP")}</p>
                     <span className="w-[40%] h-[1px] bg-neutral-300 dark:bg-zinc-600"></span>
                 </div>
-            ) : (
-                ""
-            )}
+            ) : null}
             <div className={`flex pt-[5px] pb-[5px] relative group hover:bg-neutral-100 transition duration-100 ease-in dark:hover:bg-discord-700`}>
                 {!skipProfileRender ? (
                     <div className="w-12 ml-5 relative">
                         <img src={user.profilePicture} onClick={e => handleSelect(e, message.id)} className="size-10 rounded-full cursor-pointer" />
                         <div
-                            className={`absolute z-10  shadow-xs shadow-black rounded-md animate-opacity ${selected === message.id ? "block" : "hidden"} ${
-                                liftProfileUp ? "bottom-11 left-11" : "top-6 left-11 "
-                            } dark:bg-discord-800`}
+                            className={`absolute z-10  shadow-xs shadow-black rounded-md animate-opacity ${
+                                selected === message.id ? "block" : "hidden"
+                            } ${liftProfileUp ? "bottom-11 left-11" : "top-6 left-11 "} dark:bg-discord-800`}
                         >
                             <UserProfileFull data={user} />
                         </div>

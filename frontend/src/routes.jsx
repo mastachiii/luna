@@ -2,11 +2,6 @@ import { createBrowserRouter } from "react-router";
 import SignUp from "./components/auth/signUp";
 import LogIn from "./components/auth/logIn";
 import Index from "./components/layout/indexLayout";
-import FriendsPage from "./components/friendsPage";
-import Request from "./components/requestList";
-import Chat from "./components/chat/chat";
-import CreateGroup from "./components/createGroup";
-import CustomizeProfile from "./components/customizeProfile";
 
 const routes = createBrowserRouter([
     {
@@ -20,30 +15,6 @@ const routes = createBrowserRouter([
     {
         path: "/",
         element: <Index />,
-    },
-    {
-        path: "/add",
-        element: <FriendsPage />,
-    },
-    {
-        path: "/requests",
-        element: <Request />,
-    },
-    {
-        path: "/chat/:username",
-        element: <Chat isGroup={false} />,
-    },
-    {
-        path: "/chat/group/:id",
-        element: <Chat isGroup={true} />,
-    },
-    {
-        path: "/group/create",
-        element: <CreateGroup />,
-    },
-    {
-        path: "/customize",
-        element: <CustomizeProfile />,
     },
 ]);
 

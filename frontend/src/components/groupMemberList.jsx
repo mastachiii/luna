@@ -32,7 +32,7 @@ export default function GroupMemberList({ members, ownerId }) {
                             className={`flex pb-2 pl-2 pr-1 rounded-md cursor-pointer hover:bg-zinc-200 ${selected === m.id ? "bg-zinc-200 dark:bg-discord-600 dark:text-zinc-50" : "dark:text-zinc-400"} dark:hover:bg-discord-500`}
                         >
                             <UserProfile profilePicture={m.profilePicture || unknown} displayName={m.displayName} isOwner={m.id === ownerId} />
-                            <div className={`absolute right-60 z-20 ${selected === m.id ? "block" : "hidden"} bg-white rounded-md animate-opacity dark:bg-discord-800`}>
+                            <div className={`absolute right-[13%] z-20 ${selected === m.id ? "block" : "hidden"} bg-white rounded-md animate-opacity dark:bg-discord-800`}>
                                 <UserProfileFull data={m} />
                             </div>
                         </div>

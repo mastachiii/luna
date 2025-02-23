@@ -105,7 +105,11 @@ class User {
             credentials: "include",
         })
             .then(response => response.json())
-            .then(data => data);
+            .then(data => {
+                if (data.message === "Unauthorized") return (window.location.href = "/log-in");
+
+                return data;
+            });
 
         return user;
     }
@@ -158,12 +162,6 @@ class User {
             },
             credentials: "include",
             body: JSON.stringify({ status: "offline" }),
-        });
-    }
-
-    foo() {
-        fetch("http://localhost:8080", {
-            credentials: "include",
         });
     }
 }
