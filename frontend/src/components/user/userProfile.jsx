@@ -24,7 +24,7 @@ export default function UserProfileFull({ displayName, profilePicture, backdrop,
                 <p className="pl-3 pr-3 text-xs">{userToShow.username}</p>
             </span>
             <div className="w-full text-wrap">
-                <p className="w-full mt-2 pl-3 pr-3 text-xs break-words ">{bio || userToShow.bio}</p>
+                <p className="w-full mt-2 pl-3 pr-3 text-xs break-words">{bio || userToShow.bio}</p>
             </div>
             {userToShow.id !== userData.id && !userIsFriend && (
                 <div className="flex justify-center mt-8">

@@ -7,7 +7,7 @@ function UserProfile({ profilePicture, displayName, isOwner }) {
     return (
         <span className="flex gap-2 mt-2">
             <img src={profilePicture} className="size-8 rounded-full" />
-            <p className="self-center text-sm ml-1 select-none dark:text-zinc-400">{displayName}</p>
+            <p className="self-center text-sm ml-1 select-none">{displayName}</p>
             {isOwner && <img src={owner} className="size-4 self-center" />}
         </span>
     );
@@ -29,10 +29,10 @@ export default function GroupMemberList({ members, ownerId }) {
                             onClick={() => {
                                 selected !== m.id ? setSelected(m.id) : setSelected(null);
                             }}
-                            className={`flex pb-2 pl-2 pr-1 rounded-md cursor-pointer hover:bg-zinc-200 ${selected === m.id && "bg-zinc-200"} dark:hover:bg-discord-500`}
+                            className={`flex pb-2 pl-2 pr-1 rounded-md cursor-pointer hover:bg-zinc-200 ${selected === m.id ? "bg-zinc-200 dark:bg-discord-600 dark:text-zinc-50" : "dark:text-zinc-400"} dark:hover:bg-discord-500`}
                         >
                             <UserProfile profilePicture={m.profilePicture || unknown} displayName={m.displayName} isOwner={m.id === ownerId} />
-                            <div className={`absolute right-60 z-20 ${selected === m.id ? "block" : "hidden"} bg-white rounded-md dark:bg-discord-800`}>
+                            <div className={`absolute right-60 z-20 ${selected === m.id ? "block" : "hidden"} bg-white rounded-md animate-opacity dark:bg-discord-800`}>
                                 <UserProfileFull data={m} />
                             </div>
                         </div>

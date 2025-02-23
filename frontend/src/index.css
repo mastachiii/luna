@@ -12,6 +12,7 @@
     --animate-dialog: dialog 100ms ease-in;
     --animate-border: border 200ms ease-in alternate infinite;
     --animate-scale: scale 150ms ease-in forwards;
+    --animate-opacity: opacity 200ms ease-in;
 
     @keyframes appear {
         0% {
@@ -48,6 +49,16 @@
         0% {
             opacity: 20;
             transform: scale(0.8);
+        }
+
+        100% {
+            opacity: 100;
+        }
+    }
+
+    @keyframes opacity {
+        0% {
+            opacity: 0;
         }
 
         100% {
