@@ -53,7 +53,7 @@ export default function Gifs({ handler, isEditor }) {
                     value={gifSearch}
                     onChange={handleChange}
                     placeholder={"Search Tenor"}
-                    className="w-[90%] p-2 mt-2 ml-3 mr-auto text-sm bg-neutral-200"
+                    className="w-[90%] p-2 mt-2 ml-3 mr-auto text-sm bg-neutral-200 dark:bg-discord-600 dark:text-zinc-100"
                 />
             </form>
             {gifsToShow && (
@@ -62,7 +62,7 @@ export default function Gifs({ handler, isEditor }) {
                         return (
                             <img
                                 src={g.images.downsized.url}
-                                className="w-[48%] border-1 border-zinc-100 rounded-md transition duration-100 ease-in cursor-pointer hover:scale-105"
+                                className="w-[48%] border-1 border-zinc-100 rounded-md transition duration-100 ease-in cursor-pointer hover:scale-105 dark:border-discord-500"
                                 key={g.slug}
                                 onClick={() => handler(g.images.downsized_medium.url)}
                             />

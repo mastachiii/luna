@@ -10,6 +10,7 @@ import noPfp from "../../assets/userUnknown.svg";
 import EditGroupChat from "./editGroupChat";
 import settings from "../../assets/settings.svg";
 import groupDefaultPfp from "../../assets/group.svg";
+import groupDefaultPfpDark from "../../assets/dark/group.svg";
 
 function reducer(state, action) {
     const newMessage = action.user && {
@@ -57,6 +58,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
     const timeout = useRef();
     const convoRef = useRef();
     const dialogRef = useRef();
+    const themeIsDark = localStorage.getItem("theme") === "dark";
 
     useEffect(() => {
         (async () => {
@@ -122,7 +124,11 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                     {
                         <span className="flex ml-5 items-center gap-3 dark:text-zinc-100">
                             <img
-                                src={isGroup ? conversation.picture || groupDefaultPfp : friend.profilePicture || noPfp}
+                                src={
+                                    isGroup
+                                        ? conversation.picture || (themeIsDark ? groupDefaultPfpDark : groupDefaultPfp)
+                                        : friend.profilePicture || noPfp
+                                }
                                 className="size-7 rounded-full"
                             />
                             <span className="flex gap-1">

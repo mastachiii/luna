@@ -14,7 +14,7 @@ async function fetchEmojis(category) {
 
 function EmojiSelector({ handler, condition, children }) {
     return (
-        <button onClick={handler} className={`p-1 rounded-full cursor-pointer hover:bg-zinc-300 ${condition && "bg-zinc-300"}`}>
+        <button onClick={handler} className={`p-1 rounded-full cursor-pointer hover:bg-zinc-300 ${condition && "bg-zinc-300 dark:bg-discord-500"} dark:hover:bg-discord-500`}>
             {children}
         </button>
     );
@@ -35,7 +35,7 @@ export default function Emojis({ handler, text }) {
     return (
         <div>
             <div className="flex h-120">
-                <div className="flex flex-col justify-evenly p-2 mt-[1px]  bg-zinc-200">
+                <div className="flex flex-col justify-evenly p-2 mt-[1px] bg-zinc-200 dark:bg-discord-800">
                     <EmojiSelector handler={() => setEmojiToDisplay("smileys-emotion")} condition={emojiToDisplay === "smileys-emotion"}>
                         &#128512;
                     </EmojiSelector>
@@ -57,7 +57,7 @@ export default function Emojis({ handler, text }) {
 
                             return (
                                 <button
-                                    className="w-10 text-lg rounded-full p-2 cursor-pointer hover:bg-zinc-200"
+                                    className="w-10 text-lg rounded-full p-2 cursor-pointer hover:bg-zinc-200 dark:hover:bg-discord-500"
                                     onClick={() => handler(`${text}${e.character}`)}
                                     key={e.character}
                                 >
