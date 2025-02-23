@@ -9,6 +9,7 @@
     --color-discord-700: #282b30;
     --color-discord-800: #202225;
     --animate-appear: appear 200ms ease-in-out;
+    --animate-dialog: dialog 100ms ease-in;
     --animate-border: border 200ms ease-in alternate infinite;
     --animate-scale: scale 150ms ease-in forwards;
 
@@ -40,6 +41,17 @@
 
         100% {
             transform: scale(1.25);
+        }
+    }
+
+    @keyframes dialog {
+        0% {
+            opacity: 20;
+            transform: scale(0.8);
+        }
+
+        100% {
+            opacity: 100;
         }
     }
 }

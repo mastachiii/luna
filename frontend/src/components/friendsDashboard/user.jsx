@@ -37,7 +37,7 @@ export default function User({ user, friendHandler, compHandler, selHandler, opt
                     <div
                         className={`${
                             condition ? "block" : "hidden"
-                        } w-35 absolute top-2 left-[-20px] z-10 p-2 bg-white rounded-sm shadow-md shadow-zinc-600`}
+                        } w-35 absolute top-2 left-[-20px] z-10 p-2 bg-white rounded-sm shadow-md shadow-zinc-600 dark:bg-discord-800 dark:shadow-transparent`}
                     >
                         <button
                             onClick={() => {
