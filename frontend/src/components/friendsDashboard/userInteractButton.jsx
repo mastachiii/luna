@@ -10,7 +10,7 @@ export default function InteractButton({ handler, image, label, labelPosition, i
                     setHovered(true);
                 }}
                 onMouseLeave={() => setHovered(false)}
-                className="p-2 bg-neutral-200 rounded-full cursor-pointer hover:*:opacity-100 dark:bg-neutral-900"
+                className="p-2 bg-neutral-200 rounded-full cursor-pointer hover:*:opacity-100 dark:bg-discord-800"
             >
                 <img src={image} alt="" className={`size-${imageSize}`} />
             </button>

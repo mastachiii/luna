@@ -12,8 +12,8 @@ export default function ChatNavBar({ friends, compHandler, friendHandler, select
     const themeIsDark = localStorage.getItem("theme") === "dark";
 
     return (
-        <div className="w-[17%] flex flex-col font-noto bg-neutral-100 dark:bg-zinc-800">
-            <div className="w-full h-13 pt-5 pb-5 mb-2 border-b-2 border-zinc-200 shadow-md shadow-zinc-200 dark:border-zinc-900 dark:shadow-transparent"></div>
+        <div className="w-[17%] flex flex-col font-noto bg-neutral-100 dark:bg-discord-700">
+            <div className="w-full h-13 pt-5 pb-5 mb-2 border-b-1 border-zinc-200 shadow-md shadow-zinc-200 dark:border-discord-800 dark:shadow-transparent"></div>
             <div className="flex flex-col gap-0.5">
                 <ChatNavBarButton
                     handleClick={() => {

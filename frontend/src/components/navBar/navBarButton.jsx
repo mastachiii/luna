@@ -47,7 +47,7 @@ export default function NavBarButton({ handleClick, condition, groupCondition, c
                 <span
                     className={`absolute left-12 z-10 mt-2 ml-5 w-40 p-3 rounded-r-lg bg-zinc-100 shadow-md shadow-zinc-700 select-none transition duration-100 ease-in ${
                         hovered ? "block" : 'hidden'
-                    } dark:text-white dark:bg-neutral-900`}
+                    } dark:text-white dark:bg-discord-800 dark:shadow-discord-800 dark:shadow-md`}
                 >
                     <p className="text-sm font-noto font-semibold">{dialogLabel}</p>
                 </span>

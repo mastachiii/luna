@@ -11,7 +11,7 @@ function Button({ handler, label, condition, pendingRequestsLength }) {
         <button
             onClick={handler}
             className={`pt-1 pb-1 pl-2 pr-2 rounded-md cursor-pointer ${
-                label !== "Add Friend" ? (condition ? "bg-zinc-200 text-black" : "text-zinc-700 hover:bg-zinc-200") : ""
+                label !== "Add Friend" ? (condition ? "bg-zinc-200 text-black dark:bg-discord-500 dark:text-zinc-50" : "text-zinc-700 hover:bg-zinc-200 dark:text-zinc-300 dark:hover:bg-discord-500") : ""
             } ${label === "Add Friend" ? (condition ? "bg-none text-green-700" : "bg-green-700 text-white") : ""}`}
         >
             <span className="flex">
@@ -71,13 +71,13 @@ export default function FriendsDashboard({ compHandler, friendHandler, selHandle
 
     if (userData) {
         return (
-            <div className="w-full font-noto bg-zinc-50 dark:bg-neutral-800">
-                <div className="w-full h-12.5 flex items-center shadow-md shadow-zinc-200 text-sm">
+            <div className="w-full font-noto bg-zinc-50  dark:bg-discord-600">
+                <div className="w-full h-13 flex items-center border-b-1 shadow-md shadow-zinc-200 text-sm dark:border-discord-700 dark:shadow-transparent">
                     <span className="flex items-center ml-5 gap-2">
                         <img src={friends} alt="" className="size-7" />
-                        <p className="font-semibold text-zinc-800">Friends</p>
+                        <p className="font-semibold text-zinc-800 dark:text-zinc-100">Friends</p>
                     </span>
-                    <div className="w-[1px] h-[50%] ml-3 mr-3  bg-zinc-300 "></div>
+                    <div className="w-[1px] h-[50%] ml-3 mr-3  bg-zinc-300 dark:bg-zinc-700"></div>
                     <div className="flex gap-5 ml-1">
                         <Button handler={() => setCompToRender("online")} label={"Online"} condition={compToRender === "online"} />
                         <Button handler={() => setCompToRender("all")} label={"All"} condition={compToRender === "all"} />

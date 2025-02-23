@@ -15,7 +15,7 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData, di
     const themeIsDark = localStorage.getItem("theme") === "dark";
 
     return (
-        <div className="h-screen flex flex-col items-center pl-3 pr-3 bg-neutral-200 dark:bg-neutral-900">
+        <div className="h-screen flex flex-col items-center pl-3 pr-3 bg-neutral-200 dark:bg-discord-800">
             <button
                 onMouseEnter={() => setUserBtnHover(true)}
                 onMouseLeave={() => setUserBtnHover(false)}

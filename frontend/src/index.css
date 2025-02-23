@@ -4,6 +4,10 @@
 @theme {
     --font-noto: "Noto Sans";
     --font-darumadrop: "Darumadrop One";
+    --color-discord-500: #424549;
+    --color-discord-600: #36393e;
+    --color-discord-700: #282b30;
+    --color-discord-800: #202225;
     --animate-appear: appear 200ms ease-in-out;
     --animate-border: border 200ms ease-in alternate infinite;
     --animate-scale: scale 150ms ease-in forwards;

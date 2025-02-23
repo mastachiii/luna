@@ -42,13 +42,13 @@ export default function FriendList({ friends, compHandler, friendHandler, selHan
                     value={search}
                     onChange={handleSearch}
                     placeholder={"Search"}
-                    className="w-full p-2 pl-3 rounded-sm text-sm  bg-zinc-200 outline-0"
+                    className="w-full p-2 pl-3 rounded-sm text-sm bg-zinc-200 outline-0 dark:bg-discord-800 dark:text-zinc-400"
                 />
                 <div>
-                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600">
+                    <p className="mt-5 mb-3 ml-1 text-xs font-semibold text-zinc-600 dark:text-zinc-400">
                         {label} - {friendsToShow.length}
                     </p>
-                    <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200"></div>
+                    <div className="w-full h-[1px] ml-1 mb-3 bg-zinc-200 dark:bg-discord-500"></div>
                 </div>
                 {friendsToShow.length === 0 && (
                     <Empty

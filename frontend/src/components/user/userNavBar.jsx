@@ -12,7 +12,7 @@ export default function UserNavBar({ compHandler }) {
     const themeIsDark = localStorage.getItem("theme") === "dark";
 
     return (
-        <div className="bg-neutral-200 flex items-center justify-between mt-auto pl-2 pr-2 pb-3 pt-3 dark:bg-neutral-900">
+        <div className="bg-neutral-200 flex items-center justify-between mt-auto pl-2 pr-2 pb-3 pt-3 dark:bg-discord-800">
             <div className="w-40 flex gap-2 items-center overflow-hidden overflow-ellipsis">
                 <img src={user.profilePicture} className="size-10 rounded-full" />
                 <span className="w-[50%] dark:text-white">
