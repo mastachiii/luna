@@ -59,7 +59,7 @@ export default function Index() {
     if (userData) {
         return (
             <UserContext.Provider value={userData}>
-                <div className="flex w-full h-full overflow-y-hidden">
+                <div className="flex w-full h-full overflow-y-hidden dark:bg-discord-600">
                     <NavBar
                         componentHandler={setCompToRender}
                         groupIdHandler={setGroupId}

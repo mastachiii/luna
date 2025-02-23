@@ -29,7 +29,7 @@ export default function UserLayout() {
     }
 
     return (
-        <div className="flex w-full h-screen">
+        <div className="flex w-full h-screen dark:bg-discord-600">
             <ChatNavBar
                 friends={userData.friends}
                 compHandler={setCompToRender}
