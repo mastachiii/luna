@@ -76,7 +76,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
 
             timeout.current = setTimeout(() => {
                 setTrigger(trigger + 1);
-            }, 10000);
+            }, 3000);
 
             return () => {
                 clearTimeout(timeout.current);
@@ -142,7 +142,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                         </span>
                     }
                 </div>
-                <div className="w-full h-[95%] flex relative dark:bg-discord-600">
+                <div className="w-full h-[90%] flex relative dark:bg-discord-600">
                     <div className={`${"w-full"}  h-[91%] flex flex-col overflow-y-scroll box-border z-0`} ref={convoRef}>
                         {!isGroup ? <ChatBegin friendData={friend} /> : <GroupChatBegin group={conversation} ref={dialogRef} />}
                         <div className="w-full h-full z-20">

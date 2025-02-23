@@ -4,7 +4,7 @@ export default function ChatNavBarButton({ handleClick, image, label, isUser, is
     return (
         <button
             onClick={handleClick}
-            className={`flex gap-4 items-center ml-2 mr-3 p-4 pt-1 pb-2 pr-0 rounded-md cursor-pointer hover:bg-stone-200 dark:hover:bg-discord-500 group  ${
+            className={`flex gap-4 items-center ml-2 mr-3 mb-1 p-4 pt-1 pb-2 pr-0 rounded-md cursor-pointer hover:bg-stone-200 dark:hover:bg-discord-500 group  ${
                 condition && "bg-stone-200 text-white dark:bg-discord-500"
             }`}
         >

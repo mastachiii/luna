@@ -28,10 +28,10 @@ export default function Index() {
 
             setUserData(data);
 
-            // Update every 10 secs
+            // Update every 3 secs
             timeout.current = setTimeout(() => {
                 setTrigger(trigger + 1);
-            }, 10000);
+            }, 3000);
 
             setStatus("done");
 

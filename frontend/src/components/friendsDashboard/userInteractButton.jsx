@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function InteractButton({ handler, image, label, labelPosition, imageSize = 4 }) {
+export default function InteractButton({ handler, image, label, labelPosition, imageSize = 4, padded = true }) {
     const [hovered, setHovered] = useState(false);
     return (
         <div className="relative">
@@ -10,7 +10,7 @@ export default function InteractButton({ handler, image, label, labelPosition, i
                     setHovered(true);
                 }}
                 onMouseLeave={() => setHovered(false)}
-                className="p-2 bg-neutral-200 rounded-full cursor-pointer hover:*:opacity-100 dark:bg-discord-800"
+                className={`bg-neutral-200 rounded-full cursor-pointer hover:*:opacity-100 dark:bg-discord-800 ${padded && "p-2"}`}
             >
                 <img src={image} alt="" className={`size-${imageSize}`} />
             </button>

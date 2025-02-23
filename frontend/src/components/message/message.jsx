@@ -62,7 +62,7 @@ export default function Message({ message, previousMessage, selected, selHandler
                         </span>
                     )}
                     {message.isImage ? (
-                        <img src={message.message} className={`w-[50%] pt-2 pb-2 ${skipProfileRender && "ml-0"}`} />
+                        <img src={message.message} className={`w-[50%] ${skipProfileRender && "ml-0"}`} />
                     ) : (
                         <p className={`w-full text-sm whitespace-pre-wrap dark:text-zinc-300`}>{message.message}</p>
                     )}
