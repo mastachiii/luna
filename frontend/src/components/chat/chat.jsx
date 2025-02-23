@@ -11,6 +11,7 @@ import EditGroupChat from "./editGroupChat";
 import settings from "../../assets/settings.svg";
 import groupDefaultPfp from "../../assets/group.svg";
 import groupDefaultPfpDark from "../../assets/dark/group.svg";
+import luna from "../../assets/logo.svg";
 
 function reducer(state, action) {
     const newMessage = action.user && {
@@ -88,7 +89,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
     useEffect(() => {
         setTimeout(() => {
             setStatus("done");
-        }, 1000);
+        }, 2000);
     }, []);
 
     function handleMessageSend(e) {
@@ -173,6 +174,12 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                     imageHandler={setImage}
                 />
                 {isGroup && <EditGroupChat ref={dialogRef} data={conversation} compHandler={compHandler} />}
+            </div>
+        );
+    } else {
+        return (
+            <div className="m-auto dark:bg-discord-600">
+                <img src={luna} className="w-[90px] p-2 rounded-2xl animate-pulse bg-pink-300"/>
             </div>
         );
     }

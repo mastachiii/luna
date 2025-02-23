@@ -5,6 +5,8 @@ import Chat from "../chat/chat";
 import UserLayout from "./userLayout";
 import CreateGroup from "../chat/createGroupDialog";
 import { UserContext } from "../userContext";
+import luna from "../../assets/logo.svg";
+import Background from "../background";
 
 export default function Index() {
     const [userData, setUserData] = useState(null);
@@ -33,15 +35,28 @@ export default function Index() {
                 setTrigger(trigger + 1);
             }, 3000);
 
-            setStatus("done");
-
             return () => {
                 clearTimeout(timeout.current);
             };
         })();
     }, [compToRender, trigger]);
 
-    if (status === "loading") return;
+    useEffect(() => {
+        setTimeout(() => {
+            setStatus("done");
+        }, 5000);
+    }, []);
+
+    if (status === "loading") {
+        return (
+            <Background>
+                <div className="h-[70%] flex justify-center items-center">
+                    <img src={luna} className="w-[120px] rounded-2xl p-5 bg-pink-300 animate-pulse" />
+                    <p></p>
+                </div>
+            </Background>
+        );
+    }
 
     let comp;
     switch (compToRender) {
@@ -59,7 +74,7 @@ export default function Index() {
     if (userData) {
         return (
             <UserContext.Provider value={userData}>
-                <div className="flex w-full h-full overflow-y-hidden dark:bg-discord-600">
+                <div className="flex w-full h-full overflow-y-hidden dark:bg-discord-600 animate-opacity">
                     <NavBar
                         componentHandler={setCompToRender}
                         groupIdHandler={setGroupId}
