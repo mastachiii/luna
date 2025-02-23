@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import userApi from "../../helpers/userApi";
 import unknown from "../../assets/userUnknown.svg";
 import add from "../../assets/add.svg";
+import addDark from "../../assets/dark/add.svg";
 import InteractButton from "./userInteractButton";
 import Empty from "./empty";
 
@@ -14,6 +15,7 @@ export default function AddFriend() {
     const [availableUsers, setAvailableUsers] = useState(null);
     const [username, setUsername] = useState("");
     const [status, setStatus] = useState("");
+    const themeIsDark = localStorage.getItem("theme") === "dark";
 
     useEffect(() => {
         (async () => {
@@ -32,19 +34,20 @@ export default function AddFriend() {
     return (
         <div className="w-[70%] p-7">
             <div className="mb-5">
-                <h4 className="mb-2 text-sm font-semibold">ADD FRIEND</h4>
-                <p className="text-sm font-light">You can add friends with their username.</p>
+                <h4 className="mb-2 text-sm font-semibold dark:text-zinc-50">ADD FRIEND</h4>
+                <p className="text-sm font-light dark:text-zinc-100">You can add friends with their username.</p>
                 <div
                     className={`flex justify-between p-2 pl-3 pr-3 mt-4 border-1 rounded-md ${
                         status === "OKAY" ? "border-green-500" : status === "FAILED" ? "border-red-500" : "border-zinc-300"
-                    }`}
+                    } dark:bg-discord-800 dark:border-transparent text-zinc-50`}
                 >
                     <input
                         type="text"
                         value={username}
                         onChange={e => setUsername(e.target.value)}
                         maxLength={40}
-                        className="w-[60%] outline-0 text-sm"
+                        className="w-[60%] outline-0 text-sm "
+                        placeholder="You can add friends with their username"
                     />
                     <button
                         onClick={handleAddFriend}
@@ -60,23 +63,27 @@ export default function AddFriend() {
                 {status === "OKAY" && <p className="ml-1 mt-1 text-xs text-green-500">Success! Your friend request was sent</p>}
             </div>
             <div className="w-full h-[1px] mb-5  bg-zinc-200"></div>
-            <p className="mb-3 text-sm font-semibold">SUGGESTED FRIENDS</p>
+            <p className="mb-3 text-sm font-semibold dark:text-zinc-50">SUGGESTED FRIENDS</p>
             <div>
-                {availableUsers && availableUsers.length === 0 && <div className="mt-20">
-                    <Empty text={'Luna is finding the right friends, come back later!'}/>
-                </div>}
+                {availableUsers && availableUsers.length === 0 && (
+                    <div className="mt-20">
+                        <Empty text={"Luna is finding the right friends, come back later!"} />
+                    </div>
+                )}
                 {availableUsers &&
                     availableUsers.map(u => {
                         return (
-                            <div key={u.id} className="flex items-center p-2 rounded-lg group hover:bg-zinc-200">
+                            <div key={u.id} className="flex items-center p-2 rounded-lg group hover:bg-zinc-200 dark:hover:bg-discord-500">
                                 <img src={u.profilePicture || unknown} className="size-9 rounded-full" />
                                 <span className="ml-2">
                                     <span className="flex items-center gap-1">
-                                        <p className="text-sm font-semibold">{u.displayName}</p>
-                                        <p className="mt-[3px] opacity-0 text-xs text-zinc-600 group-hover:opacity-100">{u.username}</p>
+                                        <p className="text-sm font-semibold dark:text-zinc-50">{u.displayName}</p>
+                                        <p className="mt-[3px] opacity-0 text-xs text-zinc-600 group-hover:opacity-100 dark:text-zinc-400">
+                                            {u.username}
+                                        </p>
                                     </span>
                                     <span className="flex items-center">
-                                        <p className="text-xs">{u.online ? "Online" : "Offline"}</p>
+                                        <p className="text-xs text-zinc-400">{u.online ? "Online" : "Offline"}</p>
                                         {u.online && (
                                             <div className="size-[6px] ml-2 mt-[2px] self-center rounded-full bg-green-500 animate-pulse"></div>
                                         )}
@@ -88,9 +95,9 @@ export default function AddFriend() {
                                             setAvailableUsers(availableUsers.filter(a => a.username !== u.username));
                                             userApi.addFriend({ username: u.username });
                                         }}
-                                        image={add}
+                                        image={themeIsDark ? addDark : add}
                                         label={"Add Friend"}
-                                        labelPosition={"bottom-9 left-[-10px]"}
+                                        labelPosition={"bottom-9 left-[-30px]"}
                                     />
                                 </div>
                             </div>
