@@ -146,7 +146,11 @@ class Conversation {
                         user: {
                             select: {
                                 displayName: true,
+                                username: true,
+                                bio: true,
+                                backdrop: true,
                                 profilePicture: true,
+                                id: true,
                             },
                         },
                     },
@@ -173,6 +177,12 @@ class Conversation {
                 id,
                 ownerId: userId,
             },
+        });
+    }
+
+    async deleteMessage({ id }) {
+        await prisma.message.delete({
+            where: { id },
         });
     }
 }

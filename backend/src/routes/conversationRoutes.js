@@ -21,5 +21,6 @@ route.post("/group/add/:id", isAuthenticated, controller.addUser);
 route.post("/group/remove/:id", isAuthenticated, controller.kickUser);
 route.post("/group/leave/:id", isAuthenticated, controller.leaveConversation);
 route.post("/group/delete/:id", isAuthenticated, controller.deleteConversation);
+route.post("/delete/message/:id", isAuthenticated, controller.deleteMessage)
 
 module.exports = route;

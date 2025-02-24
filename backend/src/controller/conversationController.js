@@ -95,9 +95,19 @@ class Conversation {
 
     async deleteConversation(req, res, next) {
         try {
-            await db.deleteConversation({ id: +req.params.id, userId: req.body.id });
+            await db.deleteConversation({ id: +req.params.id, userId: req.user.id });
 
             return res.sendStatus(204);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    async deleteMessage(req, res, next) {
+        try {
+            await db.deleteMessage({ id: +req.params.id });
+
+            return res.sendStatus(200);
         } catch (err) {
             next(err);
         }

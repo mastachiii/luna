@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { UserContext } from "../userContext";
 import InteractButton from "../friendsDashboard/userInteractButton";
+import profileDefault from "../../assets/userUnknown.svg";
 import options from "../../assets/settings.svg";
 import optionsDark from "../../assets/dark/settings.svg";
 import userApi from "../../helpers/userApi";
@@ -23,7 +24,7 @@ export default function UserNavBar({ compHandler }) {
     return (
         <div className="bg-neutral-200 flex items-center justify-between mt-auto pl-2 pr-2 pb-3 pt-3 dark:bg-discord-800">
             <div className="w-40 flex gap-2 items-center overflow-hidden overflow-ellipsis">
-                <img src={user.profilePicture} className="size-10 rounded-full" />
+                <img src={user.profilePicture || profileDefault} className="size-10 rounded-full" />
                 <span className="w-[50%] dark:text-white">
                     <p className="text-xs select-none">{user.displayName}</p>
                     <p className="text-[10px] overflow-hidden dark:text-zinc-500 select-none">{user.username}</p>

@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { format } from "date-fns";
 import dateUtils from "../../helpers/compareMsgDate";
 import UserProfileFull from "../user/userProfile";
-import { useState } from "react";
+import defaultPfp from "../../assets/userUnknown.svg";
 
 export default function Message({ message, previousMessage, selected, selHandler, containerRef }) {
     const user = message.user;
@@ -22,7 +23,7 @@ export default function Message({ message, previousMessage, selected, selHandler
 
         selected === id ? selHandler(null) : selHandler(id);
     }
-
+    console.log({user})
     return (
         <div className={`w-full flex flex-col ${skipProfileRender ? "" : "mt-6"} overflow-visible`}>
             {!previousMessage || dateUtils.checkIfMsgFirstInDay(message.dateSent, previousMessage.dateSent) ? (
@@ -39,7 +40,11 @@ export default function Message({ message, previousMessage, selected, selHandler
             >
                 {!skipProfileRender ? (
                     <div className="w-12 ml-5 relative">
-                        <img src={user.profilePicture} onClick={e => handleSelect(e, message.id)} className="size-10 rounded-full cursor-pointer" />
+                        <img
+                            src={user.profilePicture || defaultPfp}
+                            onClick={e => handleSelect(e, message.id)}
+                            className="size-10 rounded-full cursor-pointer"
+                        />
                         <div
                             className={`absolute z-10  shadow-xs shadow-black rounded-md animate-opacity ${
                                 selected === message.id ? "block" : "hidden"
