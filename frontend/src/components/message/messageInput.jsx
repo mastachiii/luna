@@ -69,7 +69,7 @@ export default function MessageInput({ textSubmit, imageSubmit, text, textHandle
                                 textHandler(e.target.value);
                             }}
                             rows={1 + text.length / 200 + (textNewLines && textNewLines.length)}
-                            className="w-[90%] text-sm text-wrap outline-0 resize-none text-zinc-100"
+                            className="w-[90%] text-sm text-wrap outline-0 resize-none dark:text-zinc-100"
                         />
                     )}
                     <div className="flex items-center gap-3 ml-auto">

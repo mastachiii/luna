@@ -70,11 +70,12 @@ export default function EditGroupChat({ data, ref, compHandler }) {
     }
 
     async function handleDelete() {
+        compHandler("user");
+        
         await conversationApi.deleteConversation({ id: data.id });
 
         deleteDialog.current.close();
         ref.current.close();
-        compHandler("user");
     }
 
     return (

@@ -32,7 +32,11 @@ export default function Message({ message, previousMessage, selected, selHandler
                     <span className="w-[40%] h-[1px] bg-neutral-300 dark:bg-zinc-600"></span>
                 </div>
             ) : null}
-            <div className={`flex pt-[5px] pb-[5px] relative group hover:bg-neutral-100 transition duration-100 ease-in dark:hover:bg-discord-700`}>
+            <div
+                className={`flex relative group hover:bg-neutral-100 transition duration-100 ease-in dark:hover:bg-discord-700 ${
+                    !skipProfileRender ? "pt-[5px] pb-[5px]" : "pt-[2px] pb-[2px]"
+                }`}
+            >
                 {!skipProfileRender ? (
                     <div className="w-12 ml-5 relative">
                         <img src={user.profilePicture} onClick={e => handleSelect(e, message.id)} className="size-10 rounded-full cursor-pointer" />
