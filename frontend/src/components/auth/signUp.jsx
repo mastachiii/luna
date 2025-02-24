@@ -59,7 +59,14 @@ export default function SignUp() {
                     valueHandler={setPasswordConfirm}
                     errorMessage={errors && errors.passwordConfirm}
                 />
-                <FormField name={"displayName"} type={"text"} label={"DISPLAY NAME"} value={displayName} valueHandler={setDisplayName} />
+                <FormField
+                    name={"displayName"}
+                    type={"text"}
+                    label={"DISPLAY NAME"}
+                    value={displayName}
+                    valueHandler={setDisplayName}
+                    errorMessage={errors && errors.displayName}
+                />
                 <FormButton>{status === "signing up" ? <LoadingSpinner /> : "Continue"} </FormButton>
                 <p className="ml-6 mt-3 text-xs text-start text-neutral-400 ">
                     Already have an account?{" "}

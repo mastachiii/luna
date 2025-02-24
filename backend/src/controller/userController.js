@@ -7,6 +7,8 @@ const validateSignUp = [
         .trim()
         .notEmpty()
         .withMessage("Username is required")
+        .isLength({ min: 1, max: 32 })
+        .withMessage("Username must not exceed 32 characters")
         .custom(async value => {
             const user = await db.getUserByUsername({ username: value });
 
@@ -22,7 +24,12 @@ const validateSignUp = [
 
             if (user) throw new Error("Email has already been used.");
         }),
-    body("displayName").trim().notEmpty().withMessage("Display name is required"),
+    body("displayName")
+        .trim()
+        .notEmpty()
+        .withMessage("Display name is required")
+        .isLength({ min: 1, max: 32 })
+        .withMessage("Display name must not exceed 32 characters"),
     body("password")
         .trim()
         .notEmpty()
