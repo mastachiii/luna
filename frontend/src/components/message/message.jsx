@@ -5,6 +5,7 @@ import UserProfileFull from "../user/userProfile";
 import defaultPfp from "../../assets/userUnknown.svg";
 import AlertDialog from "../alertDialog";
 import trash from "../../assets/trash.svg";
+import PropTypes from "prop-types";
 
 export default function Message({ message, previousMessage, selected, selHandler, containerRef, delHandler, userId }) {
     const [liftProfileUp, setLiftProfileUp] = useState(false);
@@ -96,3 +97,13 @@ export default function Message({ message, previousMessage, selected, selHandler
         </div>
     );
 }
+
+Message.propTypes = {
+    message: PropTypes.object,
+    previousMessage: PropTypes.object,
+    selected: PropTypes.number,
+    selHandler: PropTypes.func,
+    delHandler: PropTypes.func,
+    containerRef: PropTypes.any,
+    userId: PropTypes.number,
+};

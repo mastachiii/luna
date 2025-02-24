@@ -9,6 +9,7 @@ import logout from "../../assets/logout.svg";
 import logoutDark from "../../assets/dark/logout.svg";
 import light from "../../assets/light.svg";
 import dark from "../../assets/dark.svg";
+import PropTypes from "prop-types";
 
 export default function UserNavBar({ compHandler }) {
     const user = useContext(UserContext);
@@ -59,3 +60,7 @@ export default function UserNavBar({ compHandler }) {
         </div>
     );
 }
+
+UserNavBar.propTypes = {
+    compHandler: PropTypes.func,
+};

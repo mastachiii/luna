@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import EditGroupChat from "../chat/editGroupChat";
 import AlertDialog from "../alertDialog";
 import conversationApi from "../../helpers/conversationApi";
+import PropTypes from "prop-types";
 
 function NavOptions({ condition, active, groupOptionsRef, leaveDialogRef }) {
     return (
@@ -86,3 +87,23 @@ export default function NavBarButton({
         </>
     );
 }
+
+NavOptions.propTypes = {
+    condition: PropTypes.bool,
+    active: PropTypes.bool,
+    groupOptionsRef: PropTypes.any,
+    leaveDialogRef: PropTypes.any,
+};
+
+NavBarButton.propTypes = {
+    handleClick: PropTypes.func,
+    compHandler: PropTypes.func,
+    activeHandler: PropTypes.func,
+    condition: PropTypes.bool,
+    groupCondition: PropTypes.bool,
+    dialogLabel: PropTypes.string,
+    active: PropTypes.bool,
+    index: PropTypes.number,
+    conversation: PropTypes.object,
+    children: PropTypes.node,
+};

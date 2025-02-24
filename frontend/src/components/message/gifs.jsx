@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 
 const API_KEY = import.meta.env.VITE_GIPHY_API_KEY;
 
@@ -46,7 +47,7 @@ export default function Gifs({ handler, isEditor }) {
         setGifSearch(e.target.value);
     }
     return (
-        <div className={`h-115 overflow-hidden ${isEditor && 'h-full p-2 rounded-md'}`}>
+        <div className={`h-115 overflow-hidden ${isEditor && "h-full p-2 rounded-md"}`}>
             <form onSubmit={handleSearchSubmit} className="mb-2">
                 <input
                     type="text"
@@ -57,7 +58,7 @@ export default function Gifs({ handler, isEditor }) {
                 />
             </form>
             {gifsToShow && (
-                <div className={`h-110 flex flex-wrap gap-1 p-1 overflow-y-scroll ${isEditor && 'h-[90%]'}`}> 
+                <div className={`h-110 flex flex-wrap gap-1 p-1 overflow-y-scroll ${isEditor && "h-[90%]"}`}>
                     {gifsToShow.map(g => {
                         return (
                             <img
@@ -73,3 +74,8 @@ export default function Gifs({ handler, isEditor }) {
         </div>
     );
 }
+
+Gifs.propTypes = {
+    handler: PropTypes.func,
+    isEditor: PropTypes.bool,
+};

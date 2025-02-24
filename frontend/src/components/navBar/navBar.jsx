@@ -6,6 +6,7 @@ import NavBarButton from "./navBarButton";
 import { UserContext } from "../userContext";
 import group from "../../assets/group.svg";
 import groupDark from "../../assets/dark/group.svg";
+import PropTypes from "prop-types";
 
 // Separated the button styling to avoid duplication
 export default function NavBar({ componentHandler, groupIdHandler, groupData, dialogRef }) {
@@ -71,3 +72,10 @@ export default function NavBar({ componentHandler, groupIdHandler, groupData, di
         </div>
     );
 }
+
+NavBar.propTypes = {
+    componentHandler: PropTypes.func,
+    groupIdHandler: PropTypes.func,
+    groupData: PropTypes.object,
+    dialogRef: PropTypes.any,
+};

@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { UserContext } from "../userContext";
 import userApi from "../../helpers/userApi";
 import defaultPfp from "../../assets/userUnknown.svg";
+import PropTypes from "prop-types";
 
 // Props will be passed to this component if the user is in the middle of customizing their profile, (CHECK EDIT USER COMP)
 // The user data will be used when other its viewed through chats.
@@ -13,7 +14,7 @@ export default function UserProfileFull({ displayName, profilePicture, backdrop,
     function addFriend() {
         userApi.addFriend({ username: userToShow.username });
     }
-    
+
     return (
         <div className="w-72 min-h-60 pb-4 font-noto rounded-md shadow-xl relative bg-white  dark:text-zinc-50 dark:bg-discord-800">
             <div className="min-h-27 max-h-27 w-full overflow-hidden bg-pink-200 rounded-t-md">
@@ -21,7 +22,7 @@ export default function UserProfileFull({ displayName, profilePicture, backdrop,
             </div>
             <img
                 src={profilePicture || userToShow.profilePicture || defaultPfp}
-                className="size-20 absolute top-15 left-3 rounded-full border-4 border-white bg-white dark:border-discord-800"
+                className="size-20 absolute top-15 left-3 rounded-full border-4 border-white bg-white dark:border-discord-800 dark:bg-discord-800"
             />
             <span className="">
                 <p className="pl-3 pr-3 mt-7 text-lg font-semibold break-words">{displayName || userToShow.displayName}</p>
@@ -43,3 +44,11 @@ export default function UserProfileFull({ displayName, profilePicture, backdrop,
         </div>
     );
 }
+
+UserProfileFull.propTypes = {
+    displayName: PropTypes.string,
+    profilePicture: PropTypes.string,
+    backdrop: PropTypes.string,
+    bio: PropTypes.string,
+    data: PropTypes.object,
+};

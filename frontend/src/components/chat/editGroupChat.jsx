@@ -7,6 +7,7 @@ import defaultGroupProfile from "../../assets/group.svg";
 import defaultGroupProfileDark from "../../assets/dark/group.svg";
 import EditorUserList from "../editorUserList";
 import AlertDialog from "../alertDialog";
+import PropTypes from "prop-types";
 
 function User({ user, handler, label }) {
     return (
@@ -71,7 +72,7 @@ export default function EditGroupChat({ data, ref, compHandler }) {
 
     async function handleDelete() {
         compHandler("user");
-        
+
         await conversationApi.deleteConversation({ id: data.id });
 
         deleteDialog.current.close();
@@ -174,3 +175,15 @@ export default function EditGroupChat({ data, ref, compHandler }) {
         </dialog>
     );
 }
+
+EditGroupChat.propTypes = {
+    data: PropTypes.object,
+    ref: PropTypes.any,
+    compHandler: PropTypes.func,
+};
+
+User.propTypes = {
+    user: PropTypes.object,
+    handler: PropTypes.func,
+    label: PropTypes.string,
+};
