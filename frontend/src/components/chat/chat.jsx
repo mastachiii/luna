@@ -41,6 +41,13 @@ function reducer(state, action) {
             };
         }
 
+        case "delete message": {
+            return {
+                ...state,
+                messages: state.messages.filter(m => m.id !== action.id),
+            };
+        }
+
         case "replace conversation": {
             if (state && state.messages.length !== action.convo.messages.length) scrollToBottom();
 
@@ -119,6 +126,12 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
         dispatch({ type: "send image", message: gifUrl, convoRef, user: userData });
     }
 
+    function handleDeleteMessage(id) {
+        conversationApi.deleteMessage({ id });
+
+        dispatch({ type: "delete message", id });
+    }
+
     if (conversation && status === "done") {
         return (
             <div className="w-full h-[100%] flex flex-col grow font-noto overflow-visible dark:bg-discord-600">
@@ -158,6 +171,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                                             selected={selected}
                                             selHandler={setSelected}
                                             containerRef={convoRef}
+                                            delHandler={handleDeleteMessage}
                                         />
                                     );
                                 })}

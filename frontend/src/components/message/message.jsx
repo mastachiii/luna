@@ -4,7 +4,7 @@ import dateUtils from "../../helpers/compareMsgDate";
 import UserProfileFull from "../user/userProfile";
 import defaultPfp from "../../assets/userUnknown.svg";
 
-export default function Message({ message, previousMessage, selected, selHandler, containerRef }) {
+export default function Message({ message, previousMessage, selected, selHandler, containerRef, delHandler }) {
     const user = message.user;
     const [liftProfileUp, setLiftProfileUp] = useState(false);
 
@@ -23,7 +23,7 @@ export default function Message({ message, previousMessage, selected, selHandler
 
         selected === id ? selHandler(null) : selHandler(id);
     }
-    console.log({user})
+
     return (
         <div className={`w-full flex flex-col ${skipProfileRender ? "" : "mt-6"} overflow-visible`}>
             {!previousMessage || dateUtils.checkIfMsgFirstInDay(message.dateSent, previousMessage.dateSent) ? (
@@ -77,6 +77,7 @@ export default function Message({ message, previousMessage, selected, selHandler
                     )}
                 </span>
             </div>
+            <button onClick={() => delHandler(message.id)}>delete msg</button>
         </div>
     );
 }
