@@ -172,6 +172,7 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                                             selHandler={setSelected}
                                             containerRef={convoRef}
                                             delHandler={handleDeleteMessage}
+                                            userId={userData.id}
                                         />
                                     );
                                 })}

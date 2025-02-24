@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { format } from "date-fns";
 import dateUtils from "../../helpers/compareMsgDate";
 import UserProfileFull from "../user/userProfile";
 import defaultPfp from "../../assets/userUnknown.svg";
+import AlertDialog from "../alertDialog";
+import trash from "../../assets/trash.svg";
 
-export default function Message({ message, previousMessage, selected, selHandler, containerRef, delHandler }) {
-    const user = message.user;
+export default function Message({ message, previousMessage, selected, selHandler, containerRef, delHandler, userId }) {
     const [liftProfileUp, setLiftProfileUp] = useState(false);
+    const user = message.user;
+    const deleteMsgDialog = useRef();
 
     // Only compare if current message and prev message is by the same user... Render a new msg div if diff
     let skipProfileRender;
@@ -25,7 +28,7 @@ export default function Message({ message, previousMessage, selected, selHandler
     }
 
     return (
-        <div className={`w-full flex flex-col ${skipProfileRender ? "" : "mt-6"} overflow-visible`}>
+        <div className={`w-full relative flex flex-col ${skipProfileRender ? "" : "mt-6"} overflow-visible group`}>
             {!previousMessage || dateUtils.checkIfMsgFirstInDay(message.dateSent, previousMessage.dateSent) ? (
                 <div className="flex grow items-center justify-center ml-10 mt-2 mb-5">
                     <span className="w-[40%] h-[1px] bg-neutral-300 dark:bg-zinc-600"></span>
@@ -77,7 +80,19 @@ export default function Message({ message, previousMessage, selected, selHandler
                     )}
                 </span>
             </div>
-            <button onClick={() => delHandler(message.id)}>delete msg</button>
+            {message.userId === userId && (
+                <button onClick={() => deleteMsgDialog.current.showModal()}>
+                    <img
+                        src={trash}
+                        className={`size-5 absolute p-1 bg-neutral-200 opacity-0 rounded-md dark:bg-discord-500 ml-auto cursor-pointer group-hover:opacity-100 ${
+                            skipProfileRender ? "bottom-3 right-10" : "bottom-9 right-10"
+                        }`}
+                    />
+                </button>
+            )}
+            <AlertDialog handler={() => delHandler(message.id)} label={"Delete message"} btnLabel={"Delete"} ref={deleteMsgDialog}>
+                <p>Are you sure you want to delete this message?</p>
+            </AlertDialog>
         </div>
     );
 }
