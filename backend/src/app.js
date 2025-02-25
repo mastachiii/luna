@@ -12,7 +12,6 @@ const databaseUrl = process.env.NODE_ENV === "test" ? process.env.TEST_DATABASE_
 const userRoute = require("./routes/userRoutes");
 const conversationRoute = require("./routes/conversationRoutes");
 const passport = require("passport");
-const { isAuthenticated } = require("./helpers/authMiddleware");
 
 const app = express();
 
