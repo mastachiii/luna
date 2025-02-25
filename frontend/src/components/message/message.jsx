@@ -39,7 +39,7 @@ export default function Message({ message, previousMessage, selected, selHandler
             ) : null}
             <div
                 className={`flex relative group hover:bg-neutral-100 transition duration-100 ease-in dark:hover:bg-discord-700 ${
-                    !skipProfileRender ? "pt-[5px] pb-[5px]" : "pt-[2px] pb-[2px]"
+                    !skipProfileRender ? "pt-[5px] pb-[1px]" : "pt-[2px] pb-[1px]"
                 }`}
             >
                 {!skipProfileRender ? (
@@ -75,7 +75,7 @@ export default function Message({ message, previousMessage, selected, selHandler
                         </span>
                     )}
                     {message.isImage ? (
-                        <img src={message.message} className={`w-[50%] ${skipProfileRender && "ml-0"}`} />
+                        <img src={message.message} className={`w-[30%] ${skipProfileRender && "ml-0"}`} />
                     ) : (
                         <p className={`w-full text-sm whitespace-pre-wrap dark:text-zinc-300`}>{message.message}</p>
                     )}
@@ -86,7 +86,7 @@ export default function Message({ message, previousMessage, selected, selHandler
                     <img
                         src={trash}
                         className={`size-5 absolute p-1 bg-neutral-200 opacity-0 rounded-md dark:bg-discord-500 ml-auto cursor-pointer group-hover:opacity-100 ${
-                            skipProfileRender ? "bottom-3 right-10" : "bottom-9 right-10"
+                            skipProfileRender ? "top-[-10px] right-10" : "bottom-9 right-10"
                         }`}
                     />
                 </button>

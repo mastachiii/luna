@@ -76,7 +76,8 @@ export default function Chat({ isGroup, id, friend, compHandler }) {
                 ? await conversationApi.getGroupChat({ id })
                 : await conversationApi.getConversation({ username: friend.username });
 
-            dispatch({ type: "replace conversation", convo, convoRef });
+            console.log(convo);
+            if (!conversation || conversation.messages.length !== convo.messages.length) dispatch({ type: "replace conversation", convo, convoRef });
 
             // Increment interv variable so that effect would run...
             // set interval doesn't really work in this case...

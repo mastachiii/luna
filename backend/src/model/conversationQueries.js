@@ -112,7 +112,20 @@ class Conversation {
                         user: true,
                     },
                 },
-                users: true,
+                users: {
+                    select: {
+                        username: true,
+                        displayName: true,
+                        id: true,
+                        profilePicture: true,
+                        bio: true,
+                        backdrop: true,
+                        online: true,
+                    },
+                    orderBy: {
+                        displayName: "asc",
+                    },
+                },
             },
         });
 
@@ -186,11 +199,5 @@ class Conversation {
         });
     }
 }
-
-(async () => {
-    const query = await prisma.user.findMany();
-
-    console.log(query)
-})();
 
 module.exports = new Conversation();

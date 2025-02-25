@@ -22,7 +22,7 @@ class User {
                 profilePicture,
                 conversations: {
                     connect: {
-                        id: 1,
+                        id: 2,
                     },
                 },
             },
