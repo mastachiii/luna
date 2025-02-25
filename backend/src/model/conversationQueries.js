@@ -187,6 +187,10 @@ class Conversation {
     }
 }
 
-const convo = new Conversation();
+(async () => {
+    const query = await prisma.conversation.findMany();
+
+    console.log(query)
+})();
 
 module.exports = new Conversation();

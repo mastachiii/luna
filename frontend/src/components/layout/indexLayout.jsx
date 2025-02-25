@@ -26,6 +26,8 @@ export default function Index() {
 
             window.addEventListener("beforeunload", () => {
                 userApi.goOffline();
+
+                return null;
             });
 
             setUserData(data);

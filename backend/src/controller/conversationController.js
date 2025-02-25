@@ -1,3 +1,4 @@
+const { Prisma } = require("@prisma/client");
 const db = require("../model/conversationQueries");
 
 class Conversation {

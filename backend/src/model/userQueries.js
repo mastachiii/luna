@@ -20,6 +20,11 @@ class User {
                 password,
                 displayName,
                 profilePicture,
+                conversations: {
+                    connect: {
+                        id: 1,
+                    },
+                },
             },
         });
 
