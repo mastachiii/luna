@@ -16,6 +16,7 @@ const passport = require("passport");
 const app = express();
 
 // Middlewares
+app.set("trust proxy", 1);
 app.use(
     session({
         cookie: {
