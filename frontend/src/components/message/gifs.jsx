@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const API_KEY = import.meta.env.VITE_GIPHY_API_KEY;
 
 async function getTrendingGifs() {
-    const gifs = fetch(`http://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}`)
+    const gifs = fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${API_KEY}`)
         .then(response => response.json())
         .then(data => data.data);
 
