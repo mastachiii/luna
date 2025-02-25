@@ -20,6 +20,8 @@ app.use(
     session({
         cookie: {
             maxAge: 20 * 60 * 100000,
+            sameSite: "none",
+            secure: true,
         },
         resave: false,
         saveUninitialized: false,
@@ -41,7 +43,7 @@ app.use(
 );
 app.use(passport.authenticate("session"));
 app.use(express.json());
-app.use(cors({ origin: "https://luna-eta.vercel.app", credentials: true }));
+app.use(cors({ origin: "https://localhost:5173", credentials: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use("/user", userRoute);
 app.use("/conversation", conversationRoute);
