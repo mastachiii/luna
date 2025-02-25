@@ -24,8 +24,10 @@ export default function Index() {
 
             if (!data.online) userApi.goOnline();
 
-            window.addEventListener("beforeunload", () => {
-                userApi.goOffline();
+            window.addEventListener("beforeunload", e => {
+                e.preventDefault();
+
+                if (data.online) userApi.goOffline();
 
                 return null;
             });
@@ -38,6 +40,8 @@ export default function Index() {
             }, 3000);
 
             return () => {
+                userApi.goOffline();
+                console.log(1);
                 clearTimeout(timeout.current);
             };
         })();

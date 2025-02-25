@@ -188,7 +188,7 @@ class Conversation {
 }
 
 (async () => {
-    const query = await prisma.conversation.findMany();
+    const query = await prisma.user.findMany();
 
     console.log(query)
 })();

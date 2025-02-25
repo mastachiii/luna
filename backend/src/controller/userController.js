@@ -179,6 +179,7 @@ class User {
 
     async changeUserStatus(req, res, next) {
         try {
+            console.log(req.body.status);
             await db.modifyUserStatus({ id: req.user.id, isOnline: req.body.status });
 
             return res.sendStatus(200);

@@ -86,7 +86,7 @@ export default function EditGroupChat({ data, ref, compHandler }) {
                 <div className="flex">
                     <span className="w-[30%] flex flex-col items-center p-2">
                         <img
-                            src={image || themeIsDark ? defaultGroupProfileDark : defaultGroupProfile}
+                            src={image ? image : themeIsDark ? defaultGroupProfileDark : defaultGroupProfile}
                             className="size-30 mb-3 rounded-full shadow-sm shadow-black"
                         />
                         <label
