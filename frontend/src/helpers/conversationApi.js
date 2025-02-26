@@ -1,6 +1,6 @@
 class Conversation {
     constructor() {
-        this.conversationUrl = "https://luna-cu1p.onrender.com/conversation";
+        this.conversationUrl = "http://localhost:8080/conversation";
     }
 
     async getConversation({ username }) {

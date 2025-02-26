@@ -1,6 +1,6 @@
 class User {
     constructor() {
-        this.userUrl = "https://luna-cu1p.onrender.com/user";
+        this.userUrl = "http://localhost:8080/user";
     }
 
     signUp({ username, email, password, passwordConfirm, displayName, errMessageHandler, statusHandler }) {
