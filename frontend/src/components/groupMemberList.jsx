@@ -16,11 +16,13 @@ function UserProfile({ profilePicture, displayName, isOwner }) {
 
 function UserContainer({ user, selected, selHandler, ownerId }) {
     const ref = useRef();
+    const pullProfile = ref.current && document.body.clientHeight - ref.current.offsetTop < 380;
+    const bottom = ref.current && ref.current.offsetTop
     return (
         <div
             key={user.id}
             onClick={e => {
-                console.log(document.body.clientHeight - ref.current.offsetTop)
+                console.log(ref.current);
 
                 selected !== user.id ? selHandler(user.id) : selHandler(null);
             }}
@@ -30,7 +32,11 @@ function UserContainer({ user, selected, selHandler, ownerId }) {
             ref={ref}
         >
             <UserProfile profilePicture={user.profilePicture || unknown} displayName={user.displayName} isOwner={user.id === ownerId} />
-            <div className={`absolute right-[14%] ${selected === user.id ? "block" : "hidden"} bg-white rounded-md animate-opacity dark:bg-discord-800 `}>
+            <div
+                className={`absolute right-[14%] ${pullProfile ? 'bottom-15' : `top-${bottom}px`} ${
+                    selected === user.id ? "block" : "hidden"
+                } bg-white rounded-md animate-opacity dark:bg-discord-800 `}
+            >
                 <UserProfileFull data={user} />
             </div>
         </div>
@@ -43,7 +49,7 @@ export default function GroupMemberList({ members, ownerId }) {
     const [selected, setSelected] = useState(null);
 
     return (
-        <div className="w-[15%] h-screen p-5  bg-zinc-100 dark:bg-discord-700 z-10 overflow-scroll">
+        <div className="w-[15%] h-screen p-5 bg-zinc-100 dark:bg-discord-700 z-10 overflow-y-scroll">
             <p className="mb-2 text-xs text-pink-400 font-semibold">ONLINE - {onlineMembers.length}</p>
             <div>
                 {onlineMembers.map(m => {
