@@ -18,3 +18,23 @@ Used React for the user interface, Express for the REST API, and Postgres for th
 - Create group chats
 - User profile customization
 - User authentication
+
+## Screenshots
+
+- Group Chat
+
+  ![Group Chat](/screenshots/groupChat.png)
+
+- Private Chat
+
+  ![Private Chat](/screenshots/privateChat.png)
+
+- Homepage
+
+  ![Homepage](/screenshots/friends.png)
+
+- Login / Register
+
+  ![Login](/screenshots/login.png)
+
+  ![Register](/screenshots/signUp.png)
